@@ -4,6 +4,8 @@ const cors = require('cors');
 const { runMigrations } = require('./config/database');
 
 const customersRouter = require('./routes/customers');
+const vehiclesRouter = require('./routes/vehicles');
+const leadsRouter = require('./routes/leads');
 
 const app = express();
 
@@ -17,6 +19,8 @@ runMigrations();
 
 // Routes
 app.use('/api/customers', customersRouter);
+app.use('/api/vehicles', vehiclesRouter);
+app.use('/api/leads', leadsRouter);
 
 // Health check
 app.get('/health', (req, res) => {
