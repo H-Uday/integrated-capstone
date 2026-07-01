@@ -57,7 +57,7 @@ function runMigrations() {
 
     CREATE TABLE IF NOT EXISTS transactions (
       transaction_id      INTEGER PRIMARY KEY AUTOINCREMENT,
-      lead_id             INTEGER NOT NULL REFERENCES leads(lead_id),
+      lead_id             INTEGER REFERENCES leads(lead_id),
       customer_id         INTEGER NOT NULL REFERENCES customers(customer_id),
       vehicle_id          INTEGER NOT NULL REFERENCES vehicles(vehicle_id),
       transaction_date    TEXT NOT NULL,

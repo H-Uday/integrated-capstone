@@ -6,6 +6,7 @@ const { runMigrations } = require('./config/database');
 const customersRouter = require('./routes/customers');
 const vehiclesRouter = require('./routes/vehicles');
 const leadsRouter = require('./routes/leads');
+const transactionsRouter = require('./routes/transactions');
 
 const app = express();
 
@@ -21,6 +22,7 @@ runMigrations();
 app.use('/api/customers', customersRouter);
 app.use('/api/vehicles', vehiclesRouter);
 app.use('/api/leads', leadsRouter);
+app.use('/api/transactions', transactionsRouter);
 
 // Health check
 app.get('/health', (req, res) => {

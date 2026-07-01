@@ -101,4 +101,35 @@ function validateLead(req, res, next) {
   next();
 }
 
-module.exports = { validateCustomer, validateVehicle, validateLead };
+function validateTransaction(req, res, next) {
+  const {
+    customer_id, vehicle_id, transaction_date,
+    final_price_inr, payment_mode
+  } = req.body;
+
+  const errors = [];
+
+  if (!customer_id || isNaN(customer_id) || Number(customer_id) <= 0)
+    errors.push('customer_id must be a positive number');
+
+  if (!vehicle_id || isNaN(vehicle_id) || Number(vehicle_id) <= 0)
+    errors.push('vehicle_id must be a positive number');
+
+  if (!transaction_date || isNaN(Date.parse(transaction_date)))
+    errors.push('transaction_date must be a valid date (YYYY-MM-DD)');
+
+  if (!final_price_inr || isNaN(final_price_inr) || Number(final_price_inr) <= 0)
+    errors.push('final_price_inr must be a positive number');
+
+  const validModes = ['Full Cash', 'Loan', 'Lease'];
+  if (!payment_mode || !validModes.includes(payment_mode))
+    errors.push(`payment_mode must be one of: ${validModes.join(', ')}`);
+
+  if (errors.length > 0) {
+    return res.status(400).json({ success: false, errors });
+  }
+
+  next();
+}
+
+module.exports = { validateCustomer, validateVehicle, validateLead, validateTransaction };
