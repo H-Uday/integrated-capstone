@@ -39,21 +39,22 @@ def print_summary(clean_data: dict) -> None:
     # Customers
     print("\n👥 CUSTOMERS")
     print(f"   Total              : {len(customers)}")
-    print(f"   Avg Annual Income  : ₹{customers['annual_income'].mean():>12,.0f}")
+    print(f"   Avg Annual Income  : ₹{customers['annual_income_local'].mean():>12,.0f}")
     print(f"   Avg Credit Score   : {customers['credit_score'].mean():.0f}")
     print(f"   Employment Mix:")
     for emp, count in customers["employment_type"].value_counts().items():
         pct = count / len(customers) * 100
-        print(f"     {emp:<18}: {count:>3} ({pct:.0f}%)")
+        print(f"      {emp:<18}: {count:>3} ({pct:.0f}%)")
 
     # Vehicles
     print("\n🚗 VEHICLES")
     print(f"   Total              : {len(vehicles)}")
-    print(f"   Price Range        : "
-          f"₹{vehicles['price_inr'].min():,.0f} – ₹{vehicles['price_inr'].max():,.0f}")
+    print(f"   Price Range (USD)  : "
+      f"${vehicles['price_usd_equivalent'].min():,.0f} – "
+      f"${vehicles['price_usd_equivalent'].max():,.0f}")
     print(f"   Segment Mix:")
     for seg, count in vehicles["segment"].value_counts().items():
-        print(f"     {seg:<18}: {count}")
+        print(f"      {seg:<18}: {count}")
 
     # Leads
     print("\n📋 LEADS")
@@ -61,7 +62,7 @@ def print_summary(clean_data: dict) -> None:
     print(f"   Status Breakdown:")
     for status, count in leads["status"].value_counts().items():
         pct = count / len(leads) * 100
-        print(f"     {status:<18}: {count:>3} ({pct:.0f}%)")
+        print(f"      {status:<18}: {count:>3} ({pct:.0f}%)")
 
     # Transactions
     print("\n💳 TRANSACTIONS")
@@ -69,7 +70,7 @@ def print_summary(clean_data: dict) -> None:
     print(f"   Payment Mode Mix:")
     for mode, count in txns["payment_mode"].value_counts().items():
         pct = count / len(txns) * 100
-        print(f"     {mode:<18}: {count:>3} ({pct:.0f}%)")
+        print(f"      {mode:<18}: {count:>3} ({pct:.0f}%)")
     loan_txns = txns[txns["payment_mode"] == "Loan"]
     if len(loan_txns) > 0:
         print(f"   Avg EMI (Loan)     : ₹{loan_txns['emi_amount'].mean():>10,.0f}")
@@ -82,9 +83,11 @@ def print_summary(clean_data: dict) -> None:
     if total_loan > 0:
         print(f"   Affordable loans   : {affordable}/{total_loan} "
               f"({affordable/total_loan*100:.0f}%)")
-    avg_ratio = master["affordability_ratio"].mean()
+    loan_master = master[master["payment_mode"] == "Loan"]
+    avg_ratio = loan_master["affordability_ratio"].mean()
     if pd.notna(avg_ratio):
-        print(f"   Avg EMI/Income     : {avg_ratio*100:.1f}%")
+      print(f"   Avg EMI/Income     : {avg_ratio*100:.1f}%")
+    print(f"   (EMI converted to USD for cross-currency comparison)")
 
     print("\n" + "━" * 55)
     print("✅ Pipeline complete. CSVs ready for EDA notebooks.")
