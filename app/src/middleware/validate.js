@@ -1,7 +1,7 @@
 function validateCustomer(req, res, next) {
   const {
     full_name, email, city, state,
-    annual_income, credit_score, employment_type
+    annual_income_local, credit_score, employment_type
   } = req.body;
 
   const errors = [];
@@ -18,8 +18,8 @@ function validateCustomer(req, res, next) {
   if (!state || state.trim().length < 2)
     errors.push('state is required');
 
-  if (!annual_income || isNaN(annual_income) || Number(annual_income) <= 0)
-    errors.push('annual_income must be a positive number');
+  if (!annual_income_local || isNaN(annual_income_local) || Number(annual_income_local) <= 0)
+    errors.push('annual_income_local must be a positive number');
 
   if (!credit_score || isNaN(credit_score) ||
       Number(credit_score) < 300 || Number(credit_score) > 900)

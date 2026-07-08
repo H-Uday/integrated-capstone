@@ -2,14 +2,14 @@ const { db } = require('../config/database');
 
 function createVehicle(req, res) {
   const {
-    make, model, variant, year, price_inr,
+    make, model, variant, year, price_local,
     segment, fuel_type, country_origin
   } = req.body;
 
   try {
     const stmt = db.prepare(`
       INSERT INTO vehicles
-        (make, model, variant, year, price_inr,
+        (make, model, variant, year, price_local,
          segment, fuel_type, country_origin)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     `);
@@ -19,7 +19,7 @@ function createVehicle(req, res) {
       model.trim(),
       variant ? variant.trim() : null,
       Number(year),
-      Number(price_inr),
+      Number(price_local),
       segment,
       fuel_type,
       country_origin.trim()
@@ -56,15 +56,15 @@ function getAllVehicles(req, res) {
       params.push(fuel_type);
     }
     if (min_price) {
-      query += ' AND price_inr >= ?';
+      query += ' AND price_local >= ?';
       params.push(Number(min_price));
     }
     if (max_price) {
-      query += ' AND price_inr <= ?';
+      query += ' AND price_local <= ?';
       params.push(Number(max_price));
     }
 
-    query += ' ORDER BY price_inr ASC';
+    query += ' ORDER BY price_local ASC';
 
     const vehicles = db.prepare(query).all(...params);
 

@@ -74,7 +74,7 @@ function getLeadsByCustomer(req, res) {
         const leads = db.prepare(`
             SELECT 
             l.*,
-            v.make, v.model, v.variant, v.price_inr, v.segment, v.fuel_type
+            v.make, v.model, v.variant, v.price_local, v.segment, v.fuel_type
             FROM leads l
             JOIN vehicles v ON l.vehicle_id = v.vehicle_id
             WHERE l.customer_id = ?

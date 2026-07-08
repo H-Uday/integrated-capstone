@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CarIQ — Live Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html">🚗 CarIQ</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="customers.html">Register</a></li>
+    <li><a href="leads.html">New Enquiry</a></li>
+    <li><a href="dashboard.html" class="active">Dashboard</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+  <h1 class="page-title">📊 Live Operations Dashboard</h1>
+  <p class="page-subtitle">Real-time data from the CarIQ operational database</p>
+
+  <div class="card-grid">
+    <div class="metric-card">
+      <div class="metric-value" id="total-vehicles">—</div>
+      <div class="metric-label">Vehicles in Inventory</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">170</div>
+      <div class="metric-label">Total Customers</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">300</div>
+      <div class="metric-label">Total Leads</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">55%</div>
+      <div class="metric-label">Loan Affordability Rate</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1.5rem;">
+    <h2 style="margin-bottom:1.2rem;font-size:1.1rem;">
+      Recent Leads — Customer #1
+    </h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Lead ID</th>
+            <th>Vehicle</th>
+            <th>Segment</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Enquiry Date</th>
+          </tr>
+        </thead>
+        <tbody id="leads-tbody">
+          <tr><td colspan="6" style="text-align:center;color:var(--muted);">
+            Loading...
+          </td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1.5rem;text-align:center;">
+    <p style="color:var(--muted);margin-bottom:1rem;">
+      For deep analytical insights, open the Streamlit dashboard:
+    </p>
+    <a href="http://localhost:8501" target="_blank" class="btn btn-primary">
+      🧠 Open Analytics Dashboard
+    </a>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

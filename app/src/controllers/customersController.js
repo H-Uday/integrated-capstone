@@ -3,15 +3,15 @@ const { db } = require('../config/database');
 function createCustomer(req, res) {
   const {
     full_name, email, phone, city, state,
-    annual_income, credit_score, employment_type
+    annual_income_local, annual_income_usd, credit_score, employment_type
   } = req.body;
 
   try {
     const stmt = db.prepare(`
       INSERT INTO customers
         (full_name, email, phone, city, state,
-         annual_income, credit_score, employment_type)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+         annual_income_local, annual_income_usd, credit_score, employment_type)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
 
     const result = stmt.run(
@@ -20,7 +20,8 @@ function createCustomer(req, res) {
       phone || null,
       city.trim(),
       state.trim(),
-      Number(annual_income),
+      Number(annual_income_local),
+      Number(annual_income_local) * 0.0107,
       Number(credit_score),
       employment_type
     );

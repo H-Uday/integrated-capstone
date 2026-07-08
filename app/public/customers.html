@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CarIQ — Register Customer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html">🚗 CarIQ</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="customers.html" class="active">Register</a></li>
+    <li><a href="leads.html">New Enquiry</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+  <h1 class="page-title">👥 Register Customer</h1>
+  <p class="page-subtitle">
+    Capture customer financial profile for affordability matching
+  </p>
+
+  <div class="card form-card">
+    <form id="customer-form">
+      <div class="form-grid">
+
+        <div class="form-group">
+          <label for="full_name">Full Name *</label>
+          <input id="full_name" type="text"
+                 placeholder="e.g. Ravi Kumar" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input id="email" type="email"
+                 placeholder="ravi@example.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input id="phone" type="tel"
+                 placeholder="9876543210">
+        </div>
+
+        <div class="form-group">
+          <label for="employment_type">Employment Type *</label>
+          <select id="employment_type" required>
+            <option value="">Select...</option>
+            <option>Salaried</option>
+            <option>Self-Employed</option>
+            <option>Business</option>
+            <option>Retired</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="city">City *</label>
+          <input id="city" type="text"
+                 placeholder="e.g. Hyderabad" required>
+        </div>
+
+        <div class="form-group">
+          <label for="state">State *</label>
+          <input id="state" type="text"
+                 placeholder="e.g. Telangana" required>
+        </div>
+
+        <div class="form-group">
+          <label for="annual_income">Annual Income (₹) *</label>
+          <input id="annual_income" type="number"
+                 placeholder="e.g. 1200000" min="1" required>
+        </div>
+
+        <div class="form-group">
+          <label for="credit_score">Credit Score (300–900) *</label>
+          <input id="credit_score" type="number"
+                 placeholder="e.g. 720" min="300" max="900" required>
+        </div>
+
+      </div>
+
+      <div id="form-alert" class="alert"></div>
+
+      <div class="btn-row">
+        <button type="reset"  class="btn btn-secondary">Clear</button>
+        <button type="submit" class="btn btn-primary"
+                id="submit-btn" data-label="Register Customer">
+          Register Customer
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
