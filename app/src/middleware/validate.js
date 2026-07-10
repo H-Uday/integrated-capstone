@@ -53,9 +53,9 @@ function validateVehicle(req, res, next) {
     errors.push('year must be between 2015 and 2026');
 
   if (!price_inr || isNaN(price_inr) || Number(price_inr) <= 0)
-    errors.push('price_inr must be a positive number');
+    errors.push('price_local must be a positive number');
 
-  const validSegments = ['Hatchback', 'Sedan', 'SUV', 'Luxary','EV','MUV'];
+  const validSegments = ['Hatchback','Sedan','SUV','Luxury','EV','MUV','Hypercar'];
   if (!segment || !validSegments.includes(segment))
     errors.push(`segment must be one of: ${validSegments.join(', ')}`);
 
@@ -119,7 +119,7 @@ function validateTransaction(req, res, next) {
     errors.push('transaction_date must be a valid date (YYYY-MM-DD)');
 
   if (!final_price_inr || isNaN(final_price_inr) || Number(final_price_inr) <= 0)
-    errors.push('final_price_inr must be a positive number');
+    errors.push('final_price_local must be a positive number');
 
   const validModes = ['Full Cash', 'Loan', 'Lease'];
   if (!payment_mode || !validModes.includes(payment_mode))

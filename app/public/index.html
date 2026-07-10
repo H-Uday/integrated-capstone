@@ -3,8 +3,147 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CarIQ — Car Sales Intelligence</title>
+  <title>CarIQ — Global Car Sales Intelligence</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── Landing Extras ── */
+    .hero-badge {
+      display: inline-block;
+      background: rgba(233,69,96,0.15);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      border-radius: 20px;
+      padding: 0.3rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero { padding: 4rem 1.5rem 2rem; }
+    .hero h1 { font-size: 2.6rem; line-height: 1.2; }
+
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      margin: 2.5rem 0;
+      padding: 1.5rem;
+      background: var(--secondary);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .stat-item { text-align: center; }
+    .stat-num  { font-size: 1.8rem; font-weight: 800; color: var(--accent); }
+    .stat-lbl  { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; }
+
+    /* How it works */
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      text-align: center;
+    }
+    .section-sub {
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 3rem;
+    }
+    .step-card {
+      background: var(--secondary);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      position: relative;
+    }
+    .step-num {
+      position: absolute;
+      top: -12px;
+      left: 1.2rem;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 10px;
+    }
+    .step-icon  { font-size: 1.8rem; margin-bottom: 0.8rem; }
+    .step-title { font-weight: 700; margin-bottom: 0.4rem; font-size: 0.95rem; }
+    .step-desc  { color: var(--muted); font-size: 0.83rem; line-height: 1.5; }
+
+    /* What is what */
+    .glossary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 3rem;
+    }
+    .glossary-card {
+      background: var(--secondary);
+      border-radius: var(--radius);
+      padding: 1.4rem;
+      border-left: 3px solid var(--accent);
+    }
+    .glossary-term  { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.4rem; }
+    .glossary-def   { color: var(--muted); font-size: 0.83rem; line-height: 1.5; }
+
+    /* CTA section */
+    .cta-section {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      background: var(--secondary);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      margin-bottom: 3rem;
+    }
+    .cta-section h2 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .cta-section p  { color: var(--muted); margin-bottom: 1.5rem; }
+    .cta-btns {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* Tech stack */
+    .tech-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      justify-content: center;
+      margin-bottom: 3rem;
+    }
+    .tech-pill {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 0.4rem 1rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .tech-pill span { color: var(--accent); font-weight: 600; }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+      font-size: 0.82rem;
+      border-top: 1px solid var(--border);
+    }
+  </style>
 </head>
 <body>
 
@@ -18,64 +157,210 @@
   </ul>
 </nav>
 
+<!-- ── HERO ── -->
 <div class="hero">
-  <h1>Global Car Sales<br><span>Affordability Intelligence</span></h1>
-  <p>CarIQ matches buyers to vehicles they can realistically afford —
-     from Maruti Alto to Bugatti Chiron, across 7 countries.</p>
-  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
-    <a href="customers.html" class="btn btn-primary">Register Customer</a>
-    <a href="leads.html"     class="btn btn-secondary">Log Enquiry</a>
+  <div class="hero-badge">🎓 15-Day Capstone Project</div>
+  <h1>Global Car Sales &<br><span style="color:var(--accent)">Affordability Intelligence</span></h1>
+  <p style="color:var(--muted);max-width:580px;margin:1rem auto 1.5rem;font-size:1rem;line-height:1.6;">
+    CarIQ is a full-stack data analytics system that tracks automotive
+    transactions across 7 countries — matching buyers to vehicles they
+    can <strong style="color:#fff">realistically afford</strong> based
+    on income, credit score, and EMI capacity.
+  </p>
+  <div class="cta-btns">
+    <a href="customers.html" class="btn btn-primary">👤 Register as Customer</a>
+    <a href="leads.html"     class="btn btn-secondary">🔍 Log a Vehicle Enquiry</a>
+  </div>
+
+  <!-- Live stats -->
+  <div class="stats-row">
+    <div class="stat-item">
+      <div class="stat-num">170</div>
+      <div class="stat-lbl">Customers</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">26</div>
+      <div class="stat-lbl">Vehicles</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">300</div>
+      <div class="stat-lbl">Leads</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">94</div>
+      <div class="stat-lbl">Transactions</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">7</div>
+      <div class="stat-lbl">Countries</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">55%</div>
+      <div class="stat-lbl">Affordability Rate</div>
+    </div>
   </div>
 </div>
 
 <div class="page">
-  <div class="feature-grid">
-    <a class="feature-card" href="customers.html">
-      <div class="feature-icon">👥</div>
-      <h3>Customer Registration</h3>
-      <p>Capture financial profiles — income, credit score, employment type</p>
-    </a>
-    <a class="feature-card" href="leads.html">
-      <div class="feature-icon">🔍</div>
-      <h3>Vehicle Enquiry</h3>
-      <p>Log customer interest against specific vehicles and dealers</p>
-    </a>
-    <a class="feature-card" href="dashboard.html">
-      <div class="feature-icon">📊</div>
-      <h3>Live Dashboard</h3>
-      <p>Real-time metrics from the operational database</p>
-    </a>
-    <a class="feature-card"
-       href="http://localhost:8501" target="_blank">
-      <div class="feature-icon">🧠</div>
-      <h3>Analytics Dashboard</h3>
-      <p>5 interactive EDA charts — affordability, markets, pricing</p>
-    </a>
+
+  <!-- ── HOW IT WORKS ── -->
+  <h2 class="section-title">⚙️ How CarIQ Works</h2>
+  <p class="section-sub">Four steps from customer registration to analytical insight</p>
+
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">Step 1</div>
+      <div class="step-icon">👤</div>
+      <div class="step-title">Register a Customer</div>
+      <div class="step-desc">
+        Enter the customer's financial profile — name, income, credit score,
+        and employment type. CarIQ uses this to compute their monthly income
+        and maximum affordable EMI.
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">Step 2</div>
+      <div class="step-icon">🚗</div>
+      <div class="step-title">Log a Vehicle Enquiry</div>
+      <div class="step-desc">
+        Match the customer to a vehicle they're interested in. This creates
+        a lead in the pipeline — tracked from enquiry to conversion with
+        dealer and date information.
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">Step 3</div>
+      <div class="step-icon">💳</div>
+      <div class="step-title">Record a Transaction</div>
+      <div class="step-desc">
+        When a sale closes, CarIQ computes the EMI automatically using the
+        standard reducing-balance formula and stores it at transaction time
+        for accurate historical analysis.
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">Step 4</div>
+      <div class="step-icon">📊</div>
+      <div class="step-title">Analyse & Decide</div>
+      <div class="step-desc">
+        The Python analytics pipeline extracts, cleans, and visualises all
+        data across 5 business questions — affordability gaps, market
+        penetration, velocity, and price sensitivity.
+      </div>
+    </div>
   </div>
 
-  <div class="card-grid" style="margin-top:3rem;">
-    <div class="metric-card">
-      <div class="metric-value">170</div>
-      <div class="metric-label">Customers</div>
+  <!-- ── WHAT IS WHAT ── -->
+  <h2 class="section-title">📖 What is What — Key Terms</h2>
+  <p class="section-sub">
+    Understand every field before you fill it in
+  </p>
+
+  <div class="glossary-grid">
+    <div class="glossary-card">
+      <div class="glossary-term">💰 Annual Income</div>
+      <div class="glossary-def">
+        Your total yearly earnings in INR (Indian Rupees). Used to compute
+        monthly income (÷12) and determine the maximum EMI you can safely
+        afford. Example: ₹12,00,000 per year = ₹1,00,000/month.
+      </div>
     </div>
-    <div class="metric-card">
-      <div class="metric-value">26</div>
-      <div class="metric-label">Vehicles</div>
+    <div class="glossary-card">
+      <div class="glossary-term">📈 Credit Score (300–900)</div>
+      <div class="glossary-def">
+        A number representing your creditworthiness. 300 = poor, 900 =
+        excellent. Most lenders require 650+ for loan approval. CarIQ
+        analyses whether credit score actually predicts affordability
+        (spoiler: income matters more).
+      </div>
     </div>
-    <div class="metric-card">
-      <div class="metric-value">300</div>
-      <div class="metric-label">Leads</div>
+    <div class="glossary-card">
+      <div class="glossary-term">📋 Lead</div>
+      <div class="glossary-def">
+        A record of a customer's interest in a specific vehicle. Status
+        moves from New → In-Progress → Converted (sold) or Rejected.
+        Time between enquiry and conversion is tracked as "days to close".
+      </div>
     </div>
-    <div class="metric-card">
-      <div class="metric-value">94</div>
-      <div class="metric-label">Transactions</div>
+    <div class="glossary-card">
+      <div class="glossary-term">💳 EMI (Equated Monthly Instalment)</div>
+      <div class="glossary-def">
+        The fixed monthly amount paid to repay a car loan. Computed using:
+        EMI = P × r × (1+r)ⁿ / ((1+r)ⁿ − 1). CarIQ flags EMIs that
+        exceed 40% of monthly income as unaffordable (RBI guideline).
+      </div>
     </div>
-    <div class="metric-card">
-      <div class="metric-value">7</div>
-      <div class="metric-label">Countries</div>
+    <div class="glossary-card">
+      <div class="glossary-term">🚗 Vehicle Segment</div>
+      <div class="glossary-def">
+        CarIQ classifies vehicles into: Hatchback, Sedan, SUV, MUV, EV,
+        Luxury, and Hypercar. Each segment has different average close
+        times, price ranges, and affordability profiles.
+      </div>
+    </div>
+    <div class="glossary-card">
+      <div class="glossary-term">📊 Affordability Rate</div>
+      <div class="glossary-def">
+        The percentage of loan customers whose EMI is ≤40% of their
+        monthly income. CarIQ's current rate is 55% — meaning 45% of
+        buyers are stretching beyond the safe lending boundary.
+      </div>
+    </div>
+    <div class="glossary-card">
+      <div class="glossary-term">🌍 USD Normalization</div>
+      <div class="glossary-def">
+        Since CarIQ covers 7 countries with different currencies, all
+        income and price comparisons are standardized to USD using FEDAI
+        locked rates (₹93.5 = $1) set on Day 7 of the project.
+      </div>
+    </div>
+    <div class="glossary-card">
+      <div class="glossary-term">⚡ Price Sensitivity</div>
+      <div class="glossary-def">
+        How much the eligible buyer pool changes when vehicle prices shift
+        ±10%. CarIQ found near-zero sensitivity — income level, not price,
+        is the binding constraint for most buyers.
+      </div>
     </div>
   </div>
+
+  <!-- ── CTA ── -->
+  <div class="cta-section">
+    <h2>Ready to get started?</h2>
+    <p>Register a customer profile or explore the analytics dashboard</p>
+    <div class="cta-btns">
+      <a href="customers.html" class="btn btn-primary">👤 Register Customer</a>
+      <a href="leads.html"     class="btn btn-secondary">🔍 New Vehicle Enquiry</a>
+      <a href="dashboard.html" class="btn btn-secondary">📊 Live Dashboard</a>
+      <a href="http://localhost:8501" target="_blank" class="btn btn-secondary">
+        🧠 Analytics
+      </a>
+    </div>
+  </div>
+
+  <!-- ── TECH STACK ── -->
+  <h2 class="section-title">🛠️ Technology Stack</h2>
+  <p class="section-sub">Production-grade dual-codebase architecture</p>
+
+  <div class="tech-grid">
+    <div class="tech-pill"><span>Backend</span> Node.js + Express</div>
+    <div class="tech-pill"><span>Database</span> SQLite (Schema v2)</div>
+    <div class="tech-pill"><span>Analytics</span> Python + Pandas</div>
+    <div class="tech-pill"><span>Dashboard</span> Streamlit + Plotly</div>
+    <div class="tech-pill"><span>EDA</span> Jupyter Notebooks</div>
+    <div class="tech-pill"><span>Frontend</span> HTML + CSS + JS</div>
+    <div class="tech-pill"><span>Version Control</span> Git + GitHub</div>
+    <div class="tech-pill"><span>Exchange Rates</span> FEDAI Locked</div>
+    <div class="tech-pill"><span>Markets</span> India + 6 International</div>
+    <div class="tech-pill"><span>Vehicles</span> Alto → Bugatti Chiron</div>
+  </div>
+
 </div>
+
+<footer>
+  🚗 CarIQ — Global & India Car Sales + Affordability Intelligence |
+  Built by Uday183020 | 15-Day Engineering Capstone
+</footer>
 
 </body>
 </html>
