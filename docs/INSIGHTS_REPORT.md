@@ -1,5 +1,5 @@
 # CarIQ — Business Insights Report
-**Prepared by:** Uday183020
+**Prepared by:** H-Uday
 **Project:** Global & India Car Sales + Affordability Intelligence
 **Date:** Day 14 of 15-Day Engineering Capstone
 
