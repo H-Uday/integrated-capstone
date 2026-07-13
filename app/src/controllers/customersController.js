@@ -80,4 +80,14 @@ function getCustomerById(req, res) {
   }
 }
 
-module.exports = { createCustomer, getCustomerById };
+function getCustomerCount(req, res) {
+  try {
+    const result = db.prepare('SELECT COUNT(*) as count FROM customers').get();
+    return res.status(200).json({ success: true, count: result.count });
+  } catch (err) {
+    console.error('getCustomerCount error:', err.message);
+    return res.status(500).json({ success: false, error: 'Internal server error' });
+  }
+}
+
+module.exports = { createCustomer, getCustomerById, getCustomerCount };

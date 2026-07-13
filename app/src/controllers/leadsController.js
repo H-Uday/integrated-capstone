@@ -94,4 +94,15 @@ function getLeadsByCustomer(req, res) {
         });
     }
 } 
-module.exports = {createLead, getLeadsByCustomer};
+
+function getLeadCount(req, res) {
+  try {
+    const result = db.prepare('SELECT COUNT(*) as count FROM leads').get();
+    return res.status(200).json({ success: true, count: result.count });
+  } catch (err) {
+    console.error('getLeadCount error:', err.message);
+    return res.status(500).json({ success: false, error: 'Internal server error' });
+  }
+}
+
+module.exports = { createLead, getLeadsByCustomer, getLeadCount };

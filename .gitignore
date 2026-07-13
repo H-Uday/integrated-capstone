@@ -19,3 +19,14 @@ analytics/data/
 # OS artifacts
 .DS_Store
 Thumbs.db
+
+# SQLite WAL artifacts
+*.sqlite-shm
+*.sqlite-wal
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Jupyter checkpoints
+.ipynb_checkpoints/

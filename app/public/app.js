@@ -206,15 +206,30 @@ async function loadVehicles() {
 // ── Dashboard Metrics ─────────────────────────────────────────
 async function loadDashboard() {
   try {
+    // Vehicles count
     const vRes  = await fetch(`${API}/vehicles`);
     const vData = await vRes.json();
     if (vData.success) {
       document.getElementById('total-vehicles').textContent = vData.count;
     }
 
+    // Customers count
+    const cRes  = await fetch(`${API}/customers/count`);
+    const cData = await cRes.json();
+    if (cData.success) {
+      document.getElementById('total-customers').textContent = cData.count;
+    }
+
+    // Leads count
+    const lCountRes  = await fetch(`${API}/leads/count`);
+    const lCountData = await lCountRes.json();
+    if (lCountData.success) {
+      document.getElementById('total-leads').textContent = lCountData.count;
+    }
+
+    // Recent leads for customer 1
     const lRes  = await fetch(`${API}/leads/1`);
     const lData = await lRes.json();
-
     if (lData.success && lData.data.length > 0) {
       const tbody = document.getElementById('leads-tbody');
       tbody.innerHTML = '';
