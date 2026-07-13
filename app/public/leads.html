@@ -15,6 +15,7 @@
     <li><a href="customers.html">Register</a></li>
     <li><a href="leads.html" class="active">New Enquiry</a></li>
     <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="login.html">Login</a></li>
   </ul>
 </nav>
 
@@ -24,61 +25,165 @@
     Log a customer's interest in a vehicle — creates a lead in the pipeline
   </p>
 
-  <div class="card form-card">
-    <form id="lead-form">
-      <div class="form-grid">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start;">
 
-        <div class="form-group">
-          <label for="customer_id">Customer ID *</label>
-          <input id="customer_id" type="number"
-                 placeholder="e.g. 1" min="1" required>
+    <!-- LEFT — Form -->
+    <div class="card">
+      <form id="lead-form">
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label for="customer_id">Customer ID *</label>
+            <input id="customer_id" type="number"
+                   placeholder="e.g. 1" min="1" required>
+          </div>
+
+          <div class="form-group">
+            <label for="enquiry_date">Enquiry Date *</label>
+            <input id="enquiry_date" type="date" required>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="vehicle_id">Select Vehicle *</label>
+            <select id="vehicle_id" required>
+              <option value="">Loading vehicles...</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="dealer_name">Dealer Name</label>
+            <input id="dealer_name" type="text"
+                   placeholder="e.g. Hyderabad Motors">
+          </div>
+
+          <div class="form-group">
+            <label for="lead_state">State *</label>
+            <input id="lead_state" type="text"
+                   placeholder="e.g. Telangana" required>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="notes">Notes</label>
+            <textarea id="notes" rows="3"
+                      placeholder="Customer requirements, test drive..."></textarea>
+          </div>
+
         </div>
 
-        <div class="form-group">
-          <label for="enquiry_date">Enquiry Date *</label>
-          <input id="enquiry_date" type="date" required>
+        <div id="lead-alert" class="alert"></div>
+
+        <div class="btn-row">
+          <button type="reset"  class="btn btn-secondary">Clear</button>
+          <button type="submit" class="btn btn-primary"
+                  id="lead-btn" data-label="Submit Enquiry">
+            Submit Enquiry
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- RIGHT — Car Image Preview -->
+    <div>
+      <div class="card" id="car-image-container"
+           style="text-align:center;min-height:320px;
+                  display:flex;flex-direction:column;
+                  align-items:center;justify-content:center;">
+
+        <!-- Default state -->
+        <div id="car-default"
+             style="color:var(--muted);padding:2rem;">
+          <div style="font-size:4rem;margin-bottom:1rem;">🚗</div>
+          <p style="font-size:0.9rem;">
+            Select a vehicle to see its preview
+          </p>
         </div>
 
-        <div class="form-group full-width">
-          <label for="vehicle_id">Select Vehicle *</label>
-          <select id="vehicle_id" required>
-            <option value="">Loading vehicles...</option>
-          </select>
+        <!-- Skeleton loader -->
+        <div id="car-skeleton" class="skeleton"
+             style="width:100%;height:220px;
+                    border-radius:8px;display:none;">
         </div>
 
-        <div class="form-group">
-          <label for="dealer_name">Dealer Name</label>
-          <input id="dealer_name" type="text"
-                 placeholder="e.g. Hyderabad Motors">
-        </div>
+        <!-- Actual image -->
+        <img id="car-image"
+             alt="Vehicle Preview"
+             style="width:100%;max-height:240px;
+                    object-fit:contain;border-radius:8px;
+                    display:none;">
 
-        <div class="form-group">
-          <label for="lead_state">State *</label>
-          <input id="lead_state" type="text"
-                 placeholder="e.g. Telangana" required>
-        </div>
+        <!-- Fallback icon -->
+        <div id="car-fallback"
+             style="font-size:5rem;display:none;"></div>
 
-        <div class="form-group full-width">
-          <label for="notes">Notes</label>
-          <textarea id="notes" rows="3"
-                    placeholder="Customer requirements, test drive request..."></textarea>
-        </div>
+        <!-- Label -->
+        <p id="car-label"
+           style="margin-top:1rem;font-weight:700;
+                  font-size:1rem;color:var(--text);
+                  display:none;"></p>
 
       </div>
 
-      <div id="lead-alert" class="alert"></div>
-
-      <div class="btn-row">
-        <button type="reset"  class="btn btn-secondary">Clear</button>
-        <button type="submit" class="btn btn-primary"
-                id="lead-btn" data-label="Submit Enquiry">
-          Submit Enquiry
-        </button>
+      <!-- Vehicle details card — shown after selection -->
+      <div id="vehicle-details"
+           style="display:none;margin-top:1rem;" class="card">
+        <h3 style="margin-bottom:1rem;font-size:1rem;
+                   color:var(--muted);text-transform:uppercase;
+                   letter-spacing:0.5px;">Vehicle Details</h3>
+        <div id="vehicle-info"
+             style="display:grid;grid-template-columns:1fr 1fr;
+                    gap:0.6rem;font-size:0.88rem;">
+        </div>
       </div>
-    </form>
+    </div>
+
   </div>
 </div>
 
 <script src="app.js"></script>
+<script>
+// Show vehicle details card when selection changes
+document.addEventListener('DOMContentLoaded', () => {
+  const select = document.getElementById('vehicle_id');
+
+  // Override fetchCarImage to also show details card
+  const origFetch = fetchCarImage;
+
+  select.addEventListener('change', () => {
+    const vehicle = window._vehicles &&
+      window._vehicles.find(v => String(v.vehicle_id) === String(select.value));
+
+    if (!vehicle) {
+      document.getElementById('vehicle-details').style.display = 'none';
+      document.getElementById('car-default').style.display     = 'block';
+      document.getElementById('car-label').style.display       = 'none';
+      return;
+    }
+
+    // Show default state hidden, show label
+    document.getElementById('car-default').style.display = 'none';
+    document.getElementById('car-label').style.display   = 'block';
+
+    // Show vehicle details
+    const details = document.getElementById('vehicle-details');
+    const info    = document.getElementById('vehicle-info');
+    details.style.display = 'block';
+
+    info.innerHTML = `
+      <div><span style="color:var(--muted)">Make</span><br><strong>${vehicle.make}</strong></div>
+      <div><span style="color:var(--muted)">Model</span><br><strong>${vehicle.model}</strong></div>
+      <div><span style="color:var(--muted)">Year</span><br><strong>${vehicle.year}</strong></div>
+      <div><span style="color:var(--muted)">Segment</span><br><strong>${vehicle.segment}</strong></div>
+      <div><span style="color:var(--muted)">Fuel</span><br><strong>${vehicle.fuel_type}</strong></div>
+      <div><span style="color:var(--muted)">Price</span><br>
+        <strong style="color:var(--accent)">
+          ₹${Number(vehicle.price_local).toLocaleString('en-IN')}
+        </strong>
+      </div>
+      <div><span style="color:var(--muted)">Origin</span><br><strong>${vehicle.country_origin}</strong></div>
+      <div><span style="color:var(--muted)">Currency</span><br><strong>${vehicle.currency_code}</strong></div>
+    `;
+  });
+});
+</script>
 </body>
 </html>

@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CarIQ — Record Transaction</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .emi-result {
+      background: var(--primary);
+      border: 1px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-align: center;
+      margin-top: 1rem;
+      display: none;
+      animation: fadeSlideUp 0.4s ease;
+    }
+    .emi-amount {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+    .emi-label {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-top: 0.3rem;
+    }
+    .emi-breakdown {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      margin-top: 1.2rem;
+      font-size: 0.85rem;
+    }
+    .emi-item {
+      background: var(--secondary);
+      padding: 0.7rem;
+      border-radius: 6px;
+    }
+    .emi-item span {
+      color: var(--muted);
+      display: block;
+      font-size: 0.75rem;
+    }
+    .loan-fields {
+      display: none;
+      grid-column: 1 / -1;
+    }
+    .loan-fields.visible {
+      display: contents;
+    }
+    .affordability-bar {
+      height: 8px;
+      border-radius: 4px;
+      background: var(--border);
+      margin-top: 0.8rem;
+      overflow: hidden;
+    }
+    .affordability-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.8s ease;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html">🚗 CarIQ</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="customers.html">Register</a></li>
+    <li><a href="leads.html">New Enquiry</a></li>
+    <li><a href="transactions.html" class="active">Transaction</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="login.html">Login</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+  <h1 class="page-title">💳 Record Transaction</h1>
+  <p class="page-subtitle">
+    Close a lead as a sale — EMI computed automatically
+  </p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;
+              gap:2rem;align-items:start;">
+
+    <!-- LEFT — Transaction Form -->
+    <div class="card">
+      <form id="transaction-form">
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label for="t_customer_id">Customer ID *</label>
+            <input id="t_customer_id" type="number"
+                   placeholder="e.g. 1" min="1" required>
+          </div>
+
+          <div class="form-group">
+            <label for="t_lead_id">Lead ID (optional)</label>
+            <input id="t_lead_id" type="number"
+                   placeholder="e.g. 301" min="1">
+          </div>
+
+          <div class="form-group full-width">
+            <label for="t_vehicle_id">Select Vehicle *</label>
+            <select id="t_vehicle_id" required>
+              <option value="">Loading vehicles...</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="t_transaction_date">Transaction Date *</label>
+            <input id="t_transaction_date" type="date" required>
+          </div>
+
+          <div class="form-group">
+            <label for="t_payment_mode">Payment Mode *</label>
+            <select id="t_payment_mode" required>
+              <option value="">Select...</option>
+              <option value="Loan">Loan</option>
+              <option value="Full Cash">Full Cash</option>
+              <option value="Lease">Lease</option>
+            </select>
+          </div>
+
+          <!-- Loan fields — shown only when Loan selected -->
+          <div class="form-group loan-fields" id="loan-fields">
+            <label for="t_loan_amount">Loan Amount (₹) *</label>
+            <input id="t_loan_amount" type="number"
+                   placeholder="e.g. 700000" min="1">
+          </div>
+
+          <div class="form-group loan-fields" id="loan-fields-2">
+            <label for="t_tenure">Loan Tenure (months) *</label>
+            <select id="t_tenure">
+              <option value="">Select...</option>
+              <option value="12">12 months</option>
+              <option value="24">24 months</option>
+              <option value="36">36 months</option>
+              <option value="48">48 months</option>
+              <option value="60">60 months</option>
+              <option value="72">72 months</option>
+              <option value="84">84 months</option>
+            </select>
+          </div>
+
+          <div class="form-group loan-fields" id="loan-fields-3">
+            <label for="t_interest_rate">Interest Rate (%) *</label>
+            <input id="t_interest_rate" type="number"
+                   placeholder="e.g. 9.5" min="6" max="20" step="0.1">
+          </div>
+
+          <div class="form-group loan-fields" id="loan-fields-4">
+            <label>&nbsp;</label>
+            <button type="button" class="btn btn-secondary"
+                    id="calc-emi-btn" style="width:100%;">
+              ⚡ Calculate EMI
+            </button>
+          </div>
+
+        </div>
+
+        <div id="txn-alert" class="alert"></div>
+
+        <div class="btn-row">
+          <button type="reset"  class="btn btn-secondary"
+                  id="txn-reset">Clear</button>
+          <button type="submit" class="btn btn-primary"
+                  id="txn-btn" data-label="Record Transaction">
+            Record Transaction
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- RIGHT — Car Preview + EMI Result -->
+    <div>
+      <!-- Car Image Card -->
+      <div class="card" style="text-align:center;min-height:280px;
+                               display:flex;flex-direction:column;
+                               align-items:center;justify-content:center;
+                               margin-bottom:1rem;">
+        <div id="t_car_default" style="color:var(--muted);padding:2rem;">
+          <div style="font-size:4rem;margin-bottom:1rem;">🚗</div>
+          <p style="font-size:0.9rem;">Select a vehicle to preview</p>
+        </div>
+        <div id="t_car_skeleton" class="skeleton"
+             style="width:100%;height:200px;
+                    border-radius:8px;display:none;"></div>
+        <img id="t_car_image" alt="Vehicle"
+             style="width:100%;max-height:220px;
+                    object-fit:contain;border-radius:8px;display:none;">
+        <div id="t_car_fallback"
+             style="font-size:5rem;display:none;"></div>
+        <p id="t_car_label"
+           style="margin-top:0.8rem;font-weight:700;display:none;"></p>
+      </div>
+
+      <!-- EMI Result Card -->
+      <div class="emi-result" id="emi-result">
+        <div style="color:var(--muted);font-size:0.8rem;
+                    text-transform:uppercase;letter-spacing:1px;
+                    margin-bottom:0.5rem;">Monthly EMI</div>
+        <div class="emi-amount" id="emi-display">₹0</div>
+        <div class="emi-label">Equated Monthly Instalment</div>
+
+        <div class="affordability-bar">
+          <div class="affordability-fill" id="afford-fill"
+               style="width:0%;background:var(--success);"></div>
+        </div>
+        <div style="font-size:0.78rem;color:var(--muted);
+                    margin-top:0.4rem;" id="afford-label"></div>
+
+        <div class="emi-breakdown">
+          <div class="emi-item">
+            <span>Loan Amount</span>
+            <strong id="b-principal">—</strong>
+          </div>
+          <div class="emi-item">
+            <span>Interest Rate</span>
+            <strong id="b-rate">—</strong>
+          </div>
+          <div class="emi-item">
+            <span>Tenure</span>
+            <strong id="b-tenure">—</strong>
+          </div>
+          <div class="emi-item">
+            <span>Total Payable</span>
+            <strong id="b-total">—</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script>
+// ── EMI Calculator (mirrors server-side formula) ──────────────
+function calcEMI(principal, annualRate, months) {
+  const r = annualRate / 12 / 100;
+  const n = months;
+  if (r === 0) return principal / n;
+  return Math.round(principal * r * Math.pow(1+r,n) / (Math.pow(1+r,n)-1) * 100) / 100;
+}
+
+function formatINR(val) {
+  return '₹' + Number(val).toLocaleString('en-IN');
+}
+
+// ── Show/hide loan fields ─────────────────────────────────────
+document.getElementById('t_payment_mode').addEventListener('change', function() {
+  const loanIds = ['loan-fields','loan-fields-2','loan-fields-3','loan-fields-4'];
+  loanIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (this.value === 'Loan') el.classList.add('visible');
+    else                       el.classList.remove('visible');
+  });
+  if (this.value !== 'Loan') {
+    document.getElementById('emi-result').style.display = 'none';
+  }
+});
+
+// ── Calculate EMI button ──────────────────────────────────────
+document.getElementById('calc-emi-btn').addEventListener('click', () => {
+  const principal = Number(document.getElementById('t_loan_amount').value);
+  const rate      = Number(document.getElementById('t_interest_rate').value);
+  const tenure    = Number(document.getElementById('t_tenure').value);
+
+  if (!principal || !rate || !tenure) {
+    alert('Please enter Loan Amount, Interest Rate, and Tenure first.');
+    return;
+  }
+
+  const emi   = calcEMI(principal, rate, tenure);
+  const total = Math.round(emi * tenure);
+
+  document.getElementById('emi-result').style.display = 'block';
+  document.getElementById('emi-display').textContent  = formatINR(emi);
+  document.getElementById('b-principal').textContent  = formatINR(principal);
+  document.getElementById('b-rate').textContent       = rate + '% p.a.';
+  document.getElementById('b-tenure').textContent     = tenure + ' months';
+  document.getElementById('b-total').textContent      = formatINR(total);
+
+  // Affordability check — needs customer monthly income
+  // Show EMI/income bar if we can compute it
+  const fill  = document.getElementById('afford-fill');
+  const label = document.getElementById('afford-label');
+  fill.style.width      = '100%';
+  fill.style.background = 'var(--accent)';
+  label.textContent     = `EMI calculated. Submit to record transaction.`;
+});
+
+// ── Vehicle dropdown for transactions page ────────────────────
+async function loadTxnVehicles() {
+  const select = document.getElementById('t_vehicle_id');
+  if (!select) return;
+
+  try {
+    const res  = await fetch('http://localhost:3000/api/vehicles');
+    const data = await res.json();
+    select.innerHTML = '<option value="">Select vehicle...</option>';
+    window._vehicles = data.data;
+
+    data.data.forEach(v => {
+      const opt       = document.createElement('option');
+      opt.value       = v.vehicle_id;
+      opt.textContent = `${v.make} ${v.model} ${v.variant || ''} ${v.year} — ₹${Number(v.price_local).toLocaleString('en-IN')} (${v.segment})`;
+      select.appendChild(opt);
+    });
+
+  } catch (err) {
+    console.error('Failed to load vehicles:', err);
+  }
+
+  select.addEventListener('change', () => {
+    const vehicle = window._vehicles &&
+      window._vehicles.find(v => String(v.vehicle_id) === String(select.value));
+
+    if (!vehicle) return;
+
+    // Show car image on right panel
+    const container = document.getElementById('t_car_image');
+    const skeleton  = document.getElementById('t_car_skeleton');
+    const defEl     = document.getElementById('t_car_default');
+    const label     = document.getElementById('t_car_label');
+    const fallback  = document.getElementById('t_car_fallback');
+
+    defEl.style.display     = 'none';
+    skeleton.style.display  = 'block';
+    container.style.display = 'none';
+    label.style.display     = 'block';
+    label.textContent       = `${vehicle.make} ${vehicle.model} ${vehicle.year}`;
+
+    // Reliable public fallback URLs matching standard database seeds
+    const makeLower = vehicle.make.toLowerCase();
+    let url = 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=600&q=80'; // Default SUV
+
+    if (makeLower.includes('maruti') || makeLower.includes('alto') || makeLower.includes('tata')) {
+      url = 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80'; // Hatchback/Compact
+    } else if (makeLower.includes('bugatti') || makeLower.includes('ferrari') || makeLower.includes('lamborghini')) {
+      url = 'https://images.unsplash.com/photo-1600706432502-75a0e2751952?auto=format&fit=crop&w=600&q=80'; // Hypercar/Luxury
+    } else if (makeLower.includes('honda') || makeLower.includes('hyundai') || makeLower.includes('bmw')) {
+      url = 'https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=600&q=80'; // Sedan
+    }
+
+    const img    = new Image();
+    img.onload   = () => {
+      skeleton.style.display  = 'none';
+      container.src           = url;
+      container.style.display = 'block';
+    };
+    img.onerror  = () => {
+      skeleton.style.display   = 'none';
+      if (fallback) {
+        fallback.style.display = 'block';
+        fallback.textContent   = '🚗';
+      }
+    };
+    img.src = url;
+
+    // Auto-fill loan amount as 80% of vehicle price
+    const loanInput = document.getElementById('t_loan_amount');
+    if (loanInput && !loanInput.value) {
+      loanInput.value = Math.round(vehicle.price_local * 0.8);
+    }
+  });
+}
+
+// ── Submit Transaction ────────────────────────────────────────
+document.getElementById('transaction-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  setLoading('txn-btn', true);
+
+  const mode      = document.getElementById('t_payment_mode').value;
+  const principal = Number(document.getElementById('t_loan_amount').value);
+  const rate      = Number(document.getElementById('t_interest_rate').value);
+  const tenure    = Number(document.getElementById('t_tenure').value);
+
+  const vehicle = window._vehicles &&
+    window._vehicles.find(
+      v => String(v.vehicle_id) ===
+           String(document.getElementById('t_vehicle_id').value)
+    );
+
+  const payload = {
+    customer_id:       document.getElementById('t_customer_id').value,
+    vehicle_id:        document.getElementById('t_vehicle_id').value,
+    lead_id:           document.getElementById('t_lead_id').value || undefined,
+    transaction_date:  document.getElementById('t_transaction_date').value,
+    final_price_inr:   vehicle ? Math.round(vehicle.price_local) : principal,
+    payment_mode:      mode,
+    loan_amount:       mode === 'Loan' ? principal   : undefined,
+    loan_tenure_months:mode === 'Loan' ? tenure      : undefined,
+    interest_rate:     mode === 'Loan' ? rate        : undefined
+  };
+
+  try {
+    const res  = await fetch('http://localhost:3000/api/transactions', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(payload)
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      showAlert('txn-alert',
+        `Transaction recorded! ID: ${data.transaction_id}` +
+        (data.emi_amount ? ` | EMI: ₹${Number(data.emi_amount).toLocaleString('en-IN')}` : ''),
+        'success'
+      );
+      document.getElementById('transaction-form').reset();
+      document.getElementById('emi-result').style.display = 'none';
+    } else {
+      const msg = data.errors ? data.errors.join(' | ') : data.error;
+      showAlert('txn-alert', msg, 'error');
+    }
+  } catch (err) {
+    showAlert('txn-alert', 'Server unreachable.', 'error');
+  } finally {
+    setLoading('txn-btn', false);
+  }
+});
+
+// ── Init ──────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  loadTxnVehicles();
+  document.getElementById('t_transaction_date').value =
+    new Date().toISOString().split('T')[0];
+});
+</script>
+</body>
+</html>

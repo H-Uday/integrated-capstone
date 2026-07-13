@@ -76,6 +76,15 @@ function runMigrations() {
                              ('Full Cash','Loan','Lease')),
       created_at           TEXT DEFAULT (datetime('now'))
     );
+
+    CREATE TABLE IF NOT EXISTS users (
+      user_id       INTEGER PRIMARY KEY AUTOINCREMENT,
+      username      TEXT UNIQUE NOT NULL,
+      email         TEXT UNIQUE NOT NULL,
+      password_hash TEXT NOT NULL,
+      role          TEXT NOT NULL DEFAULT 'dealer' CHECK (role IN ('admin','dealer','analyst')),
+      created_at    TEXT DEFAULT (datetime('now'))
+    );
   `);
 
   console.log('✅ Database migrations complete — all tables verified.');

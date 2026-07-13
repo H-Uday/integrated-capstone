@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CarIQ — Create Account</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .auth-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .auth-card {
+      background: var(--secondary);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 480px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      animation: slideUp 0.4s ease;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .auth-logo  { text-align: center; font-size: 2.5rem; margin-bottom: 0.5rem; }
+    .auth-title { text-align: center; font-size: 1.4rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .auth-sub   { text-align: center; color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; }
+    .auth-footer { text-align: center; margin-top: 1.5rem; font-size: 0.85rem; color: var(--muted); }
+    .auth-footer a { color: var(--accent); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html">🚗 CarIQ</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="login.html">Login</a></li>
+    <li><a href="register.html" class="active">Register</a></li>
+  </ul>
+</nav>
+
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <div class="auth-logo">🚗</div>
+    <div class="auth-title">Create Account</div>
+    <div class="auth-sub">Join CarIQ as a dealer or analyst</div>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="reg-username">Username</label>
+        <input id="reg-username" type="text" placeholder="uday183020">
+      </div>
+      <div class="form-group">
+        <label for="reg-role">Role</label>
+        <select id="reg-role">
+          <option value="dealer">Dealer</option>
+          <option value="analyst">Analyst</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+      <div class="form-group full-width">
+        <label for="reg-email">Email Address</label>
+        <input id="reg-email" type="email" placeholder="uday@cariq.com">
+      </div>
+      <div class="form-group">
+        <label for="reg-password">Password</label>
+        <input id="reg-password" type="password" placeholder="Min 6 characters">
+      </div>
+      <div class="form-group">
+        <label for="reg-confirm">Confirm Password</label>
+        <input id="reg-confirm" type="password" placeholder="Repeat password">
+      </div>
+    </div>
+
+    <div id="reg-alert" class="alert"></div>
+
+    <button class="btn btn-primary" id="reg-btn"
+            data-label="Create Account"
+            style="width:100%;margin-top:1.2rem;">
+      Create Account
+    </button>
+
+    <div class="auth-footer">
+      Already have an account? <a href="login.html">Sign in →</a>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script>
+  document.getElementById('reg-btn').addEventListener('click', async () => {
+    const username = document.getElementById('reg-username').value;
+    const email    = document.getElementById('reg-email').value;
+    const password = document.getElementById('reg-password').value;
+    const confirm  = document.getElementById('reg-confirm').value;
+    const role     = document.getElementById('reg-role').value;
+
+    if (!username || !email || !password) {
+      showAlert('reg-alert', '❌ All fields are required', 'error');
+      return;
+    }
+    if (password !== confirm) {
+      showAlert('reg-alert', '❌ Passwords do not match', 'error');
+      return;
+    }
+    if (password.length < 6) {
+      showAlert('reg-alert', '❌ Password must be at least 6 characters', 'error');
+      return;
+    }
+
+    setLoading('reg-btn', true);
+
+    try {
+      const res  = await fetch('http://localhost:3000/api/auth/register', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ username, email, password, role })
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        showAlert('reg-alert',
+          `✅ Account created! Redirecting to login...`, 'success');
+        setTimeout(() => window.location.href = 'login.html', 1500);
+      } else {
+        showAlert('reg-alert', `❌ ${data.error}`, 'error');
+      }
+    } catch (err) {
+      showAlert('reg-alert', '❌ Server unreachable.', 'error');
+    } finally {
+      setLoading('reg-btn', false);
+    }
+  });
+</script>
+</body>
+</html>
