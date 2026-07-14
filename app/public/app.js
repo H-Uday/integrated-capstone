@@ -1,3 +1,25 @@
+// ── Auth Helpers ──────────────────────────────────────────────
+function isLoggedIn() {
+  return !!localStorage.getItem('cariq_token');
+}
+
+function getUser() {
+  const u = localStorage.getItem('cariq_user');
+  return u ? JSON.parse(u) : null;
+}
+
+function logout() {
+  localStorage.removeItem('cariq_token');
+  localStorage.removeItem('cariq_user');
+  window.location.href = 'login.html';
+}
+
+function requireLogin() {
+  if (!isLoggedIn()) {
+    window.location.href = 'login.html';
+  }
+}
+
 // CarIQ Frontend — API Client
 const API = 'http://localhost:3000/api';
 
@@ -253,9 +275,36 @@ async function loadDashboard() {
 
 // ── Event Binding ─────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
+
+  // ── Auth gate — protect pages ──
+  const page = window.location.pathname.split('/').pop();
+  const protectedPages = [
+    'customers.html','leads.html',
+    'transactions.html','dashboard.html'
+  ];
+  if (protectedPages.includes(page) && !isLoggedIn()) {
+    window.location.href = 'login.html';
+    return;
+  }
+
+  // ── Login page — skip if already logged in ──
+  if (page === 'login.html' && isLoggedIn()) {
+    window.location.href = 'index.html';
+    return;
+  }
+
+  // ── Update nav username on all pages ──
+  const user = getUser();
+  if (user) {
+    const navUser = document.getElementById('nav-username');
+    if (navUser) navUser.textContent = user.username;
+  }
+
+  // ── Customer form ──
   const customerForm = document.getElementById('customer-form');
   if (customerForm) customerForm.addEventListener('submit', submitCustomer);
 
+  // ── Lead form ──
   const leadForm = document.getElementById('lead-form');
   if (leadForm) {
     leadForm.addEventListener('submit', submitLead);
@@ -264,5 +313,14 @@ document.addEventListener('DOMContentLoaded', () => {
       new Date().toISOString().split('T')[0];
   }
 
+  // ── Dashboard ──
   if (document.getElementById('total-vehicles')) loadDashboard();
+
+  // ── Transactions page ──
+  const txnForm = document.getElementById('transaction-form');
+  if (txnForm) {
+    loadTxnVehicles();
+    document.getElementById('t_transaction_date').value =
+      new Date().toISOString().split('T')[0];
+  }
 });

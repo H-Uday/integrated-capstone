@@ -74,7 +74,7 @@
     <li><a href="leads.html">New Enquiry</a></li>
     <li><a href="transactions.html" class="active">Transaction</a></li>
     <li><a href="dashboard.html">Dashboard</a></li>
-    <li><a href="login.html">Login</a></li>
+    <li><button onclick="logout()" class="btn btn-secondary" style="padding:0.3rem 0.8rem;font-size:0.8rem;">Logout</button></li>
   </ul>
 </nav>
 
@@ -239,6 +239,7 @@
 </div>
 
 <script src="app.js"></script>
+
 <script>
 // ── EMI Calculator (mirrors server-side formula) ──────────────
 function calcEMI(principal, annualRate, months) {
