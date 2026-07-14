@@ -61,6 +61,7 @@
     .step-icon  { font-size: 1.8rem; margin-bottom: 0.8rem; }
     .step-title { font-weight: 700; margin-bottom: 0.4rem; font-size: 0.95rem; }
     .step-desc  { color: var(--muted); font-size: 0.83rem; line-height: 1.5; }
+    
     .glossary-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -97,15 +98,67 @@
       text-align: center; padding: 2rem; color: var(--muted);
       font-size: 0.82rem; border-top: 1px solid var(--border);
     }
+    
     /* Guest landing — shown when NOT logged in */
     #guest-view  { display: none; }
     /* Full app — shown when logged in */
     #member-view { display: none; }
     .user-greeting {
-      font-size: 0.85rem; color: var(--muted);
       display: flex; align-items: center; gap: 1rem;
+      font-size: 0.85rem; color: var(--muted);
     }
     .user-greeting strong { color: var(--accent); }
+
+    /* ── FIXED CORE CARD LAYOUT GRIDS ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.2rem;
+    }
+    .metric-card {
+      background: var(--secondary);
+      border-radius: var(--radius);
+      padding: 1.4rem;
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+    .metric-value {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .metric-label {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+      margin-bottom: 3rem;
+    }
+    .feature-card {
+      background: var(--secondary);
+      border-radius: var(--radius);
+      padding: 2rem 1.5rem;
+      border: 1px solid var(--border);
+      text-align: center;
+      text-decoration: none;
+      color: var(--text);
+      display: block;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent);
+      box-shadow: 0 12px 32px rgba(69, 243, 255, 0.15);
+    }
+    .feature-icon { font-size: 2.2rem; margin-bottom: 1rem; display:block; }
+    .feature-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: #fff; }
+    .feature-card p  { color: var(--muted); font-size: 0.85rem; line-height: 1.4; }
   </style>
 </head>
 <body>

@@ -289,16 +289,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Login page — skip if already logged in ──
   if (page === 'login.html' && isLoggedIn()) {
-    window.location.href = 'index.html';
+    window.location.href = 'home.html';
     return;
   }
 
-  // ── Update nav username on all pages ──
-  const user = getUser();
-  if (user) {
-    const navUser = document.getElementById('nav-username');
-    if (navUser) navUser.textContent = user.username;
-  }
+
 
   // ── Customer form ──
   const customerForm = document.getElementById('customer-form');

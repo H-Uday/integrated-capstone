@@ -17,7 +17,16 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // Serve frontend static files
-app.use(express.static(path.join(__dirname, '../public')));
+// app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, '../public'), {
+  etag: false,
+  lastModified: false,
+  setHeaders: (res, path) => {
+    if (path.endsWith('.html')) {
+      res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+    }
+  }
+}));
 
 // Run DB migrations on startup
 runMigrations();
@@ -37,6 +46,11 @@ app.get('/health', (req, res) => {
     phase: 2,
     timestamp: new Date().toISOString()
   });
+});
+
+// Default route — serve home page
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/home.html'));
 });
 
 // 404 handler
