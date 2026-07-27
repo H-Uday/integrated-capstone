@@ -57,7 +57,8 @@ page = st.sidebar.radio(
         "Q2 — Market Penetration",
         "Q3 — Inventory Velocity",
         "Q4 — Financial Health",
-        "Q5 — Price Sensitivity"
+        "Q5 — Price Sensitivity",
+        "🤖 ML Affordability Model",
     ]
 )
 
@@ -568,9 +569,141 @@ elif page == "Q5 — Price Sensitivity":
         fig2.update_layout(height=380, yaxis=dict(range=[0,130]))
         st.plotly_chart(fig2, use_container_width=True)
 
-    st.info(
+    st.info (
         "💡 **Key Finding:** Near-zero price sensitivity — ±10% price change "
         "moves the eligible buyer pool by at most 1 customer. Income is the "
         "binding constraint, not price. Extending loan tenure to 84 months "
-        "is a more effective lever than price reduction."
+        "is a more effective lever than price reduction.")
+
+        # ════════════════════════════════════════════════════════════════
+# PAGE: ML AFFORDABILITY MODEL
+# ════════════════════════════════════════════════════════════════
+elif page == "🤖 ML Affordability Model":
+    st.title("🤖 ML Affordability Model")
+    st.markdown(
+        "**Gradient Boosted Classifier (XGBoost)** — predicts loan affordability "
+        "probability instead of using a binary 40% EMI rule."
     )
+    st.divider()
+
+    import sys
+    sys.path.append(str(Path(__file__).parent / 'src' / 'ml'))
+
+    try:
+        from predict import predict_single, get_model_metrics
+        from pathlib import Path as _Path
+
+        metrics = get_model_metrics()
+
+        # Model metrics row
+        if metrics:
+            col1, col2, col3, col4 = st.columns(4)
+            col1.metric("Model Accuracy",    f"{metrics.get('accuracy', 0)*100:.1f}%")
+            col2.metric("ROC-AUC Score",     f"{metrics.get('roc_auc', 0):.4f}" if metrics.get('roc_auc') else "N/A")
+            col3.metric("CV Accuracy",       f"{metrics.get('cv_mean_accuracy', 0)*100:.1f}%")
+            col4.metric("Training Samples",  str(metrics.get('train_samples', 0)))
+
+        st.divider()
+
+        # Feature importance chart
+        if metrics and 'feature_importance' in metrics:
+            st.subheader("📊 Feature Importance")
+            fi   = metrics['feature_importance']
+            fi_df = pd.DataFrame(list(fi.items()), columns=['Feature', 'Importance'])
+            fi_df = fi_df.sort_values('Importance', ascending=True)
+
+            fig_fi = px.bar(
+                fi_df, x='Importance', y='Feature',
+                orientation='h',
+                color='Importance',
+                color_continuous_scale='Teal',
+                title='Which Features Drive Affordability Predictions Most?',
+                labels={'Importance': 'Feature Importance Score', 'Feature': ''}
+            )
+            fig_fi.update_layout(
+                height=380,
+                coloraxis_showscale=False,
+                title_font_size=14
+            )
+            st.plotly_chart(fig_fi, use_container_width=True)
+
+        st.divider()
+
+        # Live prediction tool
+        st.subheader("🎯 Live Affordability Predictor")
+        st.markdown("Enter customer and vehicle details to get an ML-powered affordability score:")
+
+        col1, col2 = st.columns(2)
+        with col1:
+            annual_income = st.number_input("Annual Income (USD)", min_value=1000, max_value=10000000, value=25000, step=1000)
+            credit_score  = st.slider("Credit Score", min_value=300, max_value=900, value=720)
+            employment    = st.selectbox("Employment Type", ['Salaried', 'Self-Employed', 'Business', 'Retired'])
+
+        with col2:
+            vehicle_price  = st.number_input("Vehicle Price (USD)", min_value=1000, max_value=5000000, value=15000, step=1000)
+            tenure         = st.selectbox("Loan Tenure (months)", [12, 24, 36, 48, 60, 72, 84], index=4)
+            interest_rate  = st.slider("Interest Rate (%)", min_value=6.0, max_value=20.0, value=9.5, step=0.5)
+            down_payment   = st.slider("Down Payment (%)", min_value=5, max_value=50, value=20)
+
+        if st.button("🔮 Predict Affordability", type="primary"):
+            result = predict_single(
+                annual_income_usd   = annual_income,
+                credit_score        = credit_score,
+                employment_type     = employment,
+                price_usd           = vehicle_price,
+                loan_tenure_months  = tenure,
+                interest_rate       = interest_rate,
+                down_payment_pct    = down_payment / 100,
+            )
+
+            st.divider()
+            prob = result['probability_affordable']
+
+            # Probability gauge
+            col1, col2, col3 = st.columns(3)
+            col1.metric("ML Probability",   f"{prob*100:.1f}%")
+            col2.metric("ML Prediction",    result['ml_prediction'])
+            col3.metric("Rule Prediction",  result['rule_prediction'])
+
+            # Risk level
+            color = 'green' if prob >= 0.75 else ('orange' if prob >= 0.55 else ('red' if prob >= 0.35 else 'darkred'))
+            st.markdown(f"### Risk Level: :{color}[{result['risk_level']}]")
+
+            # Probability bar
+            fig_gauge = go.Figure(go.Bar(
+                x=[prob * 100],
+                y=['Affordability'],
+                orientation='h',
+                marker_color='#2ecc71' if prob >= 0.55 else '#e74c3c',
+                text=[f"{prob*100:.1f}%"],
+                textposition='outside',
+            ))
+            fig_gauge.update_layout(
+                xaxis=dict(range=[0, 100], title='Probability Affordable (%)'),
+                height=120,
+                margin=dict(l=20, r=60, t=20, b=20),
+                title='ML Affordability Probability Score'
+            )
+            st.plotly_chart(fig_gauge, use_container_width=True)
+
+            # Breakdown
+            st.markdown("**Loan Breakdown:**")
+            col1, col2, col3, col4 = st.columns(4)
+            col1.metric("Monthly Income", f"${result['monthly_income_usd']:,.0f}")
+            col2.metric("Loan Amount",    f"${result['loan_amount_usd']:,.0f}")
+            col3.metric("Monthly EMI",    f"${result['emi_usd']:,.0f}")
+            col4.metric("EMI/Income",     f"{result['rule_emi_ratio']*100:.1f}%")
+
+            # Agreement
+            if result['ml_vs_rule_agreement']:
+                st.success("✅ ML model and rule-based system AGREE on this prediction")
+            else:
+                st.warning("⚠️  ML model and rule-based system DISAGREE — ML considers additional factors")
+
+    except FileNotFoundError:
+        st.error("⚠️  ML model not trained yet. Run: python src/ml/train.py")
+        st.code("cd analytics && python src/ml/train.py", language='bash')
+    except Exception as e:
+        st.error(f"Error loading ML model: {e}")
+        st.exception(e)
+    
