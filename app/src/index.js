@@ -5,6 +5,7 @@ const cors = require('cors');
 const { runMigrations } = require('./config/database');
 
 const authRouter = require('./routes/auth');
+const alertsRouter = require('./routes/alerts');
 const customersRouter = require('./routes/customers');
 const vehiclesRouter = require('./routes/vehicles');
 const leadsRouter = require('./routes/leads');
@@ -31,8 +32,13 @@ app.use(express.static(path.join(__dirname, '../public'), {
 // Run DB migrations on startup
 runMigrations();
 
+// Start dealer alert scheduler
+const { startScheduler } = require('./alerts/alertScheduler');
+startScheduler();
+
 // Routes
 app.use('/api/auth', authRouter);
+app.use('/api/alerts', alertsRouter);
 app.use('/api/customers', customersRouter);
 app.use('/api/vehicles', vehiclesRouter);
 app.use('/api/leads', leadsRouter);

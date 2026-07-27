@@ -234,6 +234,7 @@ async function loadDashboard() {
     if (vData.success) {
       document.getElementById('total-vehicles').textContent = vData.count;
     }
+    await loadAlerts();
 
     // Customers count
     const cRes  = await fetch(`${API}/customers/count`);
@@ -319,3 +320,86 @@ document.addEventListener('DOMContentLoaded', () => {
       new Date().toISOString().split('T')[0];
   }
 });
+
+// ── Alert Dashboard ───────────────────────────────────────────
+async function loadAlerts() {
+  try {
+    const [stalledRes, statusRes] = await Promise.all([
+      fetch(`${API}/alerts/stalled`),
+      fetch(`${API}/alerts/status`),
+    ]);
+    const [stalledData, statusData] = await Promise.all([
+      stalledRes.json(),
+      statusRes.json(),
+    ]);
+
+    if (stalledData.success) {
+      const s = stalledData.summary;
+      const totalStaleEl   = document.getElementById('total-stale');
+      const totalHealthyEl = document.getElementById('total-healthy');
+      const staleRateEl    = document.getElementById('stale-rate');
+
+      if (totalStaleEl)   totalStaleEl.textContent   = s.total_stale;
+      if (totalHealthyEl) totalHealthyEl.textContent = s.total_healthy;
+      if (staleRateEl)    staleRateEl.textContent    = s.stale_rate;
+
+      const tbody = document.getElementById('stale-tbody');
+      if (tbody) {
+        if (!stalledData.stalled_leads.length) {
+          tbody.innerHTML = `<tr><td colspan="9"
+            style="text-align:center;color:#2ecc71;padding:1rem;">
+            ✅ No stalled leads — all pipelines healthy
+          </td></tr>`;
+        } else {
+          tbody.innerHTML = '';
+          stalledData.stalled_leads.forEach(lead => {
+            const row = document.createElement('tr');
+            const overdueBadge = lead.overdue_days > 14
+              ? `<span style="color:#e74c3c;font-weight:bold;">+${lead.overdue_days}d 🚨</span>`
+              : `<span style="color:#f39c12;">+${lead.overdue_days}d ⚠️</span>`;
+            row.innerHTML = `
+              <td>${lead.lead_id}</td>
+              <td>${lead.customer_name}</td>
+              <td>${lead.vehicle}</td>
+              <td>${lead.segment}</td>
+              <td>${lead.dealer_name || 'Unknown'}</td>
+              <td style="color:#e74c3c;font-weight:bold;">${lead.days_open}d</td>
+              <td style="color:var(--muted);">${lead.benchmark_days}d</td>
+              <td>${overdueBadge}</td>
+              <td><span class="badge ${badgeClass(lead.status)}">${lead.status}</span></td>
+            `;
+            tbody.appendChild(row);
+          });
+        }
+      }
+    }
+
+    if (statusData.success) {
+      const modeEl = document.getElementById('alert-mode');
+      if (modeEl) {
+        modeEl.textContent = statusData.alert_mode;
+        modeEl.style.color = statusData.alert_mode === 'EMAIL' ? '#2ecc71' : '#f39c12';
+      }
+    }
+
+  } catch (err) {
+    console.error('Alert load error:', err);
+  }
+}
+
+async function triggerAlertCheck() {
+  const msgEl = document.getElementById('alert-status-msg');
+  if (msgEl) msgEl.textContent = 'Running alert check...';
+
+  try {
+    const res  = await fetch(`${API}/alerts/trigger`, { method: 'POST' });
+    const data = await res.json();
+    if (data.success) {
+      if (msgEl) msgEl.textContent =
+        `✅ Check complete — ${data.stale_count} stalled lead(s) found`;
+      await loadAlerts(); // refresh the table
+    }
+  } catch (err) {
+    if (msgEl) msgEl.textContent = '❌ Alert check failed';
+  }
+}

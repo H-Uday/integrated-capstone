@@ -108,3 +108,17 @@ validate ID parameters inline before database queries.
 
 ---
 *Audit conducted by: Uday183020 | Day 12*
+
+---
+
+## Day 17 Addition — Alert System Endpoints
+
+| Endpoint | Protection |
+|---|---|
+| GET /api/alerts/stalled | Parameterized SQL query |
+| GET /api/alerts/status | Read-only, no user input |
+| GET /api/alerts/benchmarks | Static data, no DB |
+| POST /api/alerts/trigger | No user input — internal trigger |
+
+Alert system runs in LOG-ONLY mode by default.
+Email credentials stored in .env — never committed.

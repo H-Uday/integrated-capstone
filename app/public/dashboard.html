@@ -75,6 +75,70 @@
       🧠 Open Analytics Dashboard
     </a>
   </div>
+
+  <!-- Stalled Leads Alert Widget -->
+<div class="card" style="margin-top:1.5rem;border-left:3px solid #e74c3c;">
+  <h2 style="margin-bottom:1rem;font-size:1.1rem;color:#e74c3c;">
+    ⚠️ Stalled Leads Alert
+  </h2>
+  <div id="alert-summary" style="margin-bottom:1rem;">
+    <div class="card-grid" style="margin-bottom:0;">
+      <div class="metric-card">
+        <div class="metric-value" id="total-stale" style="color:#e74c3c;">—</div>
+        <div class="metric-label">Stalled Leads</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value" id="total-healthy" style="color:#2ecc71;">—</div>
+        <div class="metric-label">Healthy Leads</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value" id="stale-rate">—</div>
+        <div class="metric-label">Stall Rate</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value" id="alert-mode"
+             style="font-size:1rem;">—</div>
+        <div class="metric-label">Alert Mode</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Lead ID</th>
+          <th>Customer</th>
+          <th>Vehicle</th>
+          <th>Segment</th>
+          <th>Dealer</th>
+          <th>Days Open</th>
+          <th>Benchmark</th>
+          <th>Overdue</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="stale-tbody">
+        <tr>
+          <td colspan="9" style="text-align:center;color:var(--muted);">
+            Loading stalled leads...
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="margin-top:1rem;display:flex;gap:1rem;">
+    <button onclick="triggerAlertCheck()"
+            class="btn btn-primary"
+            style="font-size:0.85rem;">
+      🔔 Run Alert Check Now
+    </button>
+    <span id="alert-status-msg"
+          style="color:var(--muted);font-size:0.85rem;
+                 align-self:center;"></span>
+  </div>
+</div>
 </div>
 
 <script src="app.js"></script>
