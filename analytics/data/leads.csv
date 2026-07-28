@@ -1,0 +1,303 @@
+lead_id,customer_id,vehicle_id,enquiry_date,status,dealer_name,state,notes,created_at,enquiry_month,enquiry_year,enquiry_quarter
+1,112,23,2024-02-08,Converted,Dubai Luxury Motors,Gujarat,Seed data lead v2,2026-07-10 09:27:06,2,2024,1
+2,125,19,2024-07-11,Converted,Singapore Car Centre,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,7,2024,3
+3,120,13,2024-09-15,Converted,London Premium Cars,Uttar Pradesh,Seed data lead v2,2026-07-10 09:27:06,9,2024,3
+4,22,26,2024-04-07,On-Hold,Sydney Prestige Cars,Gujarat,Seed data lead v2,2026-07-10 09:27:06,4,2024,2
+5,7,10,2024-08-19,Converted,Bengaluru Wheels,West Bengal,Seed data lead v2,2026-07-10 09:27:06,8,2024,3
+6,75,16,2025-11-23,Converted,London Premium Cars,Telangana,Seed data lead v2,2026-07-10 09:27:06,11,2025,4
+7,137,14,2025-07-12,Converted,Dubai Luxury Motors,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,7,2025,3
+8,47,5,2024-08-16,In-Progress,London Premium Cars,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,8,2024,3
+9,28,1,2024-02-29,Converted,Sydney Prestige Cars,Delhi,Seed data lead v2,2026-07-10 09:27:06,2,2024,1
+10,91,2,2025-03-29,Converted,Bengaluru Wheels,Karnataka,Seed data lead v2,2026-07-10 09:27:06,3,2025,1
+11,91,21,2025-06-13,In-Progress,Tokyo Motors,Karnataka,Seed data lead v2,2026-07-10 09:27:06,6,2025,2
+12,130,2,2024-12-14,In-Progress,Sydney Prestige Cars,Uttar Pradesh,Seed data lead v2,2026-07-10 09:27:06,12,2024,4
+13,94,3,2025-05-13,New,Dubai Luxury Motors,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,5,2025,2
+14,99,19,2025-12-24,Rejected,Tokyo Motors,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,12,2025,4
+15,38,15,2026-03-18,Rejected,Mumbai Auto Hub,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,3,2026,1
+16,99,7,2025-07-16,Rejected,Mumbai Auto Hub,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,7,2025,3
+17,84,26,2026-03-24,In-Progress,New York Auto Group,Karnataka,Seed data lead v2,2026-07-10 09:27:06,3,2026,1
+18,75,11,2024-08-09,Converted,Singapore Car Centre,Telangana,Seed data lead v2,2026-07-10 09:27:06,8,2024,3
+19,141,26,2024-12-24,In-Progress,Chennai Auto Park,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,12,2024,4
+20,105,1,2025-08-27,On-Hold,London Premium Cars,Tamil Nadu,Seed data lead v2,2026-07-10 09:27:06,8,2025,3
+21,128,7,2024-10-11,Rejected,London Premium Cars,West Bengal,Seed data lead v2,2026-07-10 09:27:06,10,2024,4
+22,2,10,2026-02-20,Rejected,Hyderabad Motors,West Bengal,Seed data lead v2,2026-07-10 09:27:06,2,2026,1
+23,2,8,2025-09-22,Converted,Singapore Car Centre,West Bengal,Seed data lead v2,2026-07-10 09:27:06,9,2025,3
+24,135,4,2025-05-15,In-Progress,Bengaluru Wheels,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,5,2025,2
+25,36,11,2025-02-02,On-Hold,Tokyo Motors,Karnataka,Seed data lead v2,2026-07-10 09:27:06,2,2025,1
+26,54,18,2024-08-31,New,Bengaluru Wheels,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,8,2024,3
+27,77,19,2024-12-16,Rejected,Sydney Prestige Cars,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,12,2024,4
+28,89,1,2025-04-13,Converted,Delhi Car Palace,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,4,2025,2
+29,104,4,2024-11-07,On-Hold,London Premium Cars,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,11,2024,4
+30,78,24,2025-05-09,Converted,London Premium Cars,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,5,2025,2
+31,97,11,2024-02-15,Rejected,Pune Car World,Karnataka,Seed data lead v2,2026-07-10 09:27:06,2,2024,1
+32,124,2,2025-07-21,Rejected,New York Auto Group,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,7,2025,3
+33,126,23,2026-05-29,In-Progress,Pune Car World,Telangana,Seed data lead v2,2026-07-10 09:27:06,5,2026,2
+34,148,25,2025-06-15,Converted,Chennai Auto Park,Tamil Nadu,Seed data lead v2,2026-07-10 09:27:06,6,2025,2
+35,79,22,2026-03-10,Converted,Delhi Car Palace,Uttar Pradesh,Seed data lead v2,2026-07-10 09:27:06,3,2026,1
+36,5,24,2025-09-09,Rejected,Hyderabad Motors,Gujarat,Seed data lead v2,2026-07-10 09:27:06,9,2025,3
+37,76,20,2025-05-29,On-Hold,Tokyo Motors,Gujarat,Seed data lead v2,2026-07-10 09:27:06,5,2025,2
+38,142,24,2026-04-29,Rejected,New York Auto Group,Uttar Pradesh,Seed data lead v2,2026-07-10 09:27:06,4,2026,2
+39,22,25,2025-03-06,Rejected,London Premium Cars,Gujarat,Seed data lead v2,2026-07-10 09:27:06,3,2025,1
+40,111,15,2025-12-23,Rejected,Delhi Car Palace,Gujarat,Seed data lead v2,2026-07-10 09:27:06,12,2025,4
+41,125,18,2025-05-05,Converted,Mumbai Auto Hub,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,5,2025,2
+42,160,17,2024-07-20,On-Hold,Mumbai Auto Hub,Abu Dhabi,Seed data lead v2,2026-07-10 09:27:06,7,2024,3
+43,161,24,2026-04-12,Rejected,Dubai Luxury Motors,Dubai,Seed data lead v2,2026-07-10 09:27:06,4,2026,2
+44,24,1,2025-07-31,Rejected,Bengaluru Wheels,West Bengal,Seed data lead v2,2026-07-10 09:27:06,7,2025,3
+45,59,13,2025-10-01,On-Hold,Chennai Auto Park,West Bengal,Seed data lead v2,2026-07-10 09:27:06,10,2025,4
+46,86,7,2025-03-15,Rejected,London Premium Cars,West Bengal,Seed data lead v2,2026-07-10 09:27:06,3,2025,1
+47,74,25,2024-02-20,On-Hold,Tokyo Motors,Karnataka,Seed data lead v2,2026-07-10 09:27:06,2,2024,1
+48,8,5,2025-11-22,On-Hold,Hyderabad Motors,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,11,2025,4
+49,126,13,2025-03-13,On-Hold,London Premium Cars,Telangana,Seed data lead v2,2026-07-10 09:27:06,3,2025,1
+50,96,22,2026-02-25,Converted,Pune Car World,Telangana,Seed data lead v2,2026-07-10 09:27:06,2,2026,1
+51,93,1,2024-05-10,On-Hold,Sydney Prestige Cars,Delhi,Seed data lead v2,2026-07-10 09:27:06,5,2024,2
+52,24,11,2024-03-15,New,Hyderabad Motors,West Bengal,Seed data lead v2,2026-07-10 09:27:06,3,2024,1
+53,65,21,2026-05-03,Converted,Dubai Luxury Motors,West Bengal,Seed data lead v2,2026-07-10 09:27:06,5,2026,2
+54,82,23,2024-04-27,In-Progress,Mumbai Auto Hub,Tamil Nadu,Seed data lead v2,2026-07-10 09:27:06,4,2024,2
+55,74,26,2025-02-09,In-Progress,Tokyo Motors,Karnataka,Seed data lead v2,2026-07-10 09:27:06,2,2025,1
+56,75,9,2024-11-24,Converted,London Premium Cars,Telangana,Seed data lead v2,2026-07-10 09:27:06,11,2024,4
+57,155,25,2026-04-06,Converted,Tokyo Motors,Florida,Seed data lead v2,2026-07-10 09:27:06,4,2026,2
+58,58,11,2025-08-19,Converted,Mumbai Auto Hub,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,8,2025,3
+59,104,20,2026-04-20,On-Hold,Dubai Luxury Motors,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,4,2026,2
+60,162,15,2025-07-19,New,Sydney Prestige Cars,Bavaria,Seed data lead v2,2026-07-10 09:27:06,7,2025,3
+61,142,12,2025-05-25,Rejected,New York Auto Group,Uttar Pradesh,Seed data lead v2,2026-07-10 09:27:06,5,2025,2
+62,129,15,2025-12-16,Converted,Chennai Auto Park,West Bengal,Seed data lead v2,2026-07-10 09:27:06,12,2025,4
+63,75,8,2025-01-15,On-Hold,Delhi Car Palace,Telangana,Seed data lead v2,2026-07-10 09:27:06,1,2025,1
+64,46,22,2025-10-14,In-Progress,Delhi Car Palace,Karnataka,Seed data lead v2,2026-07-10 09:27:06,10,2025,4
+65,89,1,2025-08-13,Rejected,Tokyo Motors,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,8,2025,3
+66,119,15,2025-01-29,Rejected,Chennai Auto Park,Karnataka,Seed data lead v2,2026-07-10 09:27:06,1,2025,1
+67,150,12,2024-06-06,Converted,London Premium Cars,Tamil Nadu,Seed data lead v2,2026-07-10 09:27:06,6,2024,2
+68,117,9,2024-07-09,New,Bengaluru Wheels,Tamil Nadu,Seed data lead v2,2026-07-10 09:27:06,7,2024,3
+69,58,16,2024-01-08,Rejected,Singapore Car Centre,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,1,2024,1
+70,144,7,2026-02-08,On-Hold,Singapore Car Centre,Uttar Pradesh,Seed data lead v2,2026-07-10 09:27:06,2,2026,1
+71,69,4,2025-07-24,Rejected,Pune Car World,West Bengal,Seed data lead v2,2026-07-10 09:27:06,7,2025,3
+72,9,19,2024-05-06,In-Progress,Dubai Luxury Motors,Telangana,Seed data lead v2,2026-07-10 09:27:06,5,2024,2
+73,12,16,2025-01-25,Converted,London Premium Cars,Telangana,Seed data lead v2,2026-07-10 09:27:06,1,2025,1
+74,47,4,2026-02-22,New,Sydney Prestige Cars,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,2,2026,1
+75,123,2,2025-09-01,On-Hold,Singapore Car Centre,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,9,2025,3
+76,38,3,2024-06-05,Converted,Bengaluru Wheels,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,6,2024,2
+77,105,26,2024-09-12,Rejected,Tokyo Motors,Tamil Nadu,Seed data lead v2,2026-07-10 09:27:06,9,2024,3
+78,70,5,2025-01-09,Rejected,Delhi Car Palace,Gujarat,Seed data lead v2,2026-07-10 09:27:06,1,2025,1
+79,21,11,2024-08-04,Rejected,Sydney Prestige Cars,Uttar Pradesh,Seed data lead v2,2026-07-10 09:27:06,8,2024,3
+80,65,26,2025-07-07,In-Progress,Hyderabad Motors,West Bengal,Seed data lead v2,2026-07-10 09:27:06,7,2025,3
+81,26,25,2024-07-21,Converted,Delhi Car Palace,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,7,2024,3
+82,123,1,2025-03-23,Converted,Singapore Car Centre,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,3,2025,1
+83,36,18,2024-01-18,New,Mumbai Auto Hub,Karnataka,Seed data lead v2,2026-07-10 09:27:06,1,2024,1
+84,93,17,2025-03-23,On-Hold,New York Auto Group,Delhi,Seed data lead v2,2026-07-10 09:27:06,3,2025,1
+85,2,9,2024-12-08,On-Hold,Sydney Prestige Cars,West Bengal,Seed data lead v2,2026-07-10 09:27:06,12,2024,4
+86,110,21,2026-03-08,Rejected,Pune Car World,Gujarat,Seed data lead v2,2026-07-10 09:27:06,3,2026,1
+87,145,8,2025-04-22,Converted,Hyderabad Motors,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,4,2025,2
+88,32,23,2026-05-09,Converted,Sydney Prestige Cars,Delhi,Seed data lead v2,2026-07-10 09:27:06,5,2026,2
+89,24,14,2024-02-17,Converted,London Premium Cars,West Bengal,Seed data lead v2,2026-07-10 09:27:06,2,2024,1
+90,97,1,2024-05-21,New,Bengaluru Wheels,Karnataka,Seed data lead v2,2026-07-10 09:27:06,5,2024,2
+91,24,4,2024-04-27,Converted,Mumbai Auto Hub,West Bengal,Seed data lead v2,2026-07-10 09:27:06,4,2024,2
+92,142,5,2025-04-20,In-Progress,Dubai Luxury Motors,Uttar Pradesh,Seed data lead v2,2026-07-10 09:27:06,4,2025,2
+93,11,26,2026-04-12,On-Hold,Tokyo Motors,Delhi,Seed data lead v2,2026-07-10 09:27:06,4,2026,2
+94,150,11,2024-01-18,In-Progress,Delhi Car Palace,Tamil Nadu,Seed data lead v2,2026-07-10 09:27:06,1,2024,1
+95,10,13,2024-01-19,Converted,Tokyo Motors,West Bengal,Seed data lead v2,2026-07-10 09:27:06,1,2024,1
+96,1,14,2025-02-13,Rejected,Dubai Luxury Motors,Tamil Nadu,Seed data lead v2,2026-07-10 09:27:06,2,2025,1
+97,109,23,2024-11-22,New,Delhi Car Palace,Telangana,Seed data lead v2,2026-07-10 09:27:06,11,2024,4
+98,137,20,2026-05-20,On-Hold,Sydney Prestige Cars,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,5,2026,2
+99,91,9,2025-06-20,In-Progress,Pune Car World,Karnataka,Seed data lead v2,2026-07-10 09:27:06,6,2025,2
+100,106,3,2024-04-20,New,Singapore Car Centre,Uttar Pradesh,Seed data lead v2,2026-07-10 09:27:06,4,2024,2
+101,38,26,2025-09-30,Converted,Tokyo Motors,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,9,2025,3
+102,146,2,2025-03-07,Converted,Sydney Prestige Cars,Tamil Nadu,Seed data lead v2,2026-07-10 09:27:06,3,2025,1
+103,81,24,2025-06-11,On-Hold,Pune Car World,West Bengal,Seed data lead v2,2026-07-10 09:27:06,6,2025,2
+104,144,3,2025-04-20,Converted,Dubai Luxury Motors,Uttar Pradesh,Seed data lead v2,2026-07-10 09:27:06,4,2025,2
+105,70,11,2025-10-23,Rejected,Bengaluru Wheels,Gujarat,Seed data lead v2,2026-07-10 09:27:06,10,2025,4
+106,72,12,2025-12-26,New,Chennai Auto Park,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,12,2025,4
+107,163,4,2025-07-13,New,Bengaluru Wheels,Berlin,Seed data lead v2,2026-07-10 09:27:06,7,2025,3
+108,112,10,2025-06-09,Converted,Sydney Prestige Cars,Gujarat,Seed data lead v2,2026-07-10 09:27:06,6,2025,2
+109,10,6,2024-05-28,Converted,Delhi Car Palace,West Bengal,Seed data lead v2,2026-07-10 09:27:06,5,2024,2
+110,166,16,2025-10-19,Converted,New York Auto Group,Osaka,Seed data lead v2,2026-07-10 09:27:06,10,2025,4
+111,123,15,2025-12-10,Converted,Mumbai Auto Hub,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,12,2025,4
+112,118,15,2025-10-14,On-Hold,Pune Car World,Delhi,Seed data lead v2,2026-07-10 09:27:06,10,2025,4
+113,131,10,2024-10-28,New,New York Auto Group,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,10,2024,4
+114,126,12,2024-05-23,Converted,Delhi Car Palace,Telangana,Seed data lead v2,2026-07-10 09:27:06,5,2024,2
+115,90,4,2024-02-19,Rejected,Chennai Auto Park,Delhi,Seed data lead v2,2026-07-10 09:27:06,2,2024,1
+116,3,1,2026-01-09,Rejected,Sydney Prestige Cars,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,1,2026,1
+117,62,22,2025-08-17,Converted,Tokyo Motors,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,8,2025,3
+118,19,15,2025-01-14,New,Bengaluru Wheels,Telangana,Seed data lead v2,2026-07-10 09:27:06,1,2025,1
+119,140,5,2025-02-13,Converted,Delhi Car Palace,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,2,2025,1
+120,105,24,2025-07-22,Converted,Pune Car World,Tamil Nadu,Seed data lead v2,2026-07-10 09:27:06,7,2025,3
+121,114,23,2026-05-23,Rejected,Delhi Car Palace,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,5,2026,2
+122,86,4,2026-02-18,Rejected,Dubai Luxury Motors,West Bengal,Seed data lead v2,2026-07-10 09:27:06,2,2026,1
+123,136,23,2024-01-18,Converted,Tokyo Motors,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,1,2024,1
+124,51,24,2025-03-17,In-Progress,Tokyo Motors,Delhi,Seed data lead v2,2026-07-10 09:27:06,3,2025,1
+125,45,1,2024-12-27,New,Pune Car World,Delhi,Seed data lead v2,2026-07-10 09:27:06,12,2024,4
+126,157,15,2024-11-27,Converted,London Premium Cars,England,Seed data lead v2,2026-07-10 09:27:06,11,2024,4
+127,157,23,2025-05-25,Converted,Dubai Luxury Motors,England,Seed data lead v2,2026-07-10 09:27:06,5,2025,2
+128,133,19,2026-02-07,Converted,Pune Car World,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,2,2026,1
+129,165,4,2025-07-13,On-Hold,London Premium Cars,Tokyo,Seed data lead v2,2026-07-10 09:27:06,7,2025,3
+130,38,23,2024-08-07,Rejected,New York Auto Group,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,8,2024,3
+131,162,20,2025-07-13,New,Sydney Prestige Cars,Bavaria,Seed data lead v2,2026-07-10 09:27:06,7,2025,3
+132,149,17,2024-01-14,In-Progress,Chennai Auto Park,Uttar Pradesh,Seed data lead v2,2026-07-10 09:27:06,1,2024,1
+133,98,8,2025-04-27,On-Hold,Chennai Auto Park,Tamil Nadu,Seed data lead v2,2026-07-10 09:27:06,4,2025,2
+134,153,21,2024-10-21,New,Singapore Car Centre,Texas,Seed data lead v2,2026-07-10 09:27:06,10,2024,4
+135,130,17,2024-08-15,Converted,Pune Car World,Uttar Pradesh,Seed data lead v2,2026-07-10 09:27:06,8,2024,3
+136,110,6,2026-04-06,Converted,Singapore Car Centre,Gujarat,Seed data lead v2,2026-07-10 09:27:06,4,2026,2
+137,67,5,2025-09-10,New,Delhi Car Palace,West Bengal,Seed data lead v2,2026-07-10 09:27:06,9,2025,3
+138,12,17,2025-11-22,Rejected,Hyderabad Motors,Telangana,Seed data lead v2,2026-07-10 09:27:06,11,2025,4
+139,128,11,2024-10-18,New,New York Auto Group,West Bengal,Seed data lead v2,2026-07-10 09:27:06,10,2024,4
+140,84,18,2026-04-05,New,Pune Car World,Karnataka,Seed data lead v2,2026-07-10 09:27:06,4,2026,2
+141,7,6,2025-12-15,On-Hold,Mumbai Auto Hub,West Bengal,Seed data lead v2,2026-07-10 09:27:06,12,2025,4
+142,56,9,2025-09-24,Converted,Delhi Car Palace,Telangana,Seed data lead v2,2026-07-10 09:27:06,9,2025,3
+143,45,9,2025-06-05,New,Sydney Prestige Cars,Delhi,Seed data lead v2,2026-07-10 09:27:06,6,2025,2
+144,98,5,2026-04-23,Converted,Singapore Car Centre,Tamil Nadu,Seed data lead v2,2026-07-10 09:27:06,4,2026,2
+145,92,22,2025-08-30,In-Progress,Chennai Auto Park,Karnataka,Seed data lead v2,2026-07-10 09:27:06,8,2025,3
+146,83,6,2024-02-03,Converted,Tokyo Motors,Tamil Nadu,Seed data lead v2,2026-07-10 09:27:06,2,2024,1
+147,153,13,2025-07-19,Converted,Hyderabad Motors,Texas,Seed data lead v2,2026-07-10 09:27:06,7,2025,3
+148,134,5,2026-02-19,On-Hold,Singapore Car Centre,Telangana,Seed data lead v2,2026-07-10 09:27:06,2,2026,1
+149,75,10,2026-04-22,On-Hold,Tokyo Motors,Telangana,Seed data lead v2,2026-07-10 09:27:06,4,2026,2
+150,54,18,2025-06-25,On-Hold,Delhi Car Palace,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,6,2025,2
+151,129,12,2025-02-11,Rejected,Tokyo Motors,West Bengal,Seed data lead v2,2026-07-10 09:27:06,2,2025,1
+152,83,26,2024-07-22,Rejected,London Premium Cars,Tamil Nadu,Seed data lead v2,2026-07-10 09:27:06,7,2024,3
+153,119,17,2025-03-10,New,Hyderabad Motors,Karnataka,Seed data lead v2,2026-07-10 09:27:06,3,2025,1
+154,69,3,2025-04-19,Converted,Chennai Auto Park,West Bengal,Seed data lead v2,2026-07-10 09:27:06,4,2025,2
+155,66,11,2025-07-16,On-Hold,New York Auto Group,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,7,2025,3
+156,123,7,2024-01-10,New,Mumbai Auto Hub,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,1,2024,1
+157,108,24,2025-12-16,Rejected,Chennai Auto Park,Gujarat,Seed data lead v2,2026-07-10 09:27:06,12,2025,4
+158,111,24,2024-12-01,In-Progress,Singapore Car Centre,Gujarat,Seed data lead v2,2026-07-10 09:27:06,12,2024,4
+159,29,8,2024-12-05,On-Hold,New York Auto Group,Karnataka,Seed data lead v2,2026-07-10 09:27:06,12,2024,4
+160,162,4,2026-02-04,Converted,Delhi Car Palace,Bavaria,Seed data lead v2,2026-07-10 09:27:06,2,2026,1
+161,99,4,2026-01-30,New,London Premium Cars,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,1,2026,1
+162,107,20,2024-12-31,New,Chennai Auto Park,Karnataka,Seed data lead v2,2026-07-10 09:27:06,12,2024,4
+163,74,12,2025-05-08,In-Progress,Dubai Luxury Motors,Karnataka,Seed data lead v2,2026-07-10 09:27:06,5,2025,2
+164,155,12,2024-08-14,New,Pune Car World,Florida,Seed data lead v2,2026-07-10 09:27:06,8,2024,3
+165,139,21,2026-05-15,Converted,Singapore Car Centre,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,5,2026,2
+166,163,18,2025-11-02,On-Hold,New York Auto Group,Berlin,Seed data lead v2,2026-07-10 09:27:06,11,2025,4
+167,97,19,2026-04-08,On-Hold,Bengaluru Wheels,Karnataka,Seed data lead v2,2026-07-10 09:27:06,4,2026,2
+168,155,2,2026-05-08,On-Hold,Hyderabad Motors,Florida,Seed data lead v2,2026-07-10 09:27:06,5,2026,2
+169,164,1,2025-07-30,In-Progress,Tokyo Motors,Hesse,Seed data lead v2,2026-07-10 09:27:06,7,2025,3
+170,14,9,2026-01-09,Converted,Singapore Car Centre,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,1,2026,1
+171,79,7,2025-07-22,In-Progress,Sydney Prestige Cars,Uttar Pradesh,Seed data lead v2,2026-07-10 09:27:06,7,2025,3
+172,123,17,2024-04-19,Rejected,Singapore Car Centre,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,4,2024,2
+173,160,10,2026-05-26,On-Hold,Delhi Car Palace,Abu Dhabi,Seed data lead v2,2026-07-10 09:27:06,5,2026,2
+174,14,23,2024-11-03,In-Progress,London Premium Cars,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,11,2024,4
+175,83,6,2024-01-21,Converted,Pune Car World,Tamil Nadu,Seed data lead v2,2026-07-10 09:27:06,1,2024,1
+176,44,22,2026-05-16,Rejected,Chennai Auto Park,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,5,2026,2
+177,85,24,2025-10-08,Converted,Bengaluru Wheels,Tamil Nadu,Seed data lead v2,2026-07-10 09:27:06,10,2025,4
+178,77,15,2024-04-26,In-Progress,Singapore Car Centre,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,4,2024,2
+179,94,11,2025-05-20,Converted,Pune Car World,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,5,2025,2
+180,145,24,2026-05-06,On-Hold,Sydney Prestige Cars,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,5,2026,2
+181,4,26,2026-03-20,New,Chennai Auto Park,Karnataka,Seed data lead v2,2026-07-10 09:27:06,3,2026,1
+182,85,9,2025-09-01,Converted,New York Auto Group,Tamil Nadu,Seed data lead v2,2026-07-10 09:27:06,9,2025,3
+183,44,18,2025-07-06,In-Progress,Dubai Luxury Motors,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,7,2025,3
+184,141,8,2024-07-10,Rejected,Singapore Car Centre,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,7,2024,3
+185,162,13,2024-04-23,New,Singapore Car Centre,Bavaria,Seed data lead v2,2026-07-10 09:27:06,4,2024,2
+186,170,4,2025-06-06,Converted,Chennai Auto Park,Singapore,Seed data lead v2,2026-07-10 09:27:06,6,2025,2
+187,118,5,2025-01-24,Converted,Hyderabad Motors,Delhi,Seed data lead v2,2026-07-10 09:27:06,1,2025,1
+188,124,18,2024-04-01,Rejected,Bengaluru Wheels,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,4,2024,2
+189,164,5,2025-06-03,In-Progress,Hyderabad Motors,Hesse,Seed data lead v2,2026-07-10 09:27:06,6,2025,2
+190,6,18,2024-03-08,On-Hold,Delhi Car Palace,Telangana,Seed data lead v2,2026-07-10 09:27:06,3,2024,1
+191,15,5,2026-03-13,Converted,Singapore Car Centre,Delhi,Seed data lead v2,2026-07-10 09:27:06,3,2026,1
+192,42,13,2024-02-11,New,Pune Car World,Karnataka,Seed data lead v2,2026-07-10 09:27:06,2,2024,1
+193,46,1,2025-05-10,On-Hold,Sydney Prestige Cars,Karnataka,Seed data lead v2,2026-07-10 09:27:06,5,2025,2
+194,131,21,2025-04-17,On-Hold,Bengaluru Wheels,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,4,2025,2
+195,117,15,2024-06-06,New,Sydney Prestige Cars,Tamil Nadu,Seed data lead v2,2026-07-10 09:27:06,6,2024,2
+196,139,26,2025-04-21,Converted,Pune Car World,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,4,2025,2
+197,116,20,2024-12-05,On-Hold,New York Auto Group,Delhi,Seed data lead v2,2026-07-10 09:27:06,12,2024,4
+198,24,20,2025-09-25,Converted,Delhi Car Palace,West Bengal,Seed data lead v2,2026-07-10 09:27:06,9,2025,3
+199,152,9,2024-12-01,Rejected,Mumbai Auto Hub,California,Seed data lead v2,2026-07-10 09:27:06,12,2024,4
+200,145,2,2025-05-12,In-Progress,London Premium Cars,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,5,2025,2
+201,4,21,2025-09-16,New,Singapore Car Centre,Karnataka,Seed data lead v2,2026-07-10 09:27:06,9,2025,3
+202,112,14,2024-09-26,Converted,Bengaluru Wheels,Gujarat,Seed data lead v2,2026-07-10 09:27:06,9,2024,3
+203,124,11,2024-11-09,Converted,Hyderabad Motors,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,11,2024,4
+204,168,22,2024-01-05,In-Progress,Pune Car World,Victoria,Seed data lead v2,2026-07-10 09:27:06,1,2024,1
+205,162,24,2025-09-07,Converted,Bengaluru Wheels,Bavaria,Seed data lead v2,2026-07-10 09:27:06,9,2025,3
+206,88,22,2025-07-09,In-Progress,Mumbai Auto Hub,West Bengal,Seed data lead v2,2026-07-10 09:27:06,7,2025,3
+207,151,7,2026-01-04,In-Progress,Sydney Prestige Cars,New York,Seed data lead v2,2026-07-10 09:27:06,1,2026,1
+208,155,8,2024-04-25,Converted,Dubai Luxury Motors,Florida,Seed data lead v2,2026-07-10 09:27:06,4,2024,2
+209,32,10,2025-01-29,New,Bengaluru Wheels,Delhi,Seed data lead v2,2026-07-10 09:27:06,1,2025,1
+210,163,2,2025-09-21,Converted,Pune Car World,Berlin,Seed data lead v2,2026-07-10 09:27:06,9,2025,3
+211,37,2,2025-01-30,Converted,Chennai Auto Park,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,1,2025,1
+212,31,14,2026-05-15,Converted,Pune Car World,West Bengal,Seed data lead v2,2026-07-10 09:27:06,5,2026,2
+213,30,2,2025-02-03,Rejected,New York Auto Group,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,2,2025,1
+214,107,17,2025-02-21,New,Bengaluru Wheels,Karnataka,Seed data lead v2,2026-07-10 09:27:06,2,2025,1
+215,57,21,2025-07-19,New,Singapore Car Centre,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,7,2025,3
+216,104,23,2024-04-24,Converted,Pune Car World,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,4,2024,2
+217,145,19,2024-09-08,On-Hold,Sydney Prestige Cars,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,9,2024,3
+218,131,8,2024-04-09,In-Progress,Pune Car World,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,4,2024,2
+219,139,24,2024-06-20,Rejected,Sydney Prestige Cars,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,6,2024,2
+220,66,8,2025-03-16,New,Chennai Auto Park,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,3,2025,1
+221,124,5,2024-09-06,Rejected,Singapore Car Centre,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,9,2024,3
+222,142,18,2024-02-12,New,Delhi Car Palace,Uttar Pradesh,Seed data lead v2,2026-07-10 09:27:06,2,2024,1
+223,71,18,2026-04-01,In-Progress,Delhi Car Palace,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,4,2026,2
+224,49,18,2024-03-11,New,Bengaluru Wheels,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,3,2024,1
+225,128,11,2025-04-30,Converted,Tokyo Motors,West Bengal,Seed data lead v2,2026-07-10 09:27:06,4,2025,2
+226,155,25,2024-12-09,Rejected,London Premium Cars,Florida,Seed data lead v2,2026-07-10 09:27:06,12,2024,4
+227,67,7,2025-11-09,Converted,New York Auto Group,West Bengal,Seed data lead v2,2026-07-10 09:27:06,11,2025,4
+228,48,11,2026-03-25,New,Singapore Car Centre,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,3,2026,1
+229,139,18,2026-02-24,On-Hold,Delhi Car Palace,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,2,2026,1
+230,10,18,2025-06-01,Converted,Delhi Car Palace,West Bengal,Seed data lead v2,2026-07-10 09:27:06,6,2025,2
+231,17,15,2025-06-07,Converted,Tokyo Motors,Uttar Pradesh,Seed data lead v2,2026-07-10 09:27:06,6,2025,2
+232,166,5,2024-01-22,On-Hold,Mumbai Auto Hub,Osaka,Seed data lead v2,2026-07-10 09:27:06,1,2024,1
+233,133,22,2025-12-20,Converted,Sydney Prestige Cars,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,12,2025,4
+234,5,10,2025-09-27,New,Tokyo Motors,Gujarat,Seed data lead v2,2026-07-10 09:27:06,9,2025,3
+235,75,23,2024-01-24,On-Hold,Sydney Prestige Cars,Telangana,Seed data lead v2,2026-07-10 09:27:06,1,2024,1
+236,88,20,2025-12-05,Rejected,Bengaluru Wheels,West Bengal,Seed data lead v2,2026-07-10 09:27:06,12,2025,4
+237,40,2,2026-01-04,Rejected,Chennai Auto Park,Uttar Pradesh,Seed data lead v2,2026-07-10 09:27:06,1,2026,1
+238,37,18,2024-03-19,Converted,Bengaluru Wheels,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,3,2024,1
+239,98,12,2025-04-26,Converted,London Premium Cars,Tamil Nadu,Seed data lead v2,2026-07-10 09:27:06,4,2025,2
+240,55,18,2024-06-06,In-Progress,Delhi Car Palace,Delhi,Seed data lead v2,2026-07-10 09:27:06,6,2024,2
+241,104,23,2026-01-12,Rejected,Mumbai Auto Hub,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,1,2026,1
+242,126,22,2025-06-04,In-Progress,Delhi Car Palace,Telangana,Seed data lead v2,2026-07-10 09:27:06,6,2025,2
+243,6,20,2024-10-29,Rejected,Tokyo Motors,Telangana,Seed data lead v2,2026-07-10 09:27:06,10,2024,4
+244,85,12,2024-08-03,Rejected,Mumbai Auto Hub,Tamil Nadu,Seed data lead v2,2026-07-10 09:27:06,8,2024,3
+245,123,5,2024-10-03,New,Hyderabad Motors,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,10,2024,4
+246,104,11,2024-02-11,Rejected,Dubai Luxury Motors,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,2,2024,1
+247,151,2,2026-04-01,Converted,Sydney Prestige Cars,New York,Seed data lead v2,2026-07-10 09:27:06,4,2026,2
+248,150,16,2024-02-16,New,Bengaluru Wheels,Tamil Nadu,Seed data lead v2,2026-07-10 09:27:06,2,2024,1
+249,157,10,2025-11-13,Rejected,Delhi Car Palace,England,Seed data lead v2,2026-07-10 09:27:06,11,2025,4
+250,83,14,2026-01-30,In-Progress,Bengaluru Wheels,Tamil Nadu,Seed data lead v2,2026-07-10 09:27:06,1,2026,1
+251,45,10,2025-09-11,New,London Premium Cars,Delhi,Seed data lead v2,2026-07-10 09:27:06,9,2025,3
+252,12,16,2025-10-20,On-Hold,Dubai Luxury Motors,Telangana,Seed data lead v2,2026-07-10 09:27:06,10,2025,4
+253,83,3,2024-03-23,Converted,Mumbai Auto Hub,Tamil Nadu,Seed data lead v2,2026-07-10 09:27:06,3,2024,1
+254,2,6,2025-01-28,Converted,Dubai Luxury Motors,West Bengal,Seed data lead v2,2026-07-10 09:27:06,1,2025,1
+255,45,2,2024-01-25,New,Hyderabad Motors,Delhi,Seed data lead v2,2026-07-10 09:27:06,1,2024,1
+256,113,13,2025-10-01,New,London Premium Cars,Tamil Nadu,Seed data lead v2,2026-07-10 09:27:06,10,2025,4
+257,19,16,2025-02-15,In-Progress,London Premium Cars,Telangana,Seed data lead v2,2026-07-10 09:27:06,2,2025,1
+258,12,16,2026-04-10,Rejected,Singapore Car Centre,Telangana,Seed data lead v2,2026-07-10 09:27:06,4,2026,2
+259,10,12,2024-01-31,Converted,Pune Car World,West Bengal,Seed data lead v2,2026-07-10 09:27:06,1,2024,1
+260,77,14,2024-12-31,On-Hold,Delhi Car Palace,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,12,2024,4
+261,75,2,2025-06-20,In-Progress,Pune Car World,Telangana,Seed data lead v2,2026-07-10 09:27:06,6,2025,2
+262,11,21,2025-05-12,New,Sydney Prestige Cars,Delhi,Seed data lead v2,2026-07-10 09:27:06,5,2025,2
+263,77,21,2026-04-27,Rejected,Pune Car World,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,4,2026,2
+264,70,3,2026-05-19,In-Progress,Hyderabad Motors,Gujarat,Seed data lead v2,2026-07-10 09:27:06,5,2026,2
+265,25,1,2025-01-06,New,New York Auto Group,Uttar Pradesh,Seed data lead v2,2026-07-10 09:27:06,1,2025,1
+266,5,22,2024-02-09,In-Progress,Bengaluru Wheels,Gujarat,Seed data lead v2,2026-07-10 09:27:06,2,2024,1
+267,131,24,2024-11-29,In-Progress,Sydney Prestige Cars,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,11,2024,4
+268,28,17,2024-09-12,Converted,Delhi Car Palace,Delhi,Seed data lead v2,2026-07-10 09:27:06,9,2024,3
+269,86,23,2025-12-04,In-Progress,Delhi Car Palace,West Bengal,Seed data lead v2,2026-07-10 09:27:06,12,2025,4
+270,64,6,2025-01-07,New,Mumbai Auto Hub,Karnataka,Seed data lead v2,2026-07-10 09:27:06,1,2025,1
+271,48,2,2025-07-26,Rejected,Pune Car World,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,7,2025,3
+272,67,25,2024-11-20,Rejected,Hyderabad Motors,West Bengal,Seed data lead v2,2026-07-10 09:27:06,11,2024,4
+273,122,20,2024-07-27,New,Singapore Car Centre,West Bengal,Seed data lead v2,2026-07-10 09:27:06,7,2024,3
+274,170,7,2026-05-22,New,London Premium Cars,Singapore,Seed data lead v2,2026-07-10 09:27:06,5,2026,2
+275,137,18,2024-05-09,In-Progress,New York Auto Group,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,5,2024,2
+276,128,14,2025-02-25,New,Singapore Car Centre,West Bengal,Seed data lead v2,2026-07-10 09:27:06,2,2025,1
+277,61,24,2026-05-13,On-Hold,Tokyo Motors,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,5,2026,2
+278,105,3,2024-04-24,Rejected,Mumbai Auto Hub,Tamil Nadu,Seed data lead v2,2026-07-10 09:27:06,4,2024,2
+279,123,1,2024-02-17,In-Progress,Delhi Car Palace,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,2,2024,1
+280,57,4,2024-02-22,On-Hold,New York Auto Group,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,2,2024,1
+281,154,16,2026-03-13,In-Progress,Bengaluru Wheels,Illinois,Seed data lead v2,2026-07-10 09:27:06,3,2026,1
+282,111,25,2026-04-06,New,Bengaluru Wheels,Gujarat,Seed data lead v2,2026-07-10 09:27:06,4,2026,2
+283,147,15,2025-02-08,Converted,New York Auto Group,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,2,2025,1
+284,63,16,2026-05-20,In-Progress,Pune Car World,Rajasthan,Seed data lead v2,2026-07-10 09:27:06,5,2026,2
+285,35,23,2025-09-29,Rejected,London Premium Cars,Gujarat,Seed data lead v2,2026-07-10 09:27:06,9,2025,3
+286,107,13,2024-05-09,On-Hold,Mumbai Auto Hub,Karnataka,Seed data lead v2,2026-07-10 09:27:06,5,2024,2
+287,101,19,2024-10-25,New,Mumbai Auto Hub,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,10,2024,4
+288,50,24,2024-07-18,Rejected,Tokyo Motors,Gujarat,Seed data lead v2,2026-07-10 09:27:06,7,2024,3
+289,45,1,2024-02-13,On-Hold,Chennai Auto Park,Delhi,Seed data lead v2,2026-07-10 09:27:06,2,2024,1
+290,107,6,2025-01-25,On-Hold,Singapore Car Centre,Karnataka,Seed data lead v2,2026-07-10 09:27:06,1,2025,1
+291,100,14,2025-07-26,In-Progress,Sydney Prestige Cars,Tamil Nadu,Seed data lead v2,2026-07-10 09:27:06,7,2025,3
+292,153,14,2024-10-08,Converted,Sydney Prestige Cars,Texas,Seed data lead v2,2026-07-10 09:27:06,10,2024,4
+293,27,5,2025-11-29,Rejected,Sydney Prestige Cars,Uttar Pradesh,Seed data lead v2,2026-07-10 09:27:06,11,2025,4
+294,15,22,2024-08-06,In-Progress,Chennai Auto Park,Delhi,Seed data lead v2,2026-07-10 09:27:06,8,2024,3
+295,146,21,2024-08-06,On-Hold,Dubai Luxury Motors,Tamil Nadu,Seed data lead v2,2026-07-10 09:27:06,8,2024,3
+296,70,26,2026-03-15,On-Hold,Delhi Car Palace,Gujarat,Seed data lead v2,2026-07-10 09:27:06,3,2026,1
+297,90,10,2024-10-19,On-Hold,Sydney Prestige Cars,Delhi,Seed data lead v2,2026-07-10 09:27:06,10,2024,4
+298,61,26,2026-05-01,Converted,Singapore Car Centre,Maharashtra,Seed data lead v2,2026-07-10 09:27:06,5,2026,2
+299,82,20,2026-05-05,Converted,Chennai Auto Park,Tamil Nadu,Seed data lead v2,2026-07-10 09:27:06,5,2026,2
+300,12,3,2024-08-21,Converted,Pune Car World,Telangana,Seed data lead v2,2026-07-10 09:27:06,8,2024,3
+301,151,5,2026-07-10,New,Hyderabad Motors,Telangana,,2026-07-10 15:44:34,7,2026,3
+302,171,7,2026-07-13,Converted,Hyderabad Motors,Telangana,,2026-07-13 04:55:12,7,2026,3

@@ -1,0 +1,86 @@
+table,table_description,column,dtype,non_null,null,unique,min,max,mean
+customers,Operational customer profiles with financial attributes,customer_id,int64,151,0,151,1,151,76
+customers,Operational customer profiles with financial attributes,full_name,str,151,0,130,,,
+customers,Operational customer profiles with financial attributes,email,str,151,0,151,,,
+customers,Operational customer profiles with financial attributes,phone,str,151,0,151,,,
+customers,Operational customer profiles with financial attributes,city,str,151,0,10,,,
+customers,Operational customer profiles with financial attributes,state,str,151,0,9,,,
+customers,Operational customer profiles with financial attributes,annual_income,float64,151,0,151,279980,9703976,2344567.16
+customers,Operational customer profiles with financial attributes,credit_score,Int64,151,0,117,551,900,730.01
+customers,Operational customer profiles with financial attributes,employment_type,str,151,0,4,,,
+customers,Operational customer profiles with financial attributes,created_at,datetime64[us],151,0,2,,,
+customers,Operational customer profiles with financial attributes,monthly_income,float64,151,0,151,23331.67,808664.67,195380.6
+customers,Operational customer profiles with financial attributes,income_segment,category,151,0,6,,,
+customers,Operational customer profiles with financial attributes,credit_band,category,151,0,3,,,
+vehicles,Vehicle inventory with pricing and segment classification,vehicle_id,int64,18,0,18,1,18,9.5
+vehicles,Vehicle inventory with pricing and segment classification,make,str,18,0,9,,,
+vehicles,Vehicle inventory with pricing and segment classification,model,str,18,0,17,,,
+vehicles,Vehicle inventory with pricing and segment classification,variant,str,18,0,16,,,
+vehicles,Vehicle inventory with pricing and segment classification,year,Int64,18,0,2,2023,2024,2023.61
+vehicles,Vehicle inventory with pricing and segment classification,price_inr,float64,18,0,16,750000,6100000,1959388.89
+vehicles,Vehicle inventory with pricing and segment classification,segment,str,18,0,6,,,
+vehicles,Vehicle inventory with pricing and segment classification,fuel_type,str,18,0,4,,,
+vehicles,Vehicle inventory with pricing and segment classification,country_origin,str,18,0,5,,,
+vehicles,Vehicle inventory with pricing and segment classification,created_at,datetime64[us],18,0,2,,,
+vehicles,Vehicle inventory with pricing and segment classification,price_segment,category,18,0,4,,,
+leads,Customer enquiries linked to vehicles and dealers,lead_id,int64,250,0,250,1,250,125.5
+leads,Customer enquiries linked to vehicles and dealers,customer_id,int64,250,0,123,1,150,77.77
+leads,Customer enquiries linked to vehicles and dealers,vehicle_id,int64,250,0,18,1,18,9.6
+leads,Customer enquiries linked to vehicles and dealers,enquiry_date,datetime64[us],250,0,212,,,
+leads,Customer enquiries linked to vehicles and dealers,status,str,250,0,5,,,
+leads,Customer enquiries linked to vehicles and dealers,dealer_name,str,250,0,9,,,
+leads,Customer enquiries linked to vehicles and dealers,state,str,250,0,9,,,
+leads,Customer enquiries linked to vehicles and dealers,notes,str,250,0,1,,,
+leads,Customer enquiries linked to vehicles and dealers,created_at,datetime64[us],250,0,1,,,
+leads,Customer enquiries linked to vehicles and dealers,enquiry_month,int32,250,0,12,1,12,6.04
+leads,Customer enquiries linked to vehicles and dealers,enquiry_year,int32,250,0,3,2024,2026,2024.74
+leads,Customer enquiries linked to vehicles and dealers,enquiry_quarter,int32,250,0,4,1,4,2.36
+transactions,Completed sales with EMI computation and payment mode,transaction_id,int64,100,0,100,1,100,50.5
+transactions,Completed sales with EMI computation and payment mode,lead_id,float64,99,1,99,2,250,125.37
+transactions,Completed sales with EMI computation and payment mode,customer_id,int64,100,0,72,1,148,75.21
+transactions,Completed sales with EMI computation and payment mode,vehicle_id,int64,100,0,18,1,18,8.91
+transactions,Completed sales with EMI computation and payment mode,transaction_date,datetime64[us],100,0,98,,,
+transactions,Completed sales with EMI computation and payment mode,final_price_inr,float64,100,0,16,750000,6100000,1895750
+transactions,Completed sales with EMI computation and payment mode,loan_amount,float64,66,34,59,525000,5368000,1443199.09
+transactions,Completed sales with EMI computation and payment mode,loan_tenure_months,Int64,66,34,6,24,84,53.45
+transactions,Completed sales with EMI computation and payment mode,interest_rate,float64,66,34,61,7.5,13.86,10.43
+transactions,Completed sales with EMI computation and payment mode,emi_amount,float64,66,34,66,9223.42,158133.26,39279.96
+transactions,Completed sales with EMI computation and payment mode,payment_mode,str,100,0,3,,,
+transactions,Completed sales with EMI computation and payment mode,created_at,datetime64[us],100,0,2,,,
+transactions,Completed sales with EMI computation and payment mode,tx_month,int32,100,0,12,1,12,5.94
+transactions,Completed sales with EMI computation and payment mode,tx_year,int32,100,0,3,2024,2026,2024.85
+transactions,Completed sales with EMI computation and payment mode,tx_quarter,int32,100,0,4,1,4,2.3
+transactions,Completed sales with EMI computation and payment mode,is_loan,int64,100,0,2,0,1,0.66
+master,Denormalized join of all 4 tables for analytical queries,transaction_id,int64,100,0,100,1,100,50.5
+master,Denormalized join of all 4 tables for analytical queries,lead_id,float64,99,1,99,2,250,125.37
+master,Denormalized join of all 4 tables for analytical queries,customer_id,int64,100,0,72,1,148,75.21
+master,Denormalized join of all 4 tables for analytical queries,vehicle_id,int64,100,0,18,1,18,8.91
+master,Denormalized join of all 4 tables for analytical queries,transaction_date,datetime64[us],100,0,98,,,
+master,Denormalized join of all 4 tables for analytical queries,final_price_inr,float64,100,0,16,750000,6100000,1895750
+master,Denormalized join of all 4 tables for analytical queries,loan_amount,float64,66,34,59,525000,5368000,1443199.09
+master,Denormalized join of all 4 tables for analytical queries,loan_tenure_months,Int64,66,34,6,24,84,53.45
+master,Denormalized join of all 4 tables for analytical queries,interest_rate,float64,66,34,61,7.5,13.86,10.43
+master,Denormalized join of all 4 tables for analytical queries,emi_amount,float64,66,34,66,9223.42,158133.26,39279.96
+master,Denormalized join of all 4 tables for analytical queries,payment_mode,str,100,0,3,,,
+master,Denormalized join of all 4 tables for analytical queries,created_at,datetime64[us],100,0,2,,,
+master,Denormalized join of all 4 tables for analytical queries,tx_month,int32,100,0,12,1,12,5.94
+master,Denormalized join of all 4 tables for analytical queries,tx_year,int32,100,0,3,2024,2026,2024.85
+master,Denormalized join of all 4 tables for analytical queries,tx_quarter,int32,100,0,4,1,4,2.3
+master,Denormalized join of all 4 tables for analytical queries,is_loan,int64,100,0,2,0,1,0.66
+master,Denormalized join of all 4 tables for analytical queries,full_name,str,100,0,67,,,
+master,Denormalized join of all 4 tables for analytical queries,city,str,100,0,10,,,
+master,Denormalized join of all 4 tables for analytical queries,state,str,100,0,9,,,
+master,Denormalized join of all 4 tables for analytical queries,annual_income,float64,100,0,72,279980,9703976,2455623.7
+master,Denormalized join of all 4 tables for analytical queries,monthly_income,float64,100,0,72,23331.67,808664.67,204635.31
+master,Denormalized join of all 4 tables for analytical queries,credit_score,Int64,100,0,63,556,896,723.16
+master,Denormalized join of all 4 tables for analytical queries,employment_type,str,100,0,4,,,
+master,Denormalized join of all 4 tables for analytical queries,income_segment,category,100,0,6,,,
+master,Denormalized join of all 4 tables for analytical queries,credit_band,category,100,0,3,,,
+master,Denormalized join of all 4 tables for analytical queries,make,str,100,0,9,,,
+master,Denormalized join of all 4 tables for analytical queries,model,str,100,0,17,,,
+master,Denormalized join of all 4 tables for analytical queries,segment,str,100,0,6,,,
+master,Denormalized join of all 4 tables for analytical queries,fuel_type,str,100,0,4,,,
+master,Denormalized join of all 4 tables for analytical queries,price_inr,float64,100,0,16,750000,6100000,1895750
+master,Denormalized join of all 4 tables for analytical queries,price_segment,category,100,0,4,,,
+master,Denormalized join of all 4 tables for analytical queries,affordability_ratio,float64,66,34,66,0.03,3.12,0.35
+master,Denormalized join of all 4 tables for analytical queries,is_affordable,Int64,100,0,2,0,1,0.48

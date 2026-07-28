@@ -1,0 +1,9 @@
+country,brand,units_sold,year,segment
+USA,Toyota,450000,2023,SUV
+USA,Ford,380000,2023,Truck
+Germany,Volkswagen,310000,2023,Sedan
+India,Maruti Suzuki,520000,2023,Hatchback
+India,Hyundai,290000,2023,Sedan
+China,BYD,800000,2023,EV
+Japan,Honda,260000,2023,Sedan
+UK,Jaguar,45000,2023,Luxury
