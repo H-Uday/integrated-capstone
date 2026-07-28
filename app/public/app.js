@@ -21,7 +21,10 @@ function requireLogin() {
 }
 
 // CarIQ Frontend — API Client
-const API = 'http://localhost:3000/api';
+// Auto-detect API URL — localhost in dev, Railway URL in production
+const API = window.location.hostname === 'localhost'
+  ? 'http://localhost:3000/api'
+  : `${window.location.origin}/api`;
 
 // ── Utility ──────────────────────────────────────────────────
 function showAlert(id, message, type) {

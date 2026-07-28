@@ -27,6 +27,13 @@ DATA_DIR = Path(__file__).parent / "data"
 
 @st.cache_data
 def load_data():
+    # On cloud, run pipeline first if CSVs missing
+    if not (DATA_DIR / "master.csv").exists():
+        st.info("🔄 First run — generating analytics data...")
+        import subprocess
+        import sys
+        subprocess.run([sys.executable, str(Path(__file__).parent / "src" / "pipeline.py")])
+
     master    = pd.read_csv(DATA_DIR / "master.csv")
     customers = pd.read_csv(DATA_DIR / "customers.csv")
     vehicles  = pd.read_csv(DATA_DIR / "vehicles.csv")
@@ -36,9 +43,6 @@ def load_data():
     leads['enquiry_date']      = pd.to_datetime(leads['enquiry_date'])
 
     return master, customers, vehicles, leads
-
-master, customers, vehicles, leads = load_data()
-loans = master[master['payment_mode'] == 'Loan'].copy()
 
 # ── Sidebar ──────────────────────────────────────────────────────
 st.sidebar.image(

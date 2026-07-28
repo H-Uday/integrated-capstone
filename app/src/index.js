@@ -14,7 +14,16 @@ const transactionsRouter = require('./routes/transactions');
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'https://localhost:3000',
+    /\.railway\.app$/,
+    /\.vercel\.app$/,
+    /\.streamlit\.app$/,
+  ],
+  credentials: true,
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // Serve frontend static files
@@ -31,6 +40,23 @@ app.use(express.static(path.join(__dirname, '../public'), {
 
 // Run DB migrations on startup
 runMigrations();
+
+// Auto-seed database if empty (for cloud deployment)
+async function autoSeed() {
+  try {
+    const { db } = require('./config/database');
+    const count = db.prepare('SELECT COUNT(*) as c FROM customers').get();
+    if (count.c === 0) {
+      console.log('🌱 Empty database detected — running auto-seed...');
+      require('./seed');
+    } else {
+      console.log(`✅ Database has ${count.c} customers — skipping seed`);
+    }
+  } catch (err) {
+    console.log('⚠️  Auto-seed check failed:', err.message);
+  }
+}
+autoSeed();
 
 // Start dealer alert scheduler
 const { startScheduler } = require('./alerts/alertScheduler');
