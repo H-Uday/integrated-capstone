@@ -81,6 +81,19 @@ exclusively through the SQLite database. No cross-imports. No shared runtime.
 
 ## 🚀 Setup & Run
 
+## 🌐 Live Demo
+
+| Service                   | URL                                               |
+| ------------------------- | ------------------------------------------------- |
+| **Express API + Web App** | https://cariq-app.onrender.com                    |
+| **Streamlit Analytics**   | https://cariq-analytics.streamlit.app             |
+| **GitHub Repository**     | https://github.com/Uday183020/integrated-capstone |
+
+### Quick API Test
+
+````bash
+curl [https://cariq-app.onrender.com/health](https://cariq-app.onrender.com/health)
+
 ### Prerequisites
 
 - Node.js v18+ and npm
@@ -92,7 +105,7 @@ exclusively through the SQLite database. No cross-imports. No shared runtime.
 ```bash
 git clone https://github.com/H-Uday/integrated-capstone
 cd integrated-capstone
-```
+````
 
 ### 2. Setup the App (Node.js)
 
