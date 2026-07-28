@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: cariq-api
+    env: node
+    rootDir: app
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 3000
+      - key: NODE_ENV
+        value: production
+      - key: DB_PATH
+        value: ./cariq.sqlite
+      - key: DB_MODE
+        value: sqlite
+      - key: JWT_SECRET
+        value: cariq_jwt_secret_2026_secure_production
+      - key: ALERT_ENABLED
+        value: false

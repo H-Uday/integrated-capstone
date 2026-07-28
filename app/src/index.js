@@ -18,6 +18,8 @@ app.use(cors({
   origin: [
     'http://localhost:3000',
     'https://localhost:3000',
+    /\.onrender\.app$/,  
+    /\.onrender\.com$/,
     /\.railway\.app$/,
     /\.vercel\.app$/,
     /\.streamlit\.app$/,
