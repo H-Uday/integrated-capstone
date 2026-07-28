@@ -95,7 +95,8 @@
     }
     setLoading('login-btn', true);
     try {
-      const res  = await fetch('http://localhost:3000/api/auth/login', {
+      // ✅ CHANGED: Uses the API variable from app.js instead of hardcoded localhost
+      const res  = await fetch(`${API}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
