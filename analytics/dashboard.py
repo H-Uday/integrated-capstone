@@ -59,6 +59,8 @@ page = st.sidebar.radio(
         "Q4 — Financial Health",
         "Q5 — Price Sensitivity",
         "🤖 ML Affordability Model",
+        "📈 Q7 — Sales Forecast",
+        "💎 Q8 — Customer CLV",
     ]
 )
 
@@ -706,4 +708,187 @@ elif page == "🤖 ML Affordability Model":
     except Exception as e:
         st.error(f"Error loading ML model: {e}")
         st.exception(e)
-    
+
+
+    # ════════════════════════════════════════════════════════════════
+# PAGE: Q7 — SALES FORECASTING
+# ════════════════════════════════════════════════════════════════
+elif page == "📈 Q7 — Sales Forecast":
+    st.title("📈 Q7: Sales Volume Forecasting")
+    st.markdown(
+        "**ARIMA Time-Series Model** — forecasts next 3 months of "
+        "transaction volume based on 2024–2026 historical patterns."
+    )
+    st.divider()
+
+    import sys
+    sys.path.append(str(Path(__file__).parent / 'src'))
+
+    try:
+        from forecasting import (
+            load_monthly_series, forecast_next_months,
+            get_seasonality_insights
+        )
+
+        series = load_monthly_series()
+        forecast_df, series, method = forecast_next_months(series, n_months=3)
+        insights = get_seasonality_insights(series)
+
+        col1, col2, col3, col4 = st.columns(4)
+        col1.metric("Peak Month",    insights['peak_month'])
+        col2.metric("Peak Avg Txns", f"{insights['peak_avg']:.1f}")
+        col3.metric("Low Month",     insights['low_month'])
+        col4.metric("Overall Avg",   f"{insights['overall_mean']:.1f}/month")
+
+        st.divider()
+
+        # Historical + Forecast chart
+        hist_df = series.reset_index()
+        hist_df.columns = ['period', 'count']
+
+        fore_df = forecast_df.reset_index()
+
+        fig1 = go.Figure()
+        fig1.add_trace(go.Scatter(
+            x=hist_df['period'], y=hist_df['count'],
+            mode='lines+markers', name='Historical',
+            line=dict(color='#00d9d9', width=2),
+        ))
+        if not fore_df.empty:
+            fig1.add_trace(go.Scatter(
+                x=fore_df['period'], y=fore_df['forecast'],
+                mode='lines+markers', name='Forecast',
+                line=dict(color='#f39c12', width=2, dash='dash'),
+                marker=dict(size=8, symbol='diamond'),
+            ))
+            fig1.add_trace(go.Scatter(
+                x=pd.concat([fore_df['period'], fore_df['period'][::-1]]),
+                y=pd.concat([fore_df['upper_80'], fore_df['lower_80'][::-1]]),
+                fill='toself',
+                fillcolor='rgba(243,156,18,0.15)',
+                line=dict(color='rgba(255,255,255,0)'),
+                name='80% Confidence Interval',
+            ))
+        fig1.update_layout(
+            title='Monthly Transactions — Historical + 3-Month Forecast',
+            height=420, title_font_size=13,
+        )
+        st.plotly_chart(fig1, use_container_width=True)
+
+        # Seasonality bar
+        months = list(insights['monthly_avg'].keys())
+        values = list(insights['monthly_avg'].values())
+        colors = ['#e74c3c' if m == insights['peak_month']
+                  else '#2ecc71' if m == insights['low_month']
+                  else '#00d9d9' for m in months]
+
+        fig2 = go.Figure(go.Bar(
+            x=months, y=values,
+            marker_color=colors,
+            text=[f"{v:.1f}" for v in values],
+            textposition='outside',
+        ))
+        fig2.update_layout(
+            title='Average Transactions by Month — Seasonality Pattern',
+            height=380, title_font_size=13,
+        )
+        st.plotly_chart(fig2, use_container_width=True)
+
+        st.info(
+            f"💡 **Key Finding:** {insights['peak_month']} is the peak buying month "
+            f"(avg {insights['peak_avg']:.1f} txns). Trend is {insights['trend']}. "
+            f"Plan marketing campaigns in the month BEFORE peak months."
+        )
+
+    except Exception as e:
+        st.error(f"Forecasting error: {e}")
+        st.exception(e)
+
+# ════════════════════════════════════════════════════════════════
+# PAGE: Q8 — CUSTOMER LIFETIME VALUE
+# ════════════════════════════════════════════════════════════════
+elif page == "💎 Q8 — Customer CLV":
+    st.title("💎 Q8: Customer Lifetime Value Analysis")
+    st.markdown(
+        "**CLV = Avg Transaction Value × Purchase Frequency × Customer Lifespan** "
+        "— segments customers into High / Medium / Low value tiers."
+    )
+    st.divider()
+
+    try:
+        from clv import load_clv_data, compute_clv, clv_by_segment, clv_by_employment
+
+        master_data, customers_data = load_clv_data()
+        clv_df  = compute_clv(master_data, customers_data)
+        seg_clv = clv_by_segment(clv_df)
+        emp_clv = clv_by_employment(clv_df)
+
+        high   = (clv_df['clv_tier'] == 'High Value').sum()
+        medium = (clv_df['clv_tier'] == 'Medium Value').sum()
+        low    = (clv_df['clv_tier'] == 'Low Value').sum()
+
+        col1, col2, col3, col4 = st.columns(4)
+        col1.metric("Avg CLV",       f"${clv_df['clv'].mean():,.0f}")
+        col2.metric("High Value",    str(high))
+        col3.metric("Medium Value",  str(medium))
+        col4.metric("Low Value",     str(low))
+
+        st.divider()
+        col1, col2 = st.columns(2)
+
+        with col1:
+            tier_counts = clv_df['clv_tier'].value_counts().reset_index()
+            tier_counts.columns = ['tier', 'count']
+            colors_map = {
+                'High Value':   '#2ecc71',
+                'Medium Value': '#f39c12',
+                'Low Value':    '#e74c3c',
+            }
+            fig1 = px.pie(
+                tier_counts, names='tier', values='count',
+                color='tier', color_discrete_map=colors_map,
+                title='CLV Tier Distribution', hole=0.4,
+            )
+            fig1.update_layout(height=360)
+            st.plotly_chart(fig1, use_container_width=True)
+
+        with col2:
+            seg_clean = seg_clv.dropna(subset=['income_segment'])
+            fig2 = px.bar(
+                seg_clean,
+                x='income_segment', y='avg_clv',
+                color='avg_clv', color_continuous_scale='Greens',
+                title='Avg CLV by Income Segment',
+                text='avg_clv',
+            )
+            fig2.update_traces(texttemplate='$%{text:,.0f}', textposition='outside')
+            fig2.update_layout(height=360, coloraxis_showscale=False)
+            st.plotly_chart(fig2, use_container_width=True)
+
+        # Scatter plot
+        fig3 = px.scatter(
+            clv_df,
+            x='annual_income_usd', y='clv',
+            color='clv_tier',
+            color_discrete_map=colors_map,
+            size='transaction_count',
+            hover_data=['full_name','country','employment_type'],
+            title='CLV vs Annual Income — Customer Value Map',
+            labels={
+                'annual_income_usd': 'Annual Income (USD)',
+                'clv': 'Customer Lifetime Value (USD)',
+            },
+        )
+        fig3.update_layout(height=420)
+        st.plotly_chart(fig3, use_container_width=True)
+
+        st.info(
+            "💡 **Key Finding:** Business owners and Self-Employed customers "
+            "show the highest average CLV. The top 10 customers account for "
+            "a disproportionately high share of total revenue. "
+            "Implement VIP program for High Value tier."
+        )
+
+    except Exception as e:
+        st.error(f"CLV error: {e}")
+        st.exception(e)
