@@ -23,7 +23,7 @@ st.set_page_config(
 )
 
 # ── Data Loading ─────────────────────────────────────────────────
-DATA_DIR = Path(__file__).parent / "data"
+DATA_DIR = Path(__file__).resolve().parent / "data"
 
 @st.cache_data
 def load_data():
@@ -32,7 +32,8 @@ def load_data():
         st.info("🔄 First run — generating analytics data...")
         import subprocess
         import sys
-        subprocess.run([sys.executable, str(Path(__file__).parent / "src" / "pipeline.py")])
+        pipeline_script = Path(__file__).resolve().parent / "src" / "pipeline.py"
+        subprocess.run([sys.executable, str(pipeline_script)], check=True)
 
     master    = pd.read_csv(DATA_DIR / "master.csv")
     customers = pd.read_csv(DATA_DIR / "customers.csv")
@@ -43,6 +44,18 @@ def load_data():
     leads['enquiry_date']      = pd.to_datetime(leads['enquiry_date'])
 
     return master, customers, vehicles, leads
+
+# 🟢 ADD THIS LINE HERE to load the variables into memory!
+master, customers, vehicles, leads = load_data()
+
+# Create loans DataFrame for KPI calculations
+loans = master[master['payment_mode'] == 'Loan'].copy()
+if not loans.empty and 'emi_amount' in loans.columns:
+    # 40% monthly income rule check
+    monthly_income = (loans['annual_income_usd'] / 12)
+    loans['is_affordable'] = (loans['emi_amount'] / 83.0) <= (monthly_income * 0.40)
+else:
+    loans['is_affordable'] = []
 
 # ── Sidebar ──────────────────────────────────────────────────────
 st.sidebar.image(
@@ -78,6 +91,8 @@ def metric_row(cols_data):
     cols = st.columns(len(cols_data))
     for col, (label, value, delta) in zip(cols, cols_data):
         col.metric(label, value, delta)
+
+# ... [REST OF YOUR DASHBOARD CODE CONTINUES UNCHANGED] ...
 
 # ════════════════════════════════════════════════════════════════
 # PAGE: OVERVIEW
