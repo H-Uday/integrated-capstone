@@ -4,9 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
-  },
+  "start":      "node src/index.js",
+  "dev":        "nodemon src/index.js",
+  "migrate:pg": "node src/config/migrate_to_pg.js",
+  "prod:check": "node src/config/production.js",
+  "seed":       "node src/seed.js"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -19,7 +22,9 @@
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
     "node-cron": "^4.6.0",
-    "nodemailer": "^9.0.3"
+    "nodemailer": "^9.0.3",
+    "pg": "^8.22.0",
+    "pg-pool": "^3.14.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
