@@ -1,3 +1,4 @@
+const path = require('path');
 const { getMonthlyReportData, getQuickStats } = require('../reports/reportData');
 const { generateMonthlyPDF }                  = require('../reports/pdfGenerator');
 
@@ -21,7 +22,7 @@ function generateMonthlyReport(req, res) {
   } catch (err) {
     console.error('generateMonthlyReport error:', err.message);
     if (!res.headersSent) {
-      res.status(500).json({ success: false, error: 'PDF generation failed' });
+      res.status(500).json({ success: false, error: err.message });
     }
   }
 }
@@ -36,20 +37,20 @@ function previewReportData(req, res) {
     const data = getMonthlyReportData(year, month);
     return res.status(200).json({
       success: true,
-      data:    {
-        report_period:    data.report_period,
-        summary:          data.summary,
-        system_totals:    data.system_totals,
-        segment_breakdown:data.segment_breakdown,
-        payment_breakdown:data.payment_breakdown,
-        stalled_count:    data.stalled_leads.length,
-        transaction_count:data.transactions.length,
-        generated_at:     data.generated_at,
+      data: {
+        report_period:     data.report_period,
+        summary:           data.summary,
+        system_totals:     data.system_totals,
+        segment_breakdown: data.segment_breakdown,
+        payment_breakdown: data.payment_breakdown,
+        stalled_count:     data.stalled_leads.length,
+        transaction_count: data.transactions.length,
+        generated_at:      data.generated_at,
       },
     });
   } catch (err) {
     console.error('previewReportData error:', err.message);
-    return res.status(500).json({ success: false, error: 'Data fetch failed' });
+    return res.status(500).json({ success: false, error: err.message });
   }
 }
 
@@ -59,8 +60,28 @@ function getQuickStatsRoute(req, res) {
     const stats = getQuickStats();
     return res.status(200).json({ success: true, stats });
   } catch (err) {
-    return res.status(500).json({ success: false, error: 'Stats fetch failed' });
+    return res.status(500).json({ success: false, error: err.message });
   }
 }
 
-module.exports = { generateMonthlyReport, previewReportData, getQuickStatsRoute };
+// GET /api/reports/analytics-pdf
+function downloadAnalyticsPDF(req, res) {
+  const pdfPath = path.join(__dirname, '../../../analytics/reports/CarIQ_Analytics_Report.pdf');
+  res.download(pdfPath, 'CarIQ_Analytics_Report.pdf', (err) => {
+    if (err) {
+      if (!res.headersSent) {
+        res.status(404).json({
+          success: false,
+          error: 'Analytics PDF report not found. Run python chart_generator.py first.'
+        });
+      }
+    }
+  });
+}
+
+module.exports = {
+  generateMonthlyReport,
+  previewReportData,
+  getQuickStatsRoute,
+  downloadAnalyticsPDF,
+};
