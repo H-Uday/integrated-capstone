@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CarIQ — Dealer Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="home.html">🚗 CarIQ</a>
+  <ul class="nav-links">
+    <li><a href="home.html">Home</a></li>
+    <li><a href="dealer.html" class="active">My Dashboard</a></li>
+    <li><a href="customers.html">Register Customer</a></li>
+    <li><a href="leads.html">New Enquiry</a></li>
+    <li><a href="transactions.html">Transaction</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <span style="color:#3498db;font-weight:700;font-size:0.85rem;">
+      🔵 DEALER
+    </span>
+    <span id="nav-username"
+          style="color:var(--muted);font-size:0.85rem;"></span>
+    <button onclick="logout()"
+            class="btn btn-secondary"
+            style="padding:0.3rem 0.8rem;font-size:0.8rem;">
+      Logout
+    </button>
+  </div>
+</nav>
+
+<div class="page">
+  <h1 class="page-title">🔵 Dealer Workspace</h1>
+  <p class="page-subtitle">
+    Your operational hub — register customers, log enquiries,
+    close transactions
+  </p>
+
+  <!-- KPI Row -->
+  <div class="card-grid" style="margin-bottom:2rem;">
+    <div class="metric-card">
+      <div class="metric-value" id="d-vehicles">—</div>
+      <div class="metric-label">Available Vehicles</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="d-customers">—</div>
+      <div class="metric-label">Total Customers</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="d-leads">—</div>
+      <div class="metric-label">Active Leads</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" style="color:#2ecc71;">55%</div>
+      <div class="metric-label">Affordability Rate</div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="card" style="margin-bottom:1.5rem;">
+    <h2 style="font-size:1.1rem;margin-bottom:1.2rem;">
+      ⚡ Quick Actions
+    </h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,
+                minmax(200px,1fr));gap:1rem;">
+      <a href="customers.html" class="btn btn-primary"
+         style="text-align:center;padding:1rem;">
+        👤 Register New Customer
+      </a>
+      <a href="leads.html" class="btn btn-secondary"
+         style="text-align:center;padding:1rem;">
+        🔍 Log Vehicle Enquiry
+      </a>
+      <a href="transactions.html" class="btn btn-secondary"
+         style="text-align:center;padding:1rem;">
+        💳 Record Transaction
+      </a>
+      <a href="dashboard.html" class="btn btn-secondary"
+         style="text-align:center;padding:1rem;">
+        📊 View Live Dashboard
+      </a>
+    </div>
+  </div>
+
+  <!-- EMI Quick Calculator -->
+  <div class="card" style="margin-bottom:1.5rem;">
+    <h2 style="font-size:1.1rem;margin-bottom:1rem;">
+      ⚡ Quick EMI Calculator
+    </h2>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Loan Amount (₹)</label>
+        <input id="q-principal" type="number"
+               placeholder="e.g. 800000" min="1">
+      </div>
+      <div class="form-group">
+        <label>Annual Interest Rate (%)</label>
+        <input id="q-rate" type="number"
+               placeholder="e.g. 9.5" min="1" max="30" step="0.1">
+      </div>
+      <div class="form-group">
+        <label>Tenure (months)</label>
+        <select id="q-tenure">
+          <option value="12">12 months</option>
+          <option value="24">24 months</option>
+          <option value="36">36 months</option>
+          <option value="48">48 months</option>
+          <option value="60" selected>60 months</option>
+          <option value="72">72 months</option>
+          <option value="84">84 months</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Monthly Income (₹)</label>
+        <input id="q-income" type="number"
+               placeholder="e.g. 100000" min="1">
+      </div>
+    </div>
+    <button onclick="quickCalcEMI()"
+            class="btn btn-primary"
+            style="margin-top:0.5rem;">
+      ⚡ Calculate EMI
+    </button>
+    <div id="q-result" style="display:none;margin-top:1rem;">
+      <div class="card-grid">
+        <div class="metric-card">
+          <div class="metric-value" id="q-emi"
+               style="font-size:1.5rem;">—</div>
+          <div class="metric-label">Monthly EMI</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value" id="q-ratio"
+               style="font-size:1.5rem;">—</div>
+          <div class="metric-label">EMI/Income %</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value" id="q-verdict"
+               style="font-size:1rem;">—</div>
+          <div class="metric-label">Affordability</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value" id="q-total"
+               style="font-size:1.5rem;">—</div>
+          <div class="metric-label">Total Payable</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Segment Benchmarks -->
+  <div class="card">
+    <h2 style="font-size:1.1rem;margin-bottom:1rem;">
+      📊 Segment Close Time Benchmarks (from Q3 EDA)
+    </h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Segment</th>
+            <th>Avg Close Time</th>
+            <th>Alert Threshold</th>
+            <th>Strategy</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Hatchback</td><td>14.4 days</td><td>22 days</td>
+              <td style="color:#2ecc71;">Fast close — high intent buyers</td></tr>
+          <tr><td>Sedan</td><td>22.0 days</td><td>33 days</td>
+              <td style="color:#f39c12;">Needs comparison time — follow up at 15d</td></tr>
+          <tr><td>SUV</td><td>15.3 days</td><td>23 days</td>
+              <td style="color:#2ecc71;">Active segment — push test drives</td></tr>
+          <tr><td>MUV</td><td>16.9 days</td><td>25 days</td>
+              <td style="color:#f39c12;">Family buyers — weekend follow-ups</td></tr>
+          <tr><td>EV</td><td>16.4 days</td><td>25 days</td>
+              <td style="color:#3498db;">Tech-savvy — emphasize features</td></tr>
+          <tr><td>Luxury</td><td>15.6 days</td><td>23 days</td>
+              <td style="color:#9b59b6;">HNW buyers — personal relationship</td></tr>
+          <tr><td>Hypercar</td><td>17.7 days</td><td>27 days</td>
+              <td style="color:#e74c3c;">Cash buyers — no financing delay</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script>
+const token = localStorage.getItem('cariq_token');
+const user  = JSON.parse(localStorage.getItem('cariq_user') || '{}');
+
+// Guard — dealer or admin only
+if (!token || !['dealer','admin'].includes(user.role)) {
+  alert('Access denied. Dealer role required.');
+  window.location.href = 'home.html';
+}
+
+document.getElementById('nav-username').textContent = user.username || '';
+
+// Load KPIs
+async function loadDealerKPIs() {
+  try {
+    const [vRes, cRes, lRes] = await Promise.all([
+      fetch(`${API}/vehicles`),
+      fetch(`${API}/customers/count`),
+      fetch(`${API}/leads/count`),
+    ]);
+    const [vData, cData, lData] = await Promise.all([
+      vRes.json(), cRes.json(), lRes.json()
+    ]);
+    if (vData.success) document.getElementById('d-vehicles').textContent  = vData.count;
+    if (cData.success) document.getElementById('d-customers').textContent = cData.count;
+    if (lData.success) document.getElementById('d-leads').textContent     = lData.count;
+  } catch (err) {
+    console.error('KPI load error:', err);
+  }
+}
+
+// Quick EMI calculator
+function quickCalcEMI() {
+  const principal = Number(document.getElementById('q-principal').value);
+  const rate      = Number(document.getElementById('q-rate').value);
+  const tenure    = Number(document.getElementById('q-tenure').value);
+  const income    = Number(document.getElementById('q-income').value);
+
+  if (!principal || !rate || !tenure) {
+    alert('Please enter Loan Amount, Rate, and Tenure');
+    return;
+  }
+
+  const r   = rate / 12 / 100;
+  const emi = Math.round(principal * r * Math.pow(1+r,tenure) /
+              (Math.pow(1+r,tenure)-1));
+  const total   = emi * tenure;
+  const ratio   = income ? ((emi / income) * 100).toFixed(1) : null;
+  const afford  = ratio ? parseFloat(ratio) <= 40 : null;
+
+  document.getElementById('q-result').style.display = 'block';
+  document.getElementById('q-emi').textContent   = `₹${emi.toLocaleString('en-IN')}`;
+  document.getElementById('q-total').textContent = `₹${total.toLocaleString('en-IN')}`;
+
+  if (ratio) {
+    document.getElementById('q-ratio').textContent = `${ratio}%`;
+    document.getElementById('q-ratio').style.color =
+      afford ? '#2ecc71' : '#e74c3c';
+    document.getElementById('q-verdict').textContent =
+      afford ? '✅ Affordable' : '❌ Unaffordable';
+    document.getElementById('q-verdict').style.color =
+      afford ? '#2ecc71' : '#e74c3c';
+  } else {
+    document.getElementById('q-ratio').textContent  = 'N/A';
+    document.getElementById('q-verdict').textContent = '— Enter income';
+  }
+}
+
+loadDealerKPIs();
+</script>
+</body>
+</html>

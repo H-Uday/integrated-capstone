@@ -184,6 +184,9 @@
     <li><a href="transactions.html">Transaction</a></li>
     <li><a href="dashboard.html">Dashboard</a></li>
     <li><a href="https://cariq-analytics.streamlit.app" target="_blank">Analytics</a></li>
+    <li><a href="admin.html"  id="nav-admin"  style="display:none;color:#e74c3c;">Admin Panel</a></li>
+    <li><a href="dealer.html" id="nav-dealer" style="display:none;color:#3498db;">Dealer Hub</a></li>
+    <li><a href="analyst.html"id="nav-analyst"style="display:none;color:#2ecc71;">Analytics Hub</a></li>
   </ul>
   <div class="user-greeting">
     <span>👤 <strong id="nav-username"></strong></span>
@@ -390,6 +393,93 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('guest-view').style.display  = 'none';
     document.getElementById('member-view').style.display = 'block';
     document.getElementById('nav-username').textContent  = user.username;
+    
+    // --- STEP 21.8: Role-based badge & routing inside member view ---
+    const roleColors = {
+      admin:   '#e74c3c',
+      dealer:  '#3498db',
+      analyst: '#2ecc71',
+    };
+    const roleLabels = {
+      admin:   '🔴 Admin',
+      dealer:  '🔵 Dealer',
+      analyst: '🟢 Analyst',
+    };
+
+    // Show role badge next to username
+    const heroUser = document.getElementById('hero-username');
+    if (heroUser) {
+      heroUser.innerHTML = `${user.username} 
+        <span style="font-size:0.9rem;color:${roleColors[user.role] || 'var(--accent)'};">
+          (${roleLabels[user.role] || user.role})
+        </span>`;
+    }
+
+    // Role-specific workspace notifications
+    setTimeout(() => {
+      if (user.role === 'dealer') {
+        const nav = document.getElementById('nav-member');
+        if (nav) {
+          const tip = document.createElement('div');
+          tip.style.cssText = 'position:fixed;bottom:1rem;right:1rem;' +
+            'background:#16213e;border:1px solid #3498db;' +
+            'padding:0.8rem 1.2rem;border-radius:8px;font-size:0.85rem;' +
+            'color:#3498db;z-index:999;cursor:pointer;';
+          tip.textContent = '🔵 Go to Dealer Workspace →';
+          tip.onclick = () => window.location.href = 'dealer.html';
+          document.body.appendChild(tip);
+          setTimeout(() => tip.remove(), 5000);
+        }
+      } else if (user.role === 'analyst') {
+        const tip = document.createElement('div');
+        tip.style.cssText = 'position:fixed;bottom:1rem;right:1rem;' +
+          'background:#16213e;border:1px solid #2ecc71;' +
+          'padding:0.8rem 1.2rem;border-radius:8px;font-size:0.85rem;' +
+          'color:#2ecc71;z-index:999;cursor:pointer;';
+        tip.textContent = '🟢 Go to Analytics Hub →';
+        tip.onclick = () => window.location.href = 'analyst.html';
+        document.body.appendChild(tip);
+        setTimeout(() => tip.remove(), 5000);
+      }
+    }, 500);
+
+    // --- Fetch Dashboard Metrics using dynamic ${API} path ---
+    try {
+      const [vRes, cRes, lRes] = await Promise.all([
+        fetch(`${API}/vehicles`),
+        fetch(`${API}/customers/count`),
+        fetch(`${API}/leads/count`)
+      ]);
+      const [vData, cData, lData] = await Promise.all([
+        vRes.json(), cRes.json(), lRes.json()
+      ]);
+      if (vData.success) document.getElementById('home-vehicles').textContent  = vData.count;
+      if (cData.success) document.getElementById('home-customers').textContent = cData.count;
+      if (lData.success) document.getElementById('home-leads').textContent     = lData.count;
+    } catch(e) { console.error(e); }
+
+  } else {
+    document.getElementById('nav-guest').style.display   = 'flex';
+    document.getElementById('nav-member').style.display  = 'none';
+    document.getElementById('guest-view').style.display  = 'block';
+    document.getElementById('member-view').style.display = 'none';
+  }
+});
+</script>
+
+<!-- <script src="app.js"></script> -->
+<!-- <script>
+document.addEventListener('DOMContentLoaded', async () => {
+  const token = localStorage.getItem('cariq_token');
+  const ustr  = localStorage.getItem('cariq_user');
+  const user  = ustr ? JSON.parse(ustr) : null;
+
+  if (token && user) {
+    document.getElementById('nav-guest').style.display   = 'none';
+    document.getElementById('nav-member').style.display  = 'flex';
+    document.getElementById('guest-view').style.display  = 'none';
+    document.getElementById('member-view').style.display = 'block';
+    document.getElementById('nav-username').textContent  = user.username;
     document.getElementById('hero-username').textContent = user.username;
     try {
       const [vRes, cRes, lRes] = await Promise.all([
@@ -411,6 +501,62 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('member-view').style.display = 'none';
   }
 });
-</script>
+
+// Add this INSIDE the `if (loggedIn && user)` block
+// after setting hero-username:
+
+// Role-based welcome and navigation
+const roleColors = {
+  admin:   '#e74c3c',
+  dealer:  '#3498db',
+  analyst: '#2ecc71',
+};
+const roleLabels = {
+  admin:   '🔴 Admin',
+  dealer:  '🔵 Dealer',
+  analyst: '🟢 Analyst',
+};
+
+// Show role badge next to username
+const heroUser = document.getElementById('hero-username');
+if (heroUser) {
+  heroUser.innerHTML = `${user.username}
+    <span style="font-size:0.9rem;color:${roleColors[user.role] || 'var(--accent)'};">
+      (${roleLabels[user.role] || user.role})
+    </span>`;
+}
+
+// Auto-redirect to role-specific page after 1 second
+setTimeout(() => {
+  if (user.role === 'admin') {
+    // Admin stays on home — has access to everything
+  } else if (user.role === 'dealer') {
+    // Suggest dealer page via notification — don't force redirect
+    const nav = document.getElementById('nav-member');
+    if (nav) {
+      const tip = document.createElement('div');
+      tip.style.cssText = 'position:fixed;bottom:1rem;right:1rem;' +
+        'background:#16213e;border:1px solid #3498db;' +
+        'padding:0.8rem 1.2rem;border-radius:8px;font-size:0.85rem;' +
+        'color:#3498db;z-index:999;cursor:pointer;';
+      tip.textContent = '🔵 Go to Dealer Workspace →';
+      tip.onclick = () => window.location.href = 'dealer.html';
+      document.body.appendChild(tip);
+      setTimeout(() => tip.remove(), 5000);
+    }
+  } else if (user.role === 'analyst') {
+    const tip = document.createElement('div');
+    tip.style.cssText = 'position:fixed;bottom:1rem;right:1rem;' +
+      'background:#16213e;border:1px solid #2ecc71;' +
+      'padding:0.8rem 1.2rem;border-radius:8px;font-size:0.85rem;' +
+      'color:#2ecc71;z-index:999;cursor:pointer;';
+    tip.textContent = '🟢 Go to Analytics Hub →';
+    tip.onclick = () => window.location.href = 'analyst.html';
+    document.body.appendChild(tip);
+    setTimeout(() => tip.remove(), 5000);
+  }
+}, 500);
+
+</script> -->
 </body>
 </html>

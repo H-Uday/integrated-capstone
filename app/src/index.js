@@ -66,6 +66,9 @@ startScheduler();
 
 // Routes
 app.use('/api/auth', authRouter);
+const adminRouter = require('./routes/admin');
+// ...
+app.use('/api/admin', adminRouter);
 app.use('/api/alerts', alertsRouter);
 app.use('/api/customers', customersRouter);
 app.use('/api/vehicles', vehiclesRouter);

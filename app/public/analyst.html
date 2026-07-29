@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CarIQ — Analyst View</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="home.html">🚗 CarIQ</a>
+  <ul class="nav-links">
+    <li><a href="home.html">Home</a></li>
+    <li><a href="analyst.html" class="active">Analytics Hub</a></li>
+    <li><a href="dashboard.html">Live Dashboard</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <span style="color:#2ecc71;font-weight:700;font-size:0.85rem;">
+      🟢 ANALYST
+    </span>
+    <span id="nav-username"
+          style="color:var(--muted);font-size:0.85rem;"></span>
+    <button onclick="logout()"
+            class="btn btn-secondary"
+            style="padding:0.3rem 0.8rem;font-size:0.8rem;">
+      Logout
+    </button>
+  </div>
+</nav>
+
+<div class="page">
+  <h1 class="page-title">🟢 Analyst Analytics Hub</h1>
+  <p class="page-subtitle">
+    Read-only access to all CarIQ analytical resources —
+    no data entry permissions
+  </p>
+
+  <!-- KPI Summary -->
+  <div class="card-grid" style="margin-bottom:2rem;">
+    <div class="metric-card">
+      <div class="metric-value" id="a-customers">—</div>
+      <div class="metric-label">Total Customers</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="a-leads">—</div>
+      <div class="metric-label">Total Leads</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" style="color:#2ecc71;">55%</div>
+      <div class="metric-label">Loan Affordability Rate</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" style="color:#f39c12;">−0.279</div>
+      <div class="metric-label">Credit Score Correlation</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">8</div>
+      <div class="metric-label">Questions Answered</div>
+    </div>
+  </div>
+
+  <!-- Analytical Resources -->
+  <div class="card" style="margin-bottom:1.5rem;">
+    <h2 style="font-size:1.1rem;margin-bottom:1.2rem;">
+      📊 Analytical Resources
+    </h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,
+                minmax(220px,1fr));gap:1rem;">
+      <a href="http://localhost:8501" target="_blank"
+         class="feature-card" style="text-decoration:none;">
+        <div class="feature-icon">🧠</div>
+        <h3>Streamlit Dashboard</h3>
+        <p>9 interactive pages — Q1 through Q8 with live Plotly charts</p>
+      </a>
+      <a href="dashboard.html" class="feature-card"
+         style="text-decoration:none;">
+        <div class="feature-icon">📊</div>
+        <h3>Live Operations</h3>
+        <p>Real-time metrics from the operational SQLite database</p>
+      </a>
+      <div class="feature-card">
+        <div class="feature-icon">📓</div>
+        <h3>EDA Notebooks</h3>
+        <p>8 Jupyter notebooks — open in analytics/notebooks/ folder</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📄</div>
+        <h3>Insights Report</h3>
+        <p>docs/INSIGHTS_REPORT.md — 8 findings in plain business language</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8 Analytical Questions Summary -->
+  <div class="card" style="margin-bottom:1.5rem;">
+    <h2 style="font-size:1.1rem;margin-bottom:1rem;">
+      🔍 8 Analytical Questions — Key Findings
+    </h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Q</th>
+            <th>Question</th>
+            <th>Key Finding</th>
+            <th>Notebook</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:var(--accent);">Q1</td>
+            <td>Affordability Gap</td>
+            <td style="color:#2ecc71;">55% loan affordability rate</td>
+            <td>01_affordability_gap.ipynb</td>
+          </tr>
+          <tr>
+            <td style="color:var(--accent);">Q2</td>
+            <td>Market Penetration</td>
+            <td>Maruti leads volume, Mercedes leads revenue</td>
+            <td>02_market_penetration.ipynb</td>
+          </tr>
+          <tr>
+            <td style="color:var(--accent);">Q3</td>
+            <td>Inventory Velocity</td>
+            <td>Hatchback 14.4d, Sedan 22d, Feb+May peak</td>
+            <td>03_inventory_velocity.ipynb</td>
+          </tr>
+          <tr>
+            <td style="color:var(--accent);">Q4</td>
+            <td>Financial Health</td>
+            <td style="color:#f39c12;">Credit score corr = −0.279 (weak)</td>
+            <td>04_customer_financial_health.ipynb</td>
+          </tr>
+          <tr>
+            <td style="color:var(--accent);">Q5</td>
+            <td>Price Sensitivity</td>
+            <td>Near-zero — income is binding constraint</td>
+            <td>05_price_sensitivity.ipynb</td>
+          </tr>
+          <tr>
+            <td style="color:var(--accent);">Q6</td>
+            <td>ML Affordability</td>
+            <td>XGBoost probability score vs binary rule</td>
+            <td>06_ml_affordability_model.ipynb</td>
+          </tr>
+          <tr>
+            <td style="color:var(--accent);">Q7</td>
+            <td>Sales Forecast</td>
+            <td>ARIMA 3-month forecast with 80% CI</td>
+            <td>07_sales_forecasting.ipynb</td>
+          </tr>
+          <tr>
+            <td style="color:var(--accent);">Q8</td>
+            <td>Customer CLV</td>
+            <td>Business owners show highest avg CLV</td>
+            <td>08_customer_lifetime_value.ipynb</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Read-only notice -->
+  <div class="card" style="border-left:3px solid #f39c12;">
+    <p style="color:#f39c12;font-weight:700;margin-bottom:0.5rem;">
+      ⚠️ Analyst Role — Read-Only Access
+    </p>
+    <p style="color:var(--muted);font-size:0.9rem;">
+      Analysts can view all data and analytics but cannot register
+      customers, log leads, or record transactions. Contact an Admin
+      to request elevated permissions.
+    </p>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script>
+const token = localStorage.getItem('cariq_token');
+const user  = JSON.parse(localStorage.getItem('cariq_user') || '{}');
+
+// Guard — analyst or admin only
+if (!token || !['analyst','admin'].includes(user.role)) {
+  alert('Access denied. Analyst role required.');
+  window.location.href = 'home.html';
+}
+
+document.getElementById('nav-username').textContent = user.username || '';
+
+async function loadAnalystKPIs() {
+  try {
+    const [cRes, lRes] = await Promise.all([
+      fetch(`${API}/customers/count`),
+      fetch(`${API}/leads/count`),
+    ]);
+    const [cData, lData] = await Promise.all([
+      cRes.json(), lRes.json()
+    ]);
+    if (cData.success) document.getElementById('a-customers').textContent = cData.count;
+    if (lData.success) document.getElementById('a-leads').textContent     = lData.count;
+  } catch (err) {
+    console.error('KPI load error:', err);
+  }
+}
+
+loadAnalystKPIs();
+</script>
+</body>
+</html>

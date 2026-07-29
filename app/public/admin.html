@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CarIQ — Admin Panel</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .role-badge {
+      display: inline-block;
+      padding: 0.2rem 0.7rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .badge-admin    { background: rgba(231,76,60,0.2);   color: #e74c3c; }
+    .badge-dealer   { background: rgba(52,152,219,0.2);  color: #3498db; }
+    .badge-analyst  { background: rgba(46,204,113,0.2);  color: #2ecc71; }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .danger-btn {
+      background: rgba(231,76,60,0.2);
+      border: 1px solid #e74c3c;
+      color: #e74c3c;
+      padding: 0.3rem 0.7rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+    .danger-btn:hover { background: #e74c3c; color: #fff; }
+    .promote-btn {
+      background: rgba(46,204,113,0.2);
+      border: 1px solid #2ecc71;
+      color: #2ecc71;
+      padding: 0.3rem 0.7rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      margin-right: 0.3rem;
+    }
+    .promote-btn:hover { background: #2ecc71; color: #1a1a2e; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="home.html">🚗 CarIQ</a>
+  <ul class="nav-links">
+    <li><a href="home.html">Home</a></li>
+    <li><a href="admin.html" class="active">Admin Panel</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="customers.html">Customers</a></li>
+    <li><a href="leads.html">Leads</a></li>
+    <li><a href="transactions.html">Transactions</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <span style="color:#e74c3c;font-weight:700;font-size:0.85rem;">
+      🔴 ADMIN
+    </span>
+    <span id="nav-username" style="color:var(--muted);font-size:0.85rem;"></span>
+    <button onclick="logout()"
+            class="btn btn-secondary"
+            style="padding:0.3rem 0.8rem;font-size:0.8rem;">
+      Logout
+    </button>
+  </div>
+</nav>
+
+<div class="page">
+  <h1 class="page-title">🔴 Admin Control Panel</h1>
+  <p class="page-subtitle">System overview, user management, and role assignment</p>
+
+  <!-- System Stats -->
+  <div class="stat-grid" id="stats-grid">
+    <div class="metric-card">
+      <div class="metric-value" id="stat-customers">—</div>
+      <div class="metric-label">Customers</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="stat-vehicles">—</div>
+      <div class="metric-label">Vehicles</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="stat-leads">—</div>
+      <div class="metric-label">Leads</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="stat-transactions">—</div>
+      <div class="metric-label">Transactions</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="stat-users">—</div>
+      <div class="metric-label">Users</div>
+    </div>
+  </div>
+
+  <!-- Recent Leads -->
+  <div class="card" style="margin-bottom:1.5rem;">
+    <h2 style="font-size:1.1rem;margin-bottom:1rem;">
+      📋 Recent Leads (System-Wide)
+    </h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Lead ID</th>
+            <th>Customer</th>
+            <th>Vehicle</th>
+            <th>Status</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody id="recent-leads-tbody">
+          <tr><td colspan="5" style="text-align:center;color:var(--muted);">
+            Loading...
+          </td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- User Management -->
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;
+                align-items:center;margin-bottom:1rem;">
+      <h2 style="font-size:1.1rem;">👥 User Management</h2>
+      <a href="register.html" class="btn btn-primary"
+         style="font-size:0.85rem;padding:0.4rem 1rem;">
+        + Add User
+      </a>
+    </div>
+
+    <div id="user-alert" class="alert"></div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Created</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="users-tbody">
+          <tr><td colspan="6" style="text-align:center;color:var(--muted);">
+            Loading users...
+          </td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script>
+const token   = localStorage.getItem('cariq_token');
+const user    = JSON.parse(localStorage.getItem('cariq_user') || '{}');
+
+// Guard — admin only
+if (!token || user.role !== 'admin') {
+  alert('Access denied. Admin role required.');
+  window.location.href = 'home.html';
+}
+
+document.getElementById('nav-username').textContent = user.username || '';
+
+async function loadAdminData() {
+  try {
+    // Load stats
+    const statsRes  = await fetch(`${API}/admin/stats`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const statsData = await statsRes.json();
+
+    if (statsData.success) {
+      const s = statsData.stats;
+      document.getElementById('stat-customers').textContent    = s.customers;
+      document.getElementById('stat-vehicles').textContent     = s.vehicles;
+      document.getElementById('stat-leads').textContent        = s.leads;
+      document.getElementById('stat-transactions').textContent = s.transactions;
+      document.getElementById('stat-users').textContent        = s.users;
+
+      // Recent leads
+      const tbody = document.getElementById('recent-leads-tbody');
+      tbody.innerHTML = '';
+      statsData.recent_leads.forEach(lead => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${lead.lead_id}</td>
+          <td>${lead.full_name}</td>
+          <td>${lead.make} ${lead.model}</td>
+          <td><span class="badge ${badgeClass(lead.status)}">${lead.status}</span></td>
+          <td>${lead.enquiry_date}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    // Load users
+    const usersRes  = await fetch(`${API}/admin/users`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const usersData = await usersRes.json();
+
+    if (usersData.success) {
+      const tbody = document.getElementById('users-tbody');
+      tbody.innerHTML = '';
+      usersData.data.forEach(u => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${u.user_id}</td>
+          <td>${u.username}</td>
+          <td>${u.email}</td>
+          <td>
+            <span class="role-badge badge-${u.role}">${u.role}</span>
+          </td>
+          <td>${u.created_at ? u.created_at.split('T')[0] : '—'}</td>
+          <td>
+            ${u.user_id !== user.user_id ? `
+              <button class="promote-btn"
+                onclick="changeRole(${u.user_id}, '${u.role}')">
+                Change Role
+              </button>
+              <button class="danger-btn"
+                onclick="deleteUser(${u.user_id}, '${u.username}')">
+                Delete
+              </button>
+            ` : '<span style="color:var(--muted);font-size:0.8rem;">You</span>'}
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+  } catch (err) {
+    console.error('Admin data load error:', err);
+  }
+}
+
+async function changeRole(userId, currentRole) {
+  const roles = ['admin', 'dealer', 'analyst'];
+  const next  = roles[(roles.indexOf(currentRole) + 1) % roles.length];
+  const confirmed = confirm(
+    `Change user #${userId} role from "${currentRole}" to "${next}"?`
+  );
+  if (!confirmed) return;
+
+  try {
+    const res  = await fetch(`${API}/admin/users/${userId}/role`, {
+      method:  'PATCH',
+      headers: {
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({ role: next }),
+    });
+    const data = await res.json();
+    if (data.success) {
+      showAlert('user-alert', `✅ ${data.message}`, 'success');
+      loadAdminData();
+    } else {
+      showAlert('user-alert', `❌ ${data.error}`, 'error');
+    }
+  } catch (err) {
+    showAlert('user-alert', '❌ Request failed', 'error');
+  }
+}
+
+async function deleteUser(userId, username) {
+  const confirmed = confirm(
+    `Delete user "${username}"? This cannot be undone.`
+  );
+  if (!confirmed) return;
+
+  try {
+    const res  = await fetch(`${API}/admin/users/${userId}`, {
+      method:  'DELETE',
+      headers: { 'Authorization': `Bearer ${token}` },
+    });
+    const data = await res.json();
+    if (data.success) {
+      showAlert('user-alert', `✅ ${data.message}`, 'success');
+      loadAdminData();
+    } else {
+      showAlert('user-alert', `❌ ${data.error}`, 'error');
+    }
+  } catch (err) {
+    showAlert('user-alert', '❌ Request failed', 'error');
+  }
+}
+
+loadAdminData();
+</script>
+</body>
+</html>
