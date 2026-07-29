@@ -26,6 +26,17 @@ function createCustomer(req, res) {
       employment_type
     );
 
+    // ✅ Emit real-time event to connected WebSocket clients
+    const io = req.app.get('io');
+    if (io) {
+      io.emit('new_customer', {
+        customer_id: result.lastInsertRowid,
+        city:        city.trim(),
+        state:       state.trim(),
+        timestamp:   new Date().toISOString(),
+      });
+    }
+
     return res.status(201).json({
       success: true,
       message: 'Customer created successfully',

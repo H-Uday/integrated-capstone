@@ -149,6 +149,24 @@
     </div>
   </div>
 
+  <!-- Live Notifications for Dealer -->
+<div class="card" style="margin-bottom:1.5rem;
+     border-left:3px solid #3498db;">
+  <h2 style="font-size:1.1rem;margin-bottom:0.8rem;">
+    🔴 Live Notifications
+    <span id="notif-count"
+          style="background:#e74c3c;color:#fff;
+                 border-radius:10px;padding:0.1rem 0.5rem;
+                 font-size:0.75rem;margin-left:0.5rem;">0</span>
+  </h2>
+  <div id="live-feed"
+       style="min-height:80px;max-height:200px;overflow-y:auto;">
+    <div style="color:var(--muted);font-size:0.85rem;padding:0.5rem;">
+      Waiting for activity...
+    </div>
+  </div>
+</div>
+
   <!-- Segment Benchmarks -->
   <div class="card">
     <h2 style="font-size:1.1rem;margin-bottom:1rem;">
@@ -186,6 +204,26 @@
 </div>
 
 <script src="app.js"></script>
+<script>
+let notifCount = 0;
+const origAddToFeed = window.CarIQSocket?.addToLiveFeed;
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Override addToLiveFeed to also increment badge
+  setTimeout(() => {
+    const ws = window.CarIQSocket;
+    if (ws) {
+      const origFn = ws.addToLiveFeed;
+      ws.addToLiveFeed = function(type, data) {
+        origFn(type, data);
+        notifCount++;
+        const badge = document.getElementById('notif-count');
+        if (badge) badge.textContent = notifCount;
+      };
+    }
+  }, 1500);
+});
+</script>
 <script>
 const token = localStorage.getItem('cariq_token');
 const user  = JSON.parse(localStorage.getItem('cariq_user') || '{}');

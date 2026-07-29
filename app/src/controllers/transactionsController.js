@@ -99,6 +99,19 @@ function createTransaction(req, res) {
       ).run(Number(lead_id));
     }
 
+    // ✅ Emit real-time event to connected WebSocket clients
+    const io = req.app.get('io');
+    if (io) {
+      io.emit('sale_closed', {
+        transaction_id: result.lastInsertRowid,
+        customer_id:    Number(customer_id),
+        vehicle_id:     Number(vehicle_id),
+        payment_mode:   payment_mode,
+        emi_amount:     computedEmi,
+        timestamp:      new Date().toISOString(),
+      });
+    }
+
     return res.status(201).json({
       success: true,
       message: 'Transaction created successfully',
