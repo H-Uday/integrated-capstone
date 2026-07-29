@@ -84,6 +84,8 @@ app.use('/api/vehicles',     vehiclesRouter);
 app.use('/api/leads',        leadsRouter);
 app.use('/api/transactions', transactionsRouter);
 app.use('/api/alerts',       alertsRouter);
+const reportsRouter = require('./routes/reports');
+app.use('/api/reports', reportsRouter);
 
 app.get('/health', (req, res) => {
   const connectedClients = io.engine.clientsCount;

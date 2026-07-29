@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CarIQ — Reports</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .report-card {
+      background: var(--secondary);
+      border-radius: var(--radius);
+      padding: 2rem;
+      border: 1px solid var(--border);
+      text-align: center;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+    .report-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+    }
+    .report-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .preview-box {
+      background: var(--primary);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      margin-top: 1rem;
+      display: none;
+    }
+    .kpi-mini {
+      display: inline-block;
+      background: var(--card-bg);
+      border-radius: 6px;
+      padding: 0.5rem 1rem;
+      margin: 0.3rem;
+      text-align: center;
+    }
+    .kpi-mini .val {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent);
+      display: block;
+    }
+    .kpi-mini .lbl {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .download-progress {
+      display: none;
+      margin-top: 1rem;
+      padding: 0.8rem;
+      background: rgba(0,217,217,0.1);
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      color: var(--accent);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="home.html">🚗 CarIQ</a>
+  <ul class="nav-links">
+    <li><a href="home.html">Home</a></li>
+    <li><a href="reports.html" class="active">Reports</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="analytics.html">Analytics</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <span id="nav-username" style="color:var(--muted);font-size:0.85rem;"></span>
+    <button onclick="logout()"
+            class="btn btn-secondary"
+            style="padding:0.3rem 0.8rem;font-size:0.8rem;">
+      Logout
+    </button>
+  </div>
+</nav>
+
+<div class="page">
+  <h1 class="page-title">📄 CarIQ Reports</h1>
+  <p class="page-subtitle">
+    Generate professional PDF reports — downloadable, printable,
+    shareable with regional managers
+  </p>
+
+  <!-- Report Type Cards -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,
+              minmax(280px,1fr));gap:1.5rem;margin-bottom:2rem;">
+
+    <div class="report-card">
+      <div class="report-icon">📊</div>
+      <h3 style="margin-bottom:0.5rem;">Monthly Performance Report</h3>
+      <p style="color:var(--muted);font-size:0.88rem;margin-bottom:1.5rem;">
+        Complete monthly breakdown — transactions, leads, segment analysis,
+        payment modes, stalled leads, and KPIs. 5-page branded PDF.
+      </p>
+
+      <div style="display:flex;gap:0.8rem;justify-content:center;
+                  flex-wrap:wrap;margin-bottom:1rem;">
+        <div class="form-group" style="margin:0;">
+          <label style="font-size:0.8rem;">Year</label>
+          <select id="report-year" style="padding:0.4rem 0.8rem;width:100px;">
+            <option value="2026">2026</option>
+            <option value="2025">2025</option>
+            <option value="2024">2024</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label style="font-size:0.8rem;">Month</label>
+          <select id="report-month" style="padding:0.4rem 0.8rem;width:130px;">
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+            <option value="4">April</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7" selected>July</option>
+            <option value="8">August</option>
+            <option value="9">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+          </select>
+        </div>
+      </div>
+
+      <button onclick="previewReport()"
+              class="btn btn-secondary"
+              style="margin-right:0.5rem;margin-bottom:0.5rem;">
+        👁️ Preview Data
+      </button>
+      <button onclick="downloadReport()"
+              class="btn btn-primary"
+              id="download-btn"
+              data-label="⬇️ Download PDF">
+        ⬇️ Download PDF
+      </button>
+
+      <div class="download-progress" id="download-progress">
+        ⏳ Generating PDF... please wait
+      </div>
+
+      <!-- Preview Box -->
+      <div class="preview-box" id="preview-box">
+        <h4 style="color:var(--accent);margin-bottom:1rem;
+                   text-align:left;">Report Preview</h4>
+        <div id="preview-kpis"></div>
+        <div id="preview-segments" style="margin-top:1rem;text-align:left;"></div>
+      </div>
+    </div>
+
+    <div class="report-card" style="opacity:0.7;">
+      <div class="report-icon">📈</div>
+      <h3 style="margin-bottom:0.5rem;">Quarterly Analysis Report</h3>
+      <p style="color:var(--muted);font-size:0.88rem;margin-bottom:1.5rem;">
+        3-month rolling summary with trend analysis, forecasting,
+        and CLV tier breakdown. Coming in Day 24.
+      </p>
+      <button class="btn btn-secondary" disabled
+              style="opacity:0.5;cursor:not-allowed;">
+        Coming Soon
+      </button>
+    </div>
+
+    <div class="report-card" style="opacity:0.7;">
+      <div class="report-icon">🏆</div>
+      <h3 style="margin-bottom:0.5rem;">Dealer Performance Report</h3>
+      <p style="color:var(--muted);font-size:0.88rem;margin-bottom:1.5rem;">
+        Per-dealer breakdown — lead pipeline, conversion rates,
+        average close time vs benchmark. Coming in Day 24.
+      </p>
+      <button class="btn btn-secondary" disabled
+              style="opacity:0.5;cursor:not-allowed;">
+        Coming Soon
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Recent Download History -->
+  <div class="card">
+    <h2 style="font-size:1.1rem;margin-bottom:1rem;">
+      📋 Report Download History
+    </h2>
+    <div id="download-history">
+      <p style="color:var(--muted);font-size:0.88rem;">
+        No reports downloaded yet in this session.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script>
+const token = localStorage.getItem('cariq_token');
+const user  = JSON.parse(localStorage.getItem('cariq_user') || '{}');
+
+if (!token) {
+  window.location.href = 'login.html';
+}
+document.getElementById('nav-username').textContent = user.username || '';
+
+const downloadHistory = [];
+
+async function previewReport() {
+  const year  = document.getElementById('report-year').value;
+  const month = document.getElementById('report-month').value;
+
+  try {
+    const res  = await fetch(`${API}/reports/preview?year=${year}&month=${month}`);
+    const data = await res.json();
+
+    if (!data.success) {
+      alert('Failed to load preview: ' + data.error);
+      return;
+    }
+
+    const d = data.data;
+    const previewBox  = document.getElementById('preview-box');
+    const previewKPIs = document.getElementById('preview-kpis');
+    const previewSegs = document.getElementById('preview-segments');
+
+    previewBox.style.display = 'block';
+
+    // KPI mini cards
+    previewKPIs.innerHTML = `
+      <div class="kpi-mini"><span class="val">${d.summary.total_transactions}</span><span class="lbl">Transactions</span></div>
+      <div class="kpi-mini"><span class="val">${d.summary.total_leads}</span><span class="lbl">Leads</span></div>
+      <div class="kpi-mini"><span class="val">₹${(d.summary.total_revenue_inr||0).toLocaleString('en-IN')}</span><span class="lbl">Revenue</span></div>
+      <div class="kpi-mini"><span class="val">${d.summary.affordability_rate}%</span><span class="lbl">Affordability</span></div>
+      <div class="kpi-mini"><span class="val" style="color:${d.summary.stalled_leads>5?'#e74c3c':'#2ecc71'}">${d.summary.stalled_leads}</span><span class="lbl">Stalled Leads</span></div>
+    `;
+
+    // Segment table
+    if (d.segment_breakdown && d.segment_breakdown.length > 0) {
+      let segHtml = '<table style="width:100%;font-size:0.85rem;">';
+      segHtml += '<tr><th style="text-align:left;color:var(--accent);">Segment</th><th style="color:var(--accent);">Txns</th></tr>';
+      d.segment_breakdown.forEach(s => {
+        segHtml += `<tr><td>${s.segment}</td><td>${s.count}</td></tr>`;
+      });
+      segHtml += '</table>';
+      previewSegs.innerHTML = '<strong style="color:var(--muted);font-size:0.8rem;">SEGMENT BREAKDOWN</strong>' + segHtml;
+    } else {
+      previewSegs.innerHTML = '<p style="color:var(--muted);font-size:0.85rem;">No transactions in selected period</p>';
+    }
+
+  } catch (err) {
+    alert('Preview failed: ' + err.message);
+  }
+}
+
+async function downloadReport() {
+  const year     = document.getElementById('report-year').value;
+  const month    = document.getElementById('report-month').value;
+  const btn      = document.getElementById('download-btn');
+  const progress = document.getElementById('download-progress');
+
+  btn.disabled         = true;
+  btn.textContent      = 'Generating...';
+  progress.style.display = 'block';
+
+  try {
+    const res = await fetch(`${API}/reports/monthly?year=${year}&month=${month}`);
+
+    if (!res.ok) {
+      throw new Error(`Server error: ${res.status}`);
+    }
+
+    const blob     = await res.blob();
+    const url      = URL.createObjectURL(blob);
+    const anchor   = document.createElement('a');
+    anchor.href    = url;
+    anchor.download = `CarIQ_Report_${year}_${String(month).padStart(2,'0')}.pdf`;
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
+    URL.revokeObjectURL(url);
+
+    // Add to history
+    const monthNames = ['','Jan','Feb','Mar','Apr','May','Jun',
+                        'Jul','Aug','Sep','Oct','Nov','Dec'];
+    downloadHistory.unshift({
+      filename: `CarIQ_Report_${year}_${monthNames[month]}.pdf`,
+      time:     new Date().toLocaleTimeString('en-IN'),
+    });
+
+    const historyEl = document.getElementById('download-history');
+    historyEl.innerHTML = downloadHistory.map(d => `
+      <div style="padding:0.5rem 0;border-bottom:1px solid var(--border);
+                  display:flex;justify-content:space-between;">
+        <span style="color:var(--text);font-size:0.88rem;">📄 ${d.filename}</span>
+        <span style="color:var(--muted);font-size:0.8rem;">${d.time}</span>
+      </div>
+    `).join('');
+
+  } catch (err) {
+    alert('Download failed: ' + err.message);
+  } finally {
+    btn.disabled           = false;
+    btn.textContent        = '⬇️ Download PDF';
+    progress.style.display = 'none';
+  }
+}
+</script>
+</body>
+</html>
