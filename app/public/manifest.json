@@ -1,0 +1,43 @@
+{
+  "name": "CarIQ — Car Sales Intelligence",
+  "short_name": "CarIQ",
+  "description": "Global & India Car Sales + Affordability Intelligence",
+  "start_url": "/home.html",
+  "display": "standalone",
+  "background_color": "#1a1a2e",
+  "theme_color": "#00d9d9",
+  "orientation": "portrait-primary",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/icons/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Register Customer",
+      "url": "/customers.html",
+      "description": "Register a new customer"
+    },
+    {
+      "name": "New Enquiry",
+      "url": "/leads.html",
+      "description": "Log a vehicle enquiry"
+    },
+    {
+      "name": "Dashboard",
+      "url": "/dashboard.html",
+      "description": "View live metrics"
+    }
+  ],
+  "categories": ["business", "finance", "productivity"]
+}

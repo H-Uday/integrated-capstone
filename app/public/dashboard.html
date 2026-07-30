@@ -3,6 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#00d9d9">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="CarIQ">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icons/icon-192.svg">
   <title>CarIQ — Live Dashboard</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -20,7 +26,11 @@
 </nav>
 
 <div class="page">
+  <div style="display:flex;justify-content:space-between;
+            align-items:center;margin-bottom:0.5rem;">
   <h1 class="page-title">📊 Live Operations Dashboard</h1>
+  <span id="online-status" style="font-size:0.8rem;">🟢 Online</span>
+</div>
   <p class="page-subtitle">Real-time data from the CarIQ operational database</p>
 
   <div class="card-grid">
@@ -194,5 +204,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
+<script src="pwa.js"></script>
 </body>
 </html>

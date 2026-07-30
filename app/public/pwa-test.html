@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#00d9d9">
+  <link rel="manifest" href="/manifest.json">
+  <title>CarIQ — PWA Test</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav>
+  <a class="nav-brand" href="home.html">🚗 CarIQ</a>
+  <ul class="nav-links">
+    <li><a href="home.html">Home</a></li>
+    <li><a href="pwa-test.html" class="active">PWA Test</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+  <h1 class="page-title">📱 PWA Status Check</h1>
+  <p class="page-subtitle">Verify Progressive Web App features are working</p>
+
+  <div class="card-grid" style="margin-bottom:2rem;">
+    <div class="metric-card">
+      <div class="metric-value" id="sw-status" style="font-size:1rem;">—</div>
+      <div class="metric-label">Service Worker</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="install-status" style="font-size:1rem;">—</div>
+      <div class="metric-label">Install Status</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="network-status" style="font-size:1rem;">—</div>
+      <div class="metric-label">Network</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" id="cache-status" style="font-size:1rem;">—</div>
+      <div class="metric-label">Cache</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem;">
+    <h2 style="font-size:1.1rem;margin-bottom:1rem;">🔍 PWA Checklist</h2>
+    <div id="checklist"></div>
+  </div>
+
+  <div class="card">
+    <h2 style="font-size:1.1rem;margin-bottom:1rem;">📦 Cached Resources</h2>
+    <div id="cached-list" style="font-size:0.85rem;color:var(--muted);">
+      Loading...
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script src="pwa.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+
+  // Service Worker check
+  const swEl = document.getElementById('sw-status');
+  if ('serviceWorker' in navigator) {
+    const reg = await navigator.serviceWorker.getRegistration('/');
+    if (reg) {
+      swEl.textContent = '✅ Active';
+      swEl.style.color = '#2ecc71';
+    } else {
+      swEl.textContent = '⏳ Registering';
+      swEl.style.color = '#f39c12';
+    }
+  } else {
+    swEl.textContent = '❌ Not supported';
+    swEl.style.color = '#e74c3c';
+  }
+
+  // Install status
+  const installEl = document.getElementById('install-status');
+  if (window.matchMedia('(display-mode: standalone)').matches) {
+    installEl.textContent = '✅ Installed';
+    installEl.style.color = '#2ecc71';
+  } else {
+    installEl.textContent = '📱 Browser';
+    installEl.style.color = '#f39c12';
+  }
+
+  // Network
+  const netEl = document.getElementById('network-status');
+  netEl.textContent = navigator.onLine ? '🟢 Online' : '🔴 Offline';
+  netEl.style.color = navigator.onLine ? '#2ecc71' : '#e74c3c';
+
+  // Cache
+  const cacheEl = document.getElementById('cache-status');
+  if ('caches' in window) {
+    const keys = await caches.keys();
+    cacheEl.textContent = `✅ ${keys.length} cache(s)`;
+    cacheEl.style.color = '#2ecc71';
+
+    // List cached resources
+    const listEl = document.getElementById('cached-list');
+    let html = '';
+    for (const key of keys) {
+      const cache   = await caches.open(key);
+      const requests = await cache.keys();
+      html += `<strong style="color:var(--accent);">${key}</strong>
+               <span style="color:var(--muted);"> (${requests.length} items)</span><br>`;
+      requests.slice(0, 8).forEach(req => {
+        html += `&nbsp;&nbsp;• ${new URL(req.url).pathname}<br>`;
+      });
+      if (requests.length > 8) {
+        html += `&nbsp;&nbsp;... and ${requests.length - 8} more<br>`;
+      }
+      html += '<br>';
+    }
+    listEl.innerHTML = html || 'No cached resources yet';
+  } else {
+    cacheEl.textContent = '❌ Not supported';
+    cacheEl.style.color = '#e74c3c';
+  }
+
+  // Checklist
+  const checks = [
+    ['Service Worker registered',  'serviceWorker' in navigator],
+    ['Cache API available',        'caches' in window],
+    ['Manifest linked',            !!document.querySelector('link[rel="manifest"]')],
+    ['Theme color set',            !!document.querySelector('meta[name="theme-color"]')],
+    ['Network online',             navigator.onLine],
+    ['Running standalone (installed)', window.matchMedia('(display-mode: standalone)').matches],
+    ['Push notifications supported', 'PushManager' in window],
+    ['Background sync supported',  'SyncManager' in window.ServiceWorkerRegistration?.prototype || false],
+  ];
+
+  const checklistEl = document.getElementById('checklist');
+  checklistEl.innerHTML = checks.map(([label, pass]) => `
+    <div style="padding:0.5rem 0;border-bottom:1px solid var(--border);
+                display:flex;justify-content:space-between;">
+      <span style="color:var(--text);">${label}</span>
+      <span style="color:${pass ? '#2ecc71' : '#f39c12'};">
+        ${pass ? '✅ Pass' : '⚠️ Not active'}
+      </span>
+    </div>
+  `).join('');
+});
+</script>
+</body>
+</html>

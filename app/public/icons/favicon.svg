@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" fill="#1a1a2e" rx="9.6"/>
+  <rect width="2.56" height="64" fill="#00d9d9" rx="2"/>
+  <text x="33.28" y="28.8" font-family="Arial, sans-serif" font-weight="bold" font-size="22.4" fill="#00d9d9" text-anchor="middle" dominant-baseline="middle">🚗</text>
+  <text x="33.28" y="48" font-family="Arial, sans-serif" font-weight="bold" font-size="8.96" fill="#ffffff" text-anchor="middle">CarIQ</text>
+</svg>

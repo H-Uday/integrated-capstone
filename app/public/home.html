@@ -3,6 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#00d9d9">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="CarIQ">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icons/icon-192.svg">
   <title>CarIQ — Global Car Sales Intelligence</title>
   <link rel="stylesheet" href="style.css">
   <style>
@@ -166,7 +172,10 @@
 <!-- ── NAV — Guest (not logged in) ── -->
 <nav id="nav-guest" style="display:none;">
   <a class="nav-brand" href="home.html">🚗 CarIQ</a>
-  <ul class="nav-links">
+  <button class="mobile-menu-btn"
+          onclick="toggleMobileMenu()"
+          aria-label="Menu">☰</button>
+  <ul class="nav-links" id="mobile-nav-guest">
     <li><a href="login.html" class="btn btn-primary"
            style="padding:0.4rem 1rem;font-size:0.85rem;">Login</a></li>
     <li><a href="register.html" class="btn btn-secondary"
@@ -465,6 +474,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('member-view').style.display = 'none';
   }
 });
+
+
 </script>
 
 <!-- <script src="app.js"></script> -->
@@ -558,5 +569,21 @@ setTimeout(() => {
 }, 500);
 
 </script> -->
+<script src="pwa.js"></script>
+<script>
+function toggleMobileMenu() {
+  const navs = document.querySelectorAll('.nav-links');
+  navs.forEach(nav => nav.classList.toggle('mobile-open'));
+}
+
+// Close menu when a link is clicked
+document.addEventListener('click', (e) => {
+  if (e.target.tagName === 'A' || e.target.closest('a')) {
+    document.querySelectorAll('.nav-links').forEach(
+      nav => nav.classList.remove('mobile-open')
+    );
+  }
+});
+</script>
 </body>
 </html>

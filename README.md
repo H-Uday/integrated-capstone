@@ -94,6 +94,26 @@ exclusively through the SQLite database. No cross-imports. No shared runtime.
 ````bash
 curl [https://cariq-app.onrender.com/health](https://cariq-app.onrender.com/health)
 
+
+## 📱 Progressive Web App (PWA)
+
+CarIQ is installable as a native-like app on any device.
+
+### Install on Mobile
+1. Open `https://cariq-app.onrender.com` in Chrome (Android) or Safari (iOS)
+2. Tap "Add to Home Screen" when prompted
+3. CarIQ installs like a native app with offline support
+
+### PWA Features
+- ✅ Offline access to all cached pages
+- ✅ Install to home screen (Android + iOS)
+- ✅ Push notification support
+- ✅ Background sync for pending data
+- ✅ Cache-first strategy for instant loading
+- ✅ Mobile responsive on all screen sizes (320px–2560px)
+
+### Test PWA Status
+Visit `/pwa-test.html` to verify all PWA features are active.
 ### Prerequisites
 
 - Node.js v18+ and npm

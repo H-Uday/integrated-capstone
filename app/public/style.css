@@ -497,3 +497,159 @@ tr:hover td { color: #fff; }
   opacity: 1; 
   transform: translateY(0); 
 }
+
+/* ══════════════════════════════════════════
+   MOBILE RESPONSIVE — PWA OPTIMIZATIONS
+══════════════════════════════════════════ */
+
+/* ── Mobile Base ── */
+@media (max-width: 768px) {
+  /* Navigation */
+  nav {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 0.8rem 1rem;
+    gap: 0.5rem;
+  }
+  .nav-brand { font-size: 1.2rem; }
+  .nav-links {
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 0.3rem 0;
+  }
+  .nav-links a { font-size: 0.8rem; }
+
+  /* Page */
+  .page { padding: 1.5rem 1rem; }
+  .page-title { font-size: 1.4rem; }
+
+  /* Forms */
+  .form-grid { grid-template-columns: 1fr; }
+  .form-group.full-width { grid-column: 1; }
+
+  /* Cards */
+  .card { padding: 1.2rem; }
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+  .metric-value { font-size: 1.5rem; }
+
+  /* Feature grid */
+  .feature-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .feature-card { padding: 1rem; }
+  .feature-icon { font-size: 1.5rem; }
+
+  /* Tables */
+  .table-wrap { font-size: 0.8rem; }
+  th, td { padding: 0.5rem 0.6rem; }
+
+  /* Buttons */
+  .btn { padding: 0.6rem 1rem; font-size: 0.88rem; }
+  .btn-row { flex-direction: column; }
+  .btn-row .btn { width: 100%; text-align: center; }
+
+  /* Stats row */
+  .stats-row { gap: 1rem; padding: 1rem; }
+  .stat-num  { font-size: 1.4rem; }
+
+  /* Two-column layouts become single column */
+  div[style*="grid-template-columns: 1fr 1fr"],
+  div[style*="grid-template-columns:1fr 1fr"] {
+    display: block !important;
+  }
+  div[style*="grid-template-columns: 1fr 1fr"] > div,
+  div[style*="grid-template-columns:1fr 1fr"] > div {
+    margin-bottom: 1rem;
+  }
+}
+
+/* ── Small Mobile ── */
+@media (max-width: 480px) {
+  .hero h1 { font-size: 1.8rem; }
+  .card-grid { grid-template-columns: 1fr; }
+  .feature-grid { grid-template-columns: 1fr; }
+
+  nav {
+    justify-content: space-between;
+  }
+  .nav-links {
+    display: none; /* Hidden on very small screens */
+  }
+  .nav-links.mobile-open {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background: var(--secondary);
+    padding: 0.8rem;
+    border-radius: 0 0 var(--radius) var(--radius);
+    border: 1px solid var(--border);
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    z-index: 200;
+  }
+
+  /* Mobile hamburger */
+  .mobile-menu-btn {
+    display: block !important;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.4rem 0.7rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.2rem;
+  }
+}
+
+@media (min-width: 481px) {
+  .mobile-menu-btn { display: none !important; }
+}
+
+/* ── PWA Install Banner Animation ── */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* ── Touch Optimizations ── */
+@media (hover: none) and (pointer: coarse) {
+  /* Larger touch targets */
+  .btn { min-height: 44px; }
+  input, select, textarea { min-height: 44px; font-size: 16px; }
+
+  /* Remove hover effects on touch devices */
+  .feature-card:hover { transform: none; }
+  .btn-primary:hover  { transform: none; }
+  .metric-card:hover  { transform: none; }
+}
+
+/* ── PWA Standalone Mode ── */
+@media (display-mode: standalone) {
+  /* Add padding for iOS safe area */
+  body {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  nav {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  /* Hide browser-style elements */
+  .pwa-hide { display: none; }
+}
+
+/* ── Online/Offline Status Indicator ── */
+#online-status {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* ── Mobile Navigation Hamburger ── */
+.mobile-nav-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}

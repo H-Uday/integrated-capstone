@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#00d9d9">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="CarIQ">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icons/icon-192.svg">
+  <title>CarIQ — Offline</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .offline-container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+    }
+    .offline-icon {
+      font-size: 5rem;
+      margin-bottom: 1.5rem;
+      animation: pulse 2s ease infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: 0.6; transform: scale(0.95); }
+    }
+    .offline-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .offline-sub {
+      color: var(--muted);
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      max-width: 400px;
+    }
+    .cached-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+    .cached-link {
+      background: var(--secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .cached-link:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .cached-link-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .cached-link-name { font-size: 0.9rem; font-weight: 600; }
+    .cached-link-desc { font-size: 0.78rem; color: var(--muted); margin-top: 0.3rem; }
+    .retry-btn { margin-top: 1rem; }
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-brand" href="home.html">🚗 CarIQ</a>
+</nav>
+
+<div class="offline-container">
+  <div class="offline-icon">📡</div>
+  <div class="offline-title">You're Offline</div>
+  <p class="offline-sub">
+    No internet connection detected. CarIQ has cached your most
+    important pages — you can still access them below.
+  </p>
+
+  <div class="cached-links">
+    <a href="/home.html" class="cached-link">
+      <div class="cached-link-icon">🏠</div>
+      <div class="cached-link-name">Home</div>
+      <div class="cached-link-desc">Landing page</div>
+    </a>
+    <a href="/customers.html" class="cached-link">
+      <div class="cached-link-icon">👤</div>
+      <div class="cached-link-name">Customers</div>
+      <div class="cached-link-desc">Register form</div>
+    </a>
+    <a href="/leads.html" class="cached-link">
+      <div class="cached-link-icon">🔍</div>
+      <div class="cached-link-name">Enquiry</div>
+      <div class="cached-link-desc">Log leads</div>
+    </a>
+    <a href="/dashboard.html" class="cached-link">
+      <div class="cached-link-icon">📊</div>
+      <div class="cached-link-name">Dashboard</div>
+      <div class="cached-link-desc">Cached metrics</div>
+    </a>
+    <a href="/dealer.html" class="cached-link">
+      <div class="cached-link-icon">🔵</div>
+      <div class="cached-link-name">Dealer Hub</div>
+      <div class="cached-link-desc">EMI calculator</div>
+    </a>
+    <a href="/transactions.html" class="cached-link">
+      <div class="cached-link-icon">💳</div>
+      <div class="cached-link-name">Transactions</div>
+      <div class="cached-link-desc">Record sales</div>
+    </a>
+  </div>
+
+  <button class="btn btn-primary retry-btn"
+          onclick="window.location.reload()">
+    🔄 Retry Connection
+  </button>
+
+  <p style="color:var(--muted);font-size:0.8rem;margin-top:1.5rem;">
+    Data entered while offline will sync when connection is restored.
+  </p>
+</div>
+
+<script>
+// Auto-retry every 30 seconds
+setInterval(() => {
+  if (navigator.onLine) {
+    window.location.href = '/home.html';
+  }
+}, 30000);
+
+// Listen for online event
+window.addEventListener('online', () => {
+  window.location.href = '/home.html';
+});
+</script>
+</body>
+</html>
