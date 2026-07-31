@@ -15,6 +15,8 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.115.0",
+    "@google/genai": "^2.15.0",
     "bcryptjs": "^3.0.3",
     "better-sqlite3": "^12.11.1",
     "cors": "^2.8.6",
@@ -23,6 +25,7 @@
     "jsonwebtoken": "^9.0.3",
     "node-cron": "^4.6.0",
     "nodemailer": "^9.0.3",
+    "ollama": "^0.6.3",
     "pdfkit": "^0.19.1",
     "pg": "^8.22.0",
     "pg-pool": "^3.14.0",

@@ -86,6 +86,8 @@ app.use('/api/transactions', transactionsRouter);
 app.use('/api/alerts',       alertsRouter);
 const reportsRouter = require('./routes/reports');
 app.use('/api/reports', reportsRouter);
+const chatbotRouter = require('./routes/chatbot');
+app.use('/api/chatbot', chatbotRouter);
 
 app.get('/health', (req, res) => {
   const connectedClients = io.engine.clientsCount;
