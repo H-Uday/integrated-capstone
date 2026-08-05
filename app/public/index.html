@@ -340,9 +340,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('hero-username').textContent = user.username;
     try {
       const [vRes, cRes, lRes] = await Promise.all([
-        fetch('http://localhost:3000/api/vehicles'),
-        fetch('http://localhost:3000/api/customers/count'),
-        fetch('http://localhost:3000/api/leads/count')
+        fetch('${window.location.origin}/api/vehicles'),
+        fetch('${window.location.origin}/api/customers/count'),
+        fetch('${window.location.origin}/api/leads/count')
       ]);
       const [vData, cData, lData] = await Promise.all([
         vRes.json(), cRes.json(), lRes.json()

@@ -286,7 +286,7 @@ async function loadTxnVehicles() {
   if (!select) return;
 
   try {
-    const res  = await fetch('http://localhost:3000/api/vehicles');
+    const res  = await fetch('${window.location.origin}/api/vehicles');
     const data = await res.json();
     select.innerHTML = '<option value="">Select vehicle...</option>';
     window._vehicles = data.data;
@@ -420,7 +420,7 @@ document.getElementById('transaction-form').addEventListener('submit', async (e)
   };
 
   try {
-    const res  = await fetch('http://localhost:3000/api/transactions', {
+    const res  = await fetch('${window.location.origin}/api/transactions', {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify(payload)

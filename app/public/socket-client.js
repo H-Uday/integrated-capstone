@@ -20,7 +20,7 @@ let socket = null;
 
 function initSocket() {
   const serverUrl = window.location.hostname === 'localhost'
-    ? 'http://localhost:3000'
+    ? '${window.location.origin}'
     : window.location.origin;
 
   try {
