@@ -90,8 +90,7 @@
     Close a lead as a sale — EMI computed automatically
   </p>
 
-  <div style="display:grid;grid-template-columns:1fr 1fr;
-              gap:2rem;align-items:start;">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start;">
 
     <!-- LEFT — Transaction Form -->
     <div class="card">
@@ -100,14 +99,12 @@
 
           <div class="form-group">
             <label for="t_customer_id">Customer ID *</label>
-            <input id="t_customer_id" type="number"
-                   placeholder="e.g. 1" min="1" required>
+            <input id="t_customer_id" type="number" placeholder="e.g. 1" min="1" required>
           </div>
 
           <div class="form-group">
             <label for="t_lead_id">Lead ID (optional)</label>
-            <input id="t_lead_id" type="number"
-                   placeholder="e.g. 301" min="1">
+            <input id="t_lead_id" type="number" placeholder="e.g. 301" min="1">
           </div>
 
           <div class="form-group full-width">
@@ -135,8 +132,7 @@
           <!-- Loan fields — shown only when Loan selected -->
           <div class="form-group loan-fields" id="loan-fields">
             <label for="t_loan_amount">Loan Amount (₹) *</label>
-            <input id="t_loan_amount" type="number"
-                   placeholder="e.g. 700000" min="1">
+            <input id="t_loan_amount" type="number" placeholder="e.g. 700000" min="1">
           </div>
 
           <div class="form-group loan-fields" id="loan-fields-2">
@@ -155,14 +151,12 @@
 
           <div class="form-group loan-fields" id="loan-fields-3">
             <label for="t_interest_rate">Interest Rate (%) *</label>
-            <input id="t_interest_rate" type="number"
-                   placeholder="e.g. 9.5" min="6" max="20" step="0.1">
+            <input id="t_interest_rate" type="number" placeholder="e.g. 9.5" min="6" max="20" step="0.1">
           </div>
 
           <div class="form-group loan-fields" id="loan-fields-4">
             <label>&nbsp;</label>
-            <button type="button" class="btn btn-secondary"
-                    id="calc-emi-btn" style="width:100%;">
+            <button type="button" class="btn btn-secondary" id="calc-emi-btn" style="width:100%;">
               ⚡ Calculate EMI
             </button>
           </div>
@@ -172,10 +166,8 @@
         <div id="txn-alert" class="alert"></div>
 
         <div class="btn-row">
-          <button type="reset"  class="btn btn-secondary"
-                  id="txn-reset">Clear</button>
-          <button type="submit" class="btn btn-primary"
-                  id="txn-btn" data-label="Record Transaction">
+          <button type="reset" class="btn btn-secondary" id="txn-reset">Clear</button>
+          <button type="submit" class="btn btn-primary" id="txn-btn" data-label="Record Transaction">
             Record Transaction
           </button>
         </div>
@@ -185,40 +177,27 @@
     <!-- RIGHT — Car Preview + EMI Result -->
     <div>
       <!-- Car Image Card -->
-      <div class="card" style="text-align:center;min-height:280px;
-                               display:flex;flex-direction:column;
-                               align-items:center;justify-content:center;
-                               margin-bottom:1rem;">
+      <div class="card" style="text-align:center;min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;margin-bottom:1rem;">
         <div id="t_car_default" style="color:var(--muted);padding:2rem;">
           <div style="font-size:4rem;margin-bottom:1rem;">🚗</div>
           <p style="font-size:0.9rem;">Select a vehicle to preview</p>
         </div>
-        <div id="t_car_skeleton" class="skeleton"
-             style="width:100%;height:200px;
-                    border-radius:8px;display:none;"></div>
-        <img id="t_car_image" alt="Vehicle"
-             style="width:100%;max-height:220px;
-                    object-fit:contain;border-radius:8px;display:none;">
-        <div id="t_car_fallback"
-             style="font-size:5rem;display:none;"></div>
-        <p id="t_car_label"
-           style="margin-top:0.8rem;font-weight:700;display:none;"></p>
+        <div id="t_car_skeleton" class="skeleton" style="width:100%;height:200px;border-radius:8px;display:none;"></div>
+        <img id="t_car_image" alt="Vehicle" style="width:100%;max-height:220px;object-fit:contain;border-radius:8px;display:none;">
+        <div id="t_car_fallback" style="font-size:5rem;display:none;"></div>
+        <p id="t_car_label" style="margin-top:0.8rem;font-weight:700;display:none;"></p>
       </div>
 
       <!-- EMI Result Card -->
       <div class="emi-result" id="emi-result">
-        <div style="color:var(--muted);font-size:0.8rem;
-                    text-transform:uppercase;letter-spacing:1px;
-                    margin-bottom:0.5rem;">Monthly EMI</div>
+        <div style="color:var(--muted);font-size:0.8rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:0.5rem;">Monthly EMI</div>
         <div class="emi-amount" id="emi-display">₹0</div>
         <div class="emi-label">Equated Monthly Instalment</div>
 
         <div class="affordability-bar">
-          <div class="affordability-fill" id="afford-fill"
-               style="width:0%;background:var(--success);"></div>
+          <div class="affordability-fill" id="afford-fill" style="width:0%;background:var(--success);"></div>
         </div>
-        <div style="font-size:0.78rem;color:var(--muted);
-                    margin-top:0.4rem;" id="afford-label"></div>
+        <div style="font-size:0.78rem;color:var(--muted);margin-top:0.4rem;" id="afford-label"></div>
 
         <div class="emi-breakdown">
           <div class="emi-item">
@@ -294,8 +273,6 @@ document.getElementById('calc-emi-btn').addEventListener('click', () => {
   document.getElementById('b-tenure').textContent     = tenure + ' months';
   document.getElementById('b-total').textContent      = formatINR(total);
 
-  // Affordability check — needs customer monthly income
-  // Show EMI/income bar if we can compute it
   const fill  = document.getElementById('afford-fill');
   const label = document.getElementById('afford-label');
   fill.style.width      = '100%';
@@ -344,16 +321,52 @@ async function loadTxnVehicles() {
     label.style.display     = 'block';
     label.textContent       = `${vehicle.make} ${vehicle.model} ${vehicle.year}`;
 
-    // Reliable public fallback URLs matching standard database seeds
-    const makeLower = vehicle.make.toLowerCase();
-    let url = 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=600&q=80'; // Default SUV
+    // 🏎️ DYNAMIC HIGH-RES CAR IMAGE MAPPER
+    const makeLower  = vehicle.make.toLowerCase();
+    const modelLower = (vehicle.model || '').toLowerCase();
+    
+    // Comprehensive high-res image dictionary for all major car models
+    const carImageDatabase = {
+      // Hatchbacks & Compacts
+      'swift': 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/2018_Suzuki_Swift_SZ5_Boosterjet_1.0_Front.jpg/1280px-2018_Suzuki_Swift_SZ5_Boosterjet_1.0_Front.jpg',
+      'alto': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/2019_Maruti_Suzuki_Alto_800_LXi.jpg/1280px-2019_Maruti_Suzuki_Alto_800_LXi.jpg',
+      'baleno': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/2022_Maruti_Suzuki_Baleno_Alpha.jpg/1280px-2022_Maruti_Suzuki_Baleno_Alpha.jpg',
+      'i20': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/2021_Hyundai_i20_Asta_Turbo.jpg/1280px-2021_Hyundai_i20_Asta_Turbo.jpg',
+      'tiago': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/2020_Tata_Tiago_XZ%2B_Front.jpg/1280px-2020_Tata_Tiago_XZ%2B_Front.jpg',
 
-    if (makeLower.includes('maruti') || makeLower.includes('alto') || makeLower.includes('tata')) {
-      url = 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80'; // Hatchback/Compact
-    } else if (makeLower.includes('bugatti') || makeLower.includes('ferrari') || makeLower.includes('lamborghini')) {
-      url = 'https://images.unsplash.com/photo-1600706432502-75a0e2751952?auto=format&fit=crop&w=600&q=80'; // Hypercar/Luxury
-    } else if (makeLower.includes('honda') || makeLower.includes('hyundai') || makeLower.includes('bmw')) {
-      url = 'https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=600&q=80'; // Sedan
+      // SUVs & Crossovers
+      'nexon': 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/2023_Tata_Nexon_EV_Empowered_Front.jpg/1280px-2023_Tata_Nexon_EV_Empowered_Front.jpg',
+      'creta': 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/2024_Hyundai_Creta_SX_Tech_Front.jpg/1280px-2024_Hyundai_Creta_SX_Tech_Front.jpg',
+      'thar': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/2020_Mahindra_Thar_LX_Hard_Top_Front.jpg/1280px-2020_Mahindra_Thar_LX_Hard_Top_Front.jpg',
+      'brezza': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/2022_Maruti_Suzuki_Brezza_ZXi.jpg/1280px-2022_Maruti_Suzuki_Brezza_ZXi.jpg',
+      'harrier': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/2023_Tata_Harrier_XZ%2B.jpg/1280px-2023_Tata_Harrier_XZ%2B.jpg',
+      'fortuner': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/2021_Toyota_Fortuner_Legender.jpg/1280px-2021_Toyota_Fortuner_Legender.jpg',
+
+      // Sedans
+      'city': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/2020_Honda_City_ZX_CVT.jpg/1280px-2020_Honda_City_ZX_CVT.jpg',
+      'verna': 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/2023_Hyundai_Verna_SX_O_Turbo.jpg/1280px-2023_Hyundai_Verna_SX_O_Turbo.jpg',
+      'dzire': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/2020_Maruti_Suzuki_Dzire_ZXi.jpg/1280px-2020_Maruti_Suzuki_Dzire_ZXi.jpg',
+      
+      // Luxury & Sports
+      'bmw': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/2020_BMW_330i_M_Sport_Front.jpg/1280px-2020_BMW_330i_M_Sport_Front.jpg',
+      'audi': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/2021_Audi_A6_45_TFSI_Quattro.jpg/1280px-2021_Audi_A6_45_TFSI_Quattro.jpg',
+      'bugatti': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Rolls-Royce_Phantom_VIII_EWB_Genf_2018.jpg/1280px-Rolls-Royce_Phantom_VIII_EWB_Genf_2018.jpg',
+      'ferrari': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Ferrari_SF90_Stradale_%2853068323091%29.jpg/1280px-Ferrari_SF90_Stradale_%2853068323091%29.jpg',
+      'lamborghini': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Lamborghini_Aventador_LP700-4_-_Front_2_Ania.jpg/1280px-Lamborghini_Aventador_LP700-4_-_Front_2_Ania.jpg'
+    };
+
+    let url = vehicle.image_url;
+    
+    if (!url) {
+      const matchedKey = Object.keys(carImageDatabase).find(key => 
+        modelLower.includes(key) || makeLower.includes(key)
+      );
+
+      if (matchedKey) {
+        url = carImageDatabase[matchedKey];
+      } else {
+        url = 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=600&q=80';
+      }
     }
 
     const img    = new Image();
@@ -391,8 +404,7 @@ document.getElementById('transaction-form').addEventListener('submit', async (e)
 
   const vehicle = window._vehicles &&
     window._vehicles.find(
-      v => String(v.vehicle_id) ===
-           String(document.getElementById('t_vehicle_id').value)
+      v => String(v.vehicle_id) === String(document.getElementById('t_vehicle_id').value)
     );
 
   const payload = {
