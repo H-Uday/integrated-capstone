@@ -12,8 +12,8 @@
  * This allows CarIQ to work on showroom floors with poor WiFi.
  */
 
-const CACHE_NAME     = 'cariq-v1.0.0';
-const API_CACHE_NAME = 'cariq-api-v1.0.0';
+const CACHE_NAME     = 'cariq-v1.0.1';
+const API_CACHE_NAME = 'cariq-api-v1.0.1';
 
 // Static assets to cache on install
 const STATIC_ASSETS = [
@@ -44,7 +44,7 @@ const CACHE_API_PATTERNS = [
 
 // ── Install Event ─────────────────────────────────────────────
 self.addEventListener('install', (event) => {
-  console.log('[SW] Installing CarIQ Service Worker v1.0.0');
+  console.log('[SW] Installing CarIQ Service Worker v1.0.1');
 
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -245,4 +245,4 @@ async function syncPendingLeads() {
   // In production: read from IndexedDB and POST to API
 }
 
-console.log('[SW] CarIQ Service Worker loaded v1.0.0');
+console.log('[SW] CarIQ Service Worker loaded v1.0.1');
