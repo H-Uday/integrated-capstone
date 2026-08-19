@@ -85,8 +85,7 @@ async function chat(req, res) {
     }
 
     const completion = await groq.chat.completions.create({
-      // ✅ Universal active Groq model ID:
-      model: 'llama3-8b-8192',
+      model: 'gemma2-9b-it',
       messages: formattedMessages,
       temperature: 0.7,
       max_tokens: 1024,
