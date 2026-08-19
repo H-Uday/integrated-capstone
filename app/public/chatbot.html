@@ -565,6 +565,59 @@
       margin-top: 0.3rem;
     }
   </style>
+
+  <!-- Markdown Parser CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <style>
+    /* Markdown Content Styling */
+    .bot-message h1, .bot-message h2, .bot-message h3 {
+      margin-top: 0.8rem;
+      margin-bottom: 0.4rem;
+      font-size: 1.1rem;
+      color: #00d9d9;
+    }
+    .bot-message p {
+      margin-bottom: 0.6rem;
+      line-height: 1.5;
+    }
+    .bot-message ul, .bot-message ol {
+      margin-left: 1.2rem;
+      margin-bottom: 0.6rem;
+    }
+    .bot-message table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.8rem 0;
+      font-size: 0.85rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .bot-message th, .bot-message td {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 6px 10px;
+      text-align: left;
+    }
+    .bot-message th {
+      background: rgba(0, 217, 217, 0.15);
+      color: #00d9d9;
+      font-weight: 600;
+    }
+    .bot-message blockquote {
+      border-left: 3px solid #00d9d9;
+      padding-left: 0.8rem;
+      margin: 0.6rem 0;
+      color: rgba(255, 255, 255, 0.7);
+    }
+    .bot-message code {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-family: monospace;
+      color: #ffb86c;
+    }
+  </style>
 </head>
 <body>
 
@@ -614,9 +667,9 @@
   </div>
 
   <div class="telemetry-status">
-  <div class="status-pulse"></div>
-  SYSTEM_ONLINE // GROQ_ONLINE
-</div>
+    <div class="status-pulse"></div>
+    SYSTEM_ONLINE // GROQ_ONLINE
+  </div>
 
   <div class="header-actions">
     <button class="header-btn" onclick="clearChat()">🗑️ Clear</button>
@@ -764,9 +817,42 @@ function createParticles(x, y) {
   }
 }
 
+// ── Append Message Helper ─────────────────────────────────────
+function appendMessage(role, text) {
+  const chatContainer = document.getElementById('chat-messages') || document.getElementById('messages-area');
+  const msgDiv = document.createElement('div');
+  
+  if (role === 'assistant' || role === 'bot') {
+    msgDiv.className = 'message bot-message assistant';
+    // Clean up standalone LaTeX brackets if present and parse through marked
+    const formatted = text
+      .replace(/\\\[/g, '$$$')
+      .replace(/\\\]/g, '$$$')
+      .replace(/\\\(/g, '$')
+      .replace(/\\\)/g, '$');
+    
+    // Parse Markdown to HTML
+    msgDiv.innerHTML = typeof marked !== 'undefined' ? marked.parse(formatted) : text;
+  } else {
+    msgDiv.className = 'message user-message user';
+    msgDiv.textContent = text;
+  }
+
+  chatContainer.appendChild(msgDiv);
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
 // ── Format Message ────────────────────────────────────────────
 function formatMessage(text) {
   if (!text) return '';
+  if (typeof marked !== 'undefined') {
+    const cleaned = text
+      .replace(/\\\[/g, '$$$')
+      .replace(/\\\]/g, '$$$')
+      .replace(/\\\(/g, '$')
+      .replace(/\\\)/g, '$');
+    return marked.parse(cleaned);
+  }
   return text
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.*?)\*/g, '<em>$1</em>')
@@ -786,7 +872,7 @@ function addMessage(role, content) {
   const area = document.getElementById('messages-area');
 
   const msgEl = document.createElement('div');
-  msgEl.className = `message ${role}`;
+  msgEl.className = `message ${role} ${role === 'assistant' ? 'bot-message' : 'user-message'}`;
 
   const avatarEmoji = role === 'user' ? '👤' : '🤖';
   const avatarClass = role === 'user' ? 'user-av' : 'ai';
@@ -871,7 +957,7 @@ async function sendMessage() {
 
   } catch (err) {
     hideTyping();
-    addMessage('assistant', '⚠️ Cannot reach the CarIQ server. Make sure `npm run dev` and `ollama serve` are running.');
+    addMessage('assistant', '⚠️ Cannot reach the CarIQ server. Make sure your server and API key are configured.');
   } finally {
     isTyping         = false;
     sendBtn.disabled = false;
