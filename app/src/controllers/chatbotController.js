@@ -1,17 +1,11 @@
 /**
  * chatbotController.js
  * CarIQ AI Chatbot powered by Groq Cloud API (Llama 3.3 70B)
- *
- * Answers ANY car, automotive, or CarIQ question naturally.
  */
 
 require('dotenv').config();
-const Groq     = require('groq-sdk');
-const { db }   = require('../config/database');
-
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
-});
+const Groq   = require('groq-sdk');
+const { db } = require('../config/database');
 
 // ── 1. Fetch Real-time DB Snapshot ────────────────────────────
 function getLiveContext() {
@@ -42,14 +36,13 @@ function buildSystemInstruction(ctx) {
   return `You are CarIQ Assistant — an expert automotive advisor and general car intelligence consultant.
 
 ### Your Role:
-1. You can answer ANY question about cars, automotive engineering, market trends, electric vehicles, maintenance, loan financing, or general car trivia.
-2. If the user asks about CarIQ platform metrics or prices in our database, refer to the Database Snapshot below.
-3. If the user asks general questions about cars (e.g., "How does a turbocharger work?", "Swift Dzire features", "Bugatti top speed"), answer using your full automotive knowledge.
-4. NEVER issue safety refusals for harmless vehicle pricing or automotive specs.
+1. You can answer questions about cars, automotive engineering, electric vehicles, maintenance, loan financing, or general car trivia.
+2. If the user asks about CarIQ platform metrics or prices, refer to the Database Snapshot below.
+3. If the user asks general questions about cars, answer using your full automotive knowledge.
 
 ### CarIQ Database Snapshot:
 - Total Tracked Vehicles: ${ctx ? ctx.vehicles : 26}
-- Total Customers: ${ctx ? ctx.customers : 173}
+- Total Customers: ${ctx ? ctx.customers : 170}
 - Sample Database Catalog:
   ${ctx ? ctx.top_vehicles : 'Maruti Suzuki, Hyundai Creta, Tata Nexon EV, Bugatti Chiron, Mercedes-Benz'}
 - Key Affordability Rule: Maximum recommended EMI is 40% of monthly income.`;
@@ -63,19 +56,26 @@ async function chat(req, res) {
     return res.status(400).json({ success: false, error: 'Message is required' });
   }
 
+  const apiKey = process.env.GROQ_API_KEY;
+  if (!apiKey) {
+    return res.status(200).json({
+      success: true,
+      message: '⚡ [Demo Mode]: Groq API Key is not configured on the server environment. Please set GROQ_API_KEY in Render settings.',
+    });
+  }
+
   try {
+    const groq = new Groq({ apiKey });
     const ctx = getLiveContext();
     const systemPrompt = buildSystemInstruction(ctx);
 
-    // Format full chat history for Groq
     const formattedMessages = [
       { role: 'system', content: systemPrompt }
     ];
 
-    // Append conversation history if available
     if (messages && Array.isArray(messages)) {
       messages.forEach(msg => {
-        if (msg.role === 'user' || msg.role === 'assistant') {
+        if (msg.role && msg.content) {
           formattedMessages.push({ role: msg.role, content: msg.content });
         }
       });
@@ -83,7 +83,6 @@ async function chat(req, res) {
       formattedMessages.push({ role: 'user', content: userMessage.trim() });
     }
 
-    // Call Groq API
     const completion = await groq.chat.completions.create({
       model: 'llama-3.3-70b-versatile',
       messages: formattedMessages,
@@ -92,17 +91,13 @@ async function chat(req, res) {
     });
 
     const reply = completion.choices[0]?.message?.content || 'No response generated.';
-
-    return res.status(200).json({
-      success: true,
-      message: reply,
-    });
+    return res.status(200).json({ success: true, message: reply });
 
   } catch (err) {
     console.error('Groq Chat Error:', err.message);
     return res.status(500).json({
       success: false,
-      error: 'AI service unavailable. Ensure your GROQ_API_KEY is configured.',
+      error: 'AI service unavailable: ' + err.message,
     });
   }
 }
