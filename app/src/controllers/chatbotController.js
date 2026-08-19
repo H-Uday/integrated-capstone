@@ -1,6 +1,6 @@
 /**
  * chatbotController.js
- * CarIQ AI Chatbot powered by Groq Cloud API (Llama 3.3 70B)
+ * CarIQ AI Chatbot powered by Groq Cloud API (Llama 3.1 8B)
  */
 
 require('dotenv').config();
@@ -36,9 +36,10 @@ function buildSystemInstruction(ctx) {
   return `You are CarIQ Assistant — an expert automotive advisor and general car intelligence consultant.
 
 ### Your Role:
-1. You can answer questions about cars, automotive engineering, electric vehicles, maintenance, loan financing, or general car trivia.
-2. If the user asks about CarIQ platform metrics or prices, refer to the Database Snapshot below.
-3. If the user asks general questions about cars, answer using your full automotive knowledge.
+1. You can answer ANY question about cars, automotive engineering, market trends, electric vehicles, maintenance, loan financing, or general car trivia.
+2. If the user asks about CarIQ platform metrics or prices in our database, refer to the Database Snapshot below.
+3. If the user asks general questions about cars (e.g., "How does a turbocharger work?", "Swift Dzire features", "Bugatti top speed"), answer using your full automotive knowledge.
+4. NEVER issue safety refusals for harmless vehicle pricing or automotive specs.
 
 ### CarIQ Database Snapshot:
 - Total Tracked Vehicles: ${ctx ? ctx.vehicles : 26}
@@ -84,7 +85,7 @@ async function chat(req, res) {
     }
 
     const completion = await groq.chat.completions.create({
-      model: 'llama-3.3-70b-versatile',
+      model: 'llama-3.1-8b-instant',
       messages: formattedMessages,
       temperature: 0.7,
       max_tokens: 1024,
