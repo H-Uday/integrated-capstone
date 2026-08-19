@@ -102,8 +102,8 @@
 <script src="app.js"></script>
 <script>
   document.getElementById('reg-btn').addEventListener('click', async () => {
-    const username = document.getElementById('reg-username').value;
-    const email    = document.getElementById('reg-email').value;
+    const username = document.getElementById('reg-username').value.trim();
+    const email    = document.getElementById('reg-email').value.trim();
     const password = document.getElementById('reg-password').value;
     const confirm  = document.getElementById('reg-confirm').value;
     const role     = document.getElementById('reg-role').value;
@@ -124,7 +124,8 @@
     setLoading('reg-btn', true);
 
     try {
-      const res  = await fetch('${window.location.origin}/api/auth/register', {
+      // ✅ Corrected: uses API_BASE loaded from api-config.js (or backticks)
+      const res = await fetch(`${API_BASE}/auth/register`, {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ username, email, password, role })
@@ -132,11 +133,10 @@
       const data = await res.json();
 
       if (data.success) {
-        showAlert('reg-alert',
-          `✅ Account created! Redirecting to login...`, 'success');
+        showAlert('reg-alert', '✅ Account created! Redirecting to login...', 'success');
         setTimeout(() => window.location.href = 'login.html', 1500);
       } else {
-        showAlert('reg-alert', `❌ ${data.error}`, 'error');
+        showAlert('reg-alert', `❌ ${data.error || data.message || 'Registration failed'}`, 'error');
       }
     } catch (err) {
       showAlert('reg-alert', '❌ Server unreachable.', 'error');
