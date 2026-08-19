@@ -847,27 +847,30 @@ function createParticles(x, y) {
 // ── Render Markdown & Clean LaTeX Math ─────────────────────────
 function formatMarkdown(text) {
   if (!text) return '';
-  
-  // Clean raw LaTeX formatting blocks so they display cleanly
+
   let cleaned = text
-    .replace(/\\\[([\s\S]*?)\\\]/g, '`$1`')
-    .replace(/\\\(([\s\S]*?)\\\)/g, '`$1`')
+    // Normalize LaTeX display blocks to clean text
+    .replace(/\$\$([\s\S]*?)\$\$/g, '\n`$1`\n')
+    .replace(/\$([^$]+)\$/g, '`$1`')
     .replace(/\\text\{([^}]+)\}/g, '$1')
     .replace(/\\approx/g, '≈')
     .replace(/\\times/g, '×')
     .replace(/\\gg/g, '≫')
     .replace(/\\le/g, '≤')
     .replace(/\\ge/g, '≥')
-    .replace(/\\mathbf\{([^}]+)\}/g, '**$1**')
-    .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '($1 / $2)');
+    .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '($1 / $2)')
+    .replace(/\u202F/g, ' ')  // remove narrow no-break spaces
+    .replace(/\u00A0/g, ' '); // remove non-breaking spaces
+
+  // Ensure tables and numbered headings have line breaks before them
+  cleaned = cleaned.replace(/(\S)(\n?[0-9]️⃣)/g, '$1\n\n$2');
+  cleaned = cleaned.replace(/(\S)(\|)/g, '$1\n$2');
 
   if (typeof marked !== 'undefined') {
     return marked.parse(cleaned);
   }
-  
-  return cleaned
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\n/g, '<br>');
+
+  return cleaned.replace(/\n/g, '<br>');
 }
 
 // ── Add Message to UI ─────────────────────────────────────────
