@@ -6,9 +6,13 @@
   <meta name="theme-color" content="#00d9d9">
   <link rel="manifest" href="/manifest.json">
   <title>CarIQ AI — Your Smart Car Advisor</title>
+  
+  <!-- Markdown Parser CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
   <style>
     /* ══════════════════════════════════════════
-       CARIQ AI CHATBOT — LOCAL OLLAMA DESIGN
+       CARIQ AI CHATBOT — GROQ LLM DESIGN
     ══════════════════════════════════════════ */
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -326,7 +330,7 @@
       padding: 1.5rem 1rem;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 1.2rem;
       scrollbar-width: thin;
       scrollbar-color: rgba(0,217,217,0.3) transparent;
     }
@@ -383,7 +387,9 @@
       gap: 0.8rem;
       align-items: flex-start;
       animation: messageIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
-      max-width: 800px;
+      width: 100%;
+      max-width: 850px;
+      margin: 0 auto;
     }
     @keyframes messageIn {
       from { opacity: 0; transform: translateY(15px) scale(0.95); }
@@ -410,12 +416,13 @@
     }
 
     .msg-bubble {
-      max-width: min(480px, 75vw);
-      padding: 0.9rem 1.2rem;
+      max-width: min(720px, 85vw);
+      padding: 1rem 1.3rem;
       border-radius: 18px;
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       line-height: 1.6;
       position: relative;
+      word-break: break-word;
     }
     .message.user .msg-bubble {
       background: linear-gradient(135deg, rgba(0,217,217,0.2), rgba(123,47,255,0.2));
@@ -424,21 +431,89 @@
       color: var(--white);
     }
     .message.assistant .msg-bubble {
-      background: rgba(22,33,62,0.85);
-      border: 1px solid rgba(0,217,217,0.15);
+      background: rgba(22,33,62,0.92);
+      border: 1px solid rgba(0,217,217,0.2);
       border-bottom-left-radius: 4px;
       backdrop-filter: blur(10px);
       color: var(--white);
     }
-    .msg-bubble strong { color: var(--accent); }
-    .msg-bubble code {
+
+    /* ── MARKDOWN FORMATTING IN BOT BUBBLE ── */
+    .message.assistant .msg-bubble h1,
+    .message.assistant .msg-bubble h2,
+    .message.assistant .msg-bubble h3,
+    .message.assistant .msg-bubble h4 {
+      margin-top: 0.9rem;
+      margin-bottom: 0.4rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .message.assistant .msg-bubble h1 { font-size: 1.25rem; }
+    .message.assistant .msg-bubble h2 { font-size: 1.15rem; }
+    .message.assistant .msg-bubble h3 { font-size: 1.05rem; }
+    .message.assistant .msg-bubble h4 { font-size: 0.95rem; }
+
+    .message.assistant .msg-bubble p {
+      margin-bottom: 0.6rem;
+    }
+    .message.assistant .msg-bubble p:last-child {
+      margin-bottom: 0;
+    }
+
+    .message.assistant .msg-bubble ul,
+    .message.assistant .msg-bubble ol {
+      padding-left: 1.4rem;
+      margin: 0.5rem 0;
+    }
+    .message.assistant .msg-bubble li {
+      margin: 0.3rem 0;
+    }
+
+    .message.assistant .msg-bubble strong {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .message.assistant .msg-bubble hr {
+      border: none;
+      border-top: 1px solid rgba(0,217,217,0.25);
+      margin: 0.9rem 0;
+    }
+
+    /* Markdown Tables */
+    .message.assistant .msg-bubble table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.8rem 0;
+      font-size: 0.85rem;
+      background: rgba(5,5,16,0.6);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(0,217,217,0.2);
+    }
+    .message.assistant .msg-bubble th,
+    .message.assistant .msg-bubble td {
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 7px 10px;
+      text-align: left;
+    }
+    .message.assistant .msg-bubble th {
+      background: rgba(0,217,217,0.15);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .message.assistant .msg-bubble tr:nth-child(even) {
+      background: rgba(255,255,255,0.02);
+    }
+
+    .message.assistant .msg-bubble code {
       background: rgba(0,217,217,0.1);
       border: 1px solid rgba(0,217,217,0.2);
       border-radius: 4px;
-      padding: 0.1rem 0.4rem;
+      padding: 0.15rem 0.4rem;
       font-family: 'Courier New', monospace;
       font-size: 0.85rem;
-      color: var(--accent);
+      color: var(--gold);
     }
 
     /* Typing indicator */
@@ -448,6 +523,9 @@
       align-items: center;
       padding: 0 1rem;
       animation: messageIn 0.3s ease;
+      width: 100%;
+      max-width: 850px;
+      margin: 0 auto;
     }
     .typing-bubble {
       background: rgba(22,33,62,0.85);
@@ -537,11 +615,6 @@
       transform: none;
     }
 
-    /* Markdown formatting */
-    .msg-bubble ul { padding-left: 1.2rem; margin: 0.3rem 0; }
-    .msg-bubble li { margin: 0.2rem 0; }
-    .msg-bubble p  { margin: 0.3rem 0; }
-
     /* Racing stripe accent */
     .racing-stripe {
       position: fixed;
@@ -557,65 +630,11 @@
       100% { background-position: -200% 0; }
     }
 
-    /* Session details */
     .token-counter {
       font-size: 0.7rem;
       color: var(--muted);
       text-align: center;
       margin-top: 0.3rem;
-    }
-  </style>
-
-  <!-- Markdown Parser CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
-  <style>
-    /* Markdown Content Styling */
-    .bot-message h1, .bot-message h2, .bot-message h3 {
-      margin-top: 0.8rem;
-      margin-bottom: 0.4rem;
-      font-size: 1.1rem;
-      color: #00d9d9;
-    }
-    .bot-message p {
-      margin-bottom: 0.6rem;
-      line-height: 1.5;
-    }
-    .bot-message ul, .bot-message ol {
-      margin-left: 1.2rem;
-      margin-bottom: 0.6rem;
-    }
-    .bot-message table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 0.8rem 0;
-      font-size: 0.85rem;
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 6px;
-      overflow: hidden;
-    }
-    .bot-message th, .bot-message td {
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 6px 10px;
-      text-align: left;
-    }
-    .bot-message th {
-      background: rgba(0, 217, 217, 0.15);
-      color: #00d9d9;
-      font-weight: 600;
-    }
-    .bot-message blockquote {
-      border-left: 3px solid #00d9d9;
-      padding-left: 0.8rem;
-      margin: 0.6rem 0;
-      color: rgba(255, 255, 255, 0.7);
-    }
-    .bot-message code {
-      background: rgba(0, 0, 0, 0.3);
-      padding: 2px 5px;
-      border-radius: 4px;
-      font-family: monospace;
-      color: #ffb86c;
     }
   </style>
 </head>
@@ -666,8 +685,8 @@
     </div>
   </div>
 
-  <div class="telemetry-status">
-    <div class="status-pulse"></div>
+  <div class="telemetry-status" style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; color: var(--accent);">
+    <div class="status-dot"></div>
     SYSTEM_ONLINE // GROQ_ONLINE
   </div>
 
@@ -715,7 +734,7 @@
       <div class="welcome-emoji">🏎️</div>
       <div class="welcome-title">CarIQ AI Assistant</div>
       <p class="welcome-sub">
-        Your intelligent car advisor powered by Local Llama 3.2. Ask me about EMI calculations,
+        Your intelligent car advisor powered by Groq Cloud. Ask me about EMI calculations,
         vehicle recommendations, affordability checks, or anything
         about the CarIQ platform.
       </p>
@@ -740,12 +759,20 @@
 
 <script>
 // ── State ─────────────────────────────────────────────────────
-const API_BASE   = window.location.hostname === 'localhost'
-  ? '${window.location.origin}/api'
+const API_BASE   = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+  ? 'http://localhost:3000/api'
   : `${window.location.origin}/api`;
 
 let conversationHistory = [];
 let isTyping            = false;
+
+// Configure Marked for GFM tables and breaks
+if (typeof marked !== 'undefined') {
+  marked.setOptions({
+    gfm: true,
+    breaks: true
+  });
+}
 
 // ── Background Animation Setup ────────────────────────────────
 function setupBackground() {
@@ -817,50 +844,29 @@ function createParticles(x, y) {
   }
 }
 
-// ── Append Message Helper ─────────────────────────────────────
-function appendMessage(role, text) {
-  const chatContainer = document.getElementById('chat-messages') || document.getElementById('messages-area');
-  const msgDiv = document.createElement('div');
-  
-  if (role === 'assistant' || role === 'bot') {
-    msgDiv.className = 'message bot-message assistant';
-    // Clean up standalone LaTeX brackets if present and parse through marked
-    const formatted = text
-      .replace(/\\\[/g, '$$$')
-      .replace(/\\\]/g, '$$$')
-      .replace(/\\\(/g, '$')
-      .replace(/\\\)/g, '$');
-    
-    // Parse Markdown to HTML
-    msgDiv.innerHTML = typeof marked !== 'undefined' ? marked.parse(formatted) : text;
-  } else {
-    msgDiv.className = 'message user-message user';
-    msgDiv.textContent = text;
-  }
-
-  chatContainer.appendChild(msgDiv);
-  chatContainer.scrollTop = chatContainer.scrollHeight;
-}
-
-// ── Format Message ────────────────────────────────────────────
-function formatMessage(text) {
+// ── Render Markdown & Clean LaTeX Math ─────────────────────────
+function formatMarkdown(text) {
   if (!text) return '';
+  
+  // Clean raw LaTeX formatting blocks so they display cleanly
+  let cleaned = text
+    .replace(/\\\[([\s\S]*?)\\\]/g, '`$1`')
+    .replace(/\\\(([\s\S]*?)\\\)/g, '`$1`')
+    .replace(/\\text\{([^}]+)\}/g, '$1')
+    .replace(/\\approx/g, '≈')
+    .replace(/\\times/g, '×')
+    .replace(/\\gg/g, '≫')
+    .replace(/\\le/g, '≤')
+    .replace(/\\ge/g, '≥')
+    .replace(/\\mathbf\{([^}]+)\}/g, '**$1**')
+    .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '($1 / $2)');
+
   if (typeof marked !== 'undefined') {
-    const cleaned = text
-      .replace(/\\\[/g, '$$$')
-      .replace(/\\\]/g, '$$$')
-      .replace(/\\\(/g, '$')
-      .replace(/\\\)/g, '$');
     return marked.parse(cleaned);
   }
-  return text
+  
+  return cleaned
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.*?)\*/g, '<em>$1</em>')
-    .replace(/`(.*?)`/g, '<code>$1</code>')
-    .replace(/^\s*-\s+(.+)$/gm, '<li>$1</li>')
-    .replace(/^\s*\*\s+(.+)$/gm, '<li>$1</li>')
-    .replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>')
-    .replace(/\n\n/g, '</p><p>')
     .replace(/\n/g, '<br>');
 }
 
@@ -872,15 +878,17 @@ function addMessage(role, content) {
   const area = document.getElementById('messages-area');
 
   const msgEl = document.createElement('div');
-  msgEl.className = `message ${role} ${role === 'assistant' ? 'bot-message' : 'user-message'}`;
+  msgEl.className = `message ${role}`;
 
   const avatarEmoji = role === 'user' ? '👤' : '🤖';
   const avatarClass = role === 'user' ? 'user-av' : 'ai';
 
+  const formattedContent = role === 'assistant' ? formatMarkdown(content) : escapeHtml(content);
+
   msgEl.innerHTML = `
     <div class="msg-avatar ${avatarClass}">${avatarEmoji}</div>
     <div class="msg-bubble">
-      ${role === 'assistant' ? formatMessage(content) : content}
+      ${formattedContent}
     </div>
   `;
 
@@ -888,6 +896,12 @@ function addMessage(role, content) {
   area.scrollTop = area.scrollHeight;
 
   return msgEl;
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
 }
 
 // ── Show/Hide Typing ──────────────────────────────────────────
@@ -957,7 +971,7 @@ async function sendMessage() {
 
   } catch (err) {
     hideTyping();
-    addMessage('assistant', '⚠️ Cannot reach the CarIQ server. Make sure your server and API key are configured.');
+    addMessage('assistant', '⚠️ Cannot reach the CarIQ server. Make sure your server is running.');
   } finally {
     isTyping         = false;
     sendBtn.disabled = false;
@@ -982,7 +996,7 @@ function clearChat() {
       <div class="welcome-emoji">🏎️</div>
       <div class="welcome-title">CarIQ AI Assistant</div>
       <p class="welcome-sub">
-        Your intelligent car advisor powered by Local Llama 3.2. Ask me about EMI calculations,
+        Your intelligent car advisor powered by Groq Cloud. Ask me about EMI calculations,
         vehicle recommendations, affordability checks, or anything
         about the CarIQ platform.
       </p>
