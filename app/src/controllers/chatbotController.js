@@ -1,15 +1,17 @@
 /**
  * chatbotController.js
- * CarIQ AI Chatbot powered by Local Open-Source LLM (Ollama - Llama 3.2 1B)
+ * CarIQ AI Chatbot powered by Groq Cloud API (Llama 3.3 70B)
  *
  * Answers ANY car, automotive, or CarIQ question naturally.
  */
 
 require('dotenv').config();
-const { Ollama } = require('ollama');
-const { db }     = require('../config/database');
+const Groq     = require('groq-sdk');
+const { db }   = require('../config/database');
 
-const ollama = new Ollama({ host: 'http://127.0.0.1:11434' });
+const groq = new Groq({
+  apiKey: process.env.GROQ_API_KEY,
+});
 
 // ── 1. Fetch Real-time DB Snapshot ────────────────────────────
 function getLiveContext() {
@@ -65,7 +67,7 @@ async function chat(req, res) {
     const ctx = getLiveContext();
     const systemPrompt = buildSystemInstruction(ctx);
 
-    // Format full chat history for Ollama
+    // Format full chat history for Groq
     const formattedMessages = [
       { role: 'system', content: systemPrompt }
     ];
@@ -81,22 +83,26 @@ async function chat(req, res) {
       formattedMessages.push({ role: 'user', content: userMessage.trim() });
     }
 
-    // Call Ollama Chat API
-    const response = await ollama.chat({
-      model: 'llama3.2:1b',
+    // Call Groq API
+    const completion = await groq.chat.completions.create({
+      model: 'llama-3.3-70b-versatile',
       messages: formattedMessages,
+      temperature: 0.7,
+      max_tokens: 1024,
     });
+
+    const reply = completion.choices[0]?.message?.content || 'No response generated.';
 
     return res.status(200).json({
       success: true,
-      message: response.message.content,
+      message: reply,
     });
 
   } catch (err) {
-    console.error('Ollama Chat Error:', err.message);
+    console.error('Groq Chat Error:', err.message);
     return res.status(500).json({
       success: false,
-      error: 'Local LLM offline. Ensure Ollama is running (`ollama serve`).',
+      error: 'AI service unavailable. Ensure your GROQ_API_KEY is configured.',
     });
   }
 }
