@@ -1,6 +1,7 @@
 /**
  * chatbotController.js
- * CarIQ AI Chatbot powered by Groq Cloud API (Llama 3.1 8B)
+ * CarIQ AI Chatbot powered by Groq Cloud API
+ * Authentic, intelligent, and adaptive automotive assistant.
  */
 
 require('dotenv').config();
@@ -31,22 +32,23 @@ function getLiveContext() {
   }
 }
 
-// ── 2. System Instructions ────────────────────────────────────
+// ── 2. System Instructions: Personality & Intelligence ────────
 function buildSystemInstruction(ctx) {
-  return `You are CarIQ Assistant — an expert automotive advisor and general car intelligence consultant.
+  return `You are CarIQ, an intelligent, authentic, and sharp AI automotive collaborator with deep knowledge of cars, loan mathematics, affordability, and the auto industry.
 
-### Your Role:
-1. You can answer ANY question about cars, automotive engineering, market trends, electric vehicles, maintenance, loan financing, or general car trivia.
-2. If the user asks about CarIQ platform metrics or prices in our database, refer to the Database Snapshot below.
-3. If the user asks general questions about cars (e.g., "How does a turbocharger work?", "Swift Dzire features", "Bugatti top speed"), answer using your full automotive knowledge.
-4. NEVER issue safety refusals for harmless vehicle pricing or automotive specs.
+### Personality & Tone Guidelines:
+- **Direct & Helpful:** Lead with the core answer right away. Skip generic robotic intros (e.g., avoid "As an AI..." or "Here is the information you requested"). Jump straight into the explanation.
+- **Tone:** Grounded, sharp, peer-like, and slightly witty when appropriate, but always accurate and professional.
+- **Scannability:** Use clean Markdown formatting (**bolding**, lightweight bullet points, and short tables for specs or comparisons) to make answers easily readable.
+- **Automotive & Finance Expertise:** Provide concrete math when asked about EMIs or affordability (e.g., standard formula: EMI = [P x R x (1+R)^N]/[(1+R)^N-1], rule of thumb: max 40% income allocation or 20/4/10 rule).
+- **Scope:** Answer general car questions (turbos, EV range, hypercars, maintenance, segment comparisons) as well as questions about our internal inventory.
 
-### CarIQ Database Snapshot:
+### CarIQ Live Inventory Snapshot:
 - Total Tracked Vehicles: ${ctx ? ctx.vehicles : 26}
 - Total Customers: ${ctx ? ctx.customers : 170}
-- Sample Database Catalog:
-  ${ctx ? ctx.top_vehicles : 'Maruti Suzuki, Hyundai Creta, Tata Nexon EV, Bugatti Chiron, Mercedes-Benz'}
-- Key Affordability Rule: Maximum recommended EMI is 40% of monthly income.`;
+- Sample Catalog:
+  ${ctx ? ctx.top_vehicles : 'Maruti Suzuki Swift, Tata Nexon EV, Hyundai Creta, BMW 5 Series, Bugatti Chiron'}
+- Key Affordability Metric: Recommended monthly EMI must not exceed 40% of net income.`;
 }
 
 // ── 3. Chat Handler ───────────────────────────────────────────
@@ -61,7 +63,7 @@ async function chat(req, res) {
   if (!apiKey) {
     return res.status(200).json({
       success: true,
-      message: '⚡ [Demo Mode]: Groq API Key is not configured on the server environment. Please set GROQ_API_KEY in Render settings.',
+      message: '⚡ [Demo Mode]: Groq API Key is not configured on the server environment.',
     });
   }
 
@@ -84,12 +86,34 @@ async function chat(req, res) {
       formattedMessages.push({ role: 'user', content: userMessage.trim() });
     }
 
-    const completion = await groq.chat.completions.create({
-      model: 'gemma2-9b-it',
-      messages: formattedMessages,
-      temperature: 0.7,
-      max_tokens: 1024,
-    });
+    const candidateModels = [
+      'llama-3.3-70b-specdec',
+      'llama-3.1-70b-versatile',
+      'mixtral-8x7b-32768'
+    ];
+
+    let completion = null;
+    let lastError = null;
+
+    for (const modelId of candidateModels) {
+      try {
+        completion = await groq.chat.completions.create({
+          model: modelId,
+          messages: formattedMessages,
+          temperature: 0.6,
+          max_tokens: 1024,
+        });
+        if (completion?.choices?.[0]?.message?.content) {
+          break;
+        }
+      } catch (err) {
+        lastError = err;
+      }
+    }
+
+    if (!completion) {
+      throw lastError || new Error('All model candidate endpoints failed.');
+    }
 
     const reply = completion.choices[0]?.message?.content || 'No response generated.';
     return res.status(200).json({ success: true, message: reply });
