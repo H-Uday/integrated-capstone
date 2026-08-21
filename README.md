@@ -1,4 +1,4 @@
-# 🚗 CarIQ — Global & India Car Sales + Affordability Intelligence
+<!-- # 🚗 CarIQ — Global & India Car Sales + Affordability Intelligence
 
 > A production-grade full-stack data analytics capstone system built in 15 days.
 > Tracks automotive transactions across 7 countries and matches buyers to vehicles
@@ -306,4 +306,5 @@ Full-Stack Data Analytics System — CarIQ
 | 12  | Security      | Audit report, validation fixes, landing page       |
 | 13  | Features      | Login system, transactions UI, car images          |
 | 14  | Packaging     | README, insights report                            |
-| 15  | Defense       | Live demo + presentation                           |
+| 15  | Defense       | Live demo + presentation                           | -->
+
