@@ -321,11 +321,11 @@ Full-Stack Data Analytics System — CarIQ
 
 ## 🌐 Live Demo
 
-| Service                   | URL                                               |
-| ------------------------- | ------------------------------------------------- |
-| **Express API + Web App** | https://cariq-app.onrender.com                    |
-| **Streamlit Analytics**   | https://cariq-analytics.streamlit.app             |
-| **GitHub Repository**     | https://github.com/Uday183020/integrated-capstone |
+| Service                   | URL                                           |
+| ------------------------- | --------------------------------------------- |
+| **Express API + Web App** | https://cariq-app.onrender.com                |
+| **Streamlit Analytics**   | https://cariq-analytics.streamlit.app         |
+| **GitHub Repository**     | https://github.com/H-Uday/integrated-capstone |
 
 ### Quick API Test
 
@@ -495,7 +495,7 @@ exclusively through the SQLite database. No cross-imports. No shared runtime.
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/Uday183020/integrated-capstone
+git clone https://github.com/H-Uday/integrated-capstone
 cd integrated-capstone
 ```
 
